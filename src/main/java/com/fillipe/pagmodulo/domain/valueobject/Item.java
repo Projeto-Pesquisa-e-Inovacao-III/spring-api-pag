@@ -1,7 +1,7 @@
 package com.fillipe.pagmodulo.domain.valueobject;
 
 public record Item(
-        Long id,
+        String externalItemId,
         String name,
         String description,
         Integer quantity,
@@ -9,15 +9,26 @@ public record Item(
         String imageUrl
 ) {
     public Item {
+        validateExternalItemId(externalItemId);
         validateName(name);
         validateDescription(description);
         validateQuantity(quantity);
         validateUnitAmount(unitAmount);
         validateImageUrl(imageUrl);
+
+        name = name.trim();
+        description = description != null ? description.trim() : null;
+        imageUrl = imageUrl != null ? imageUrl.trim() : null;
     }
 
-    public Item(Long id, String name, String description, Integer quantity, Integer unitAmount) {
-        this(id, name, description, quantity, unitAmount, null);
+    public Item(String externalItemId, String name, String description, Integer quantity, Integer unitAmount) {
+        this(externalItemId, name, description, quantity, unitAmount, null);
+    }
+
+    private static void validateExternalItemId(String externalItemId){
+        if(externalItemId == null || externalItemId.trim().isEmpty()){
+            throw new IllegalArgumentException("O externalItemId deve ser não nulo ou vazio");
+        }
     }
 
     private static void validateName(String name) {
@@ -34,7 +45,7 @@ public record Item(
 
     private static void validateQuantity(Integer quantity) {
         if (quantity == null || quantity < 1 || quantity > 999)
-            throw new IllegalArgumentException("Quantidade de um item deve ser não nula, maior que 1 e menor ou igual que 999");
+            throw new IllegalArgumentException("Quantidade de um item deve ser não nula, maior ou igual a 1 e menor ou igual a 999");
     }
 
     private static void validateUnitAmount(Integer unitAmount) {

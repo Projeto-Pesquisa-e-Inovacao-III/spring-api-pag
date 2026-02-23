@@ -7,7 +7,6 @@ import com.fillipe.pagmodulo.domain.valueobject.Link;
 import com.fillipe.pagmodulo.domain.valueobject.PaymentMethod;
 import com.fillipe.pagmodulo.infrastructure.persistence.entity.*;
 import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
@@ -34,40 +33,27 @@ public abstract class CheckoutPersistenceMapper {
     public CheckoutEntityJpa toEntity(Checkout checkout) {
         if (checkout == null) return null;
 
-        CustomerEntityJpa customer = customerMapper.toEntity(checkout.getCustomer());
-
-        List<ItemEntityJpa> items = checkout.getItems() == null ? List.of()
-                : checkout.getItems().stream().map(itemMapper::toEntity).collect(Collectors.toList());
-
-        List<PaymentMethodEntityJpa> paymentMethods = checkout.getPaymentMethods() == null ? List.of()
-                : checkout.getPaymentMethods().stream().map(paymentMethodMapper::toEntity).collect(Collectors.toList());
-
-        List<LinkEntityJpa> links = checkout.getLinks() == null ? List.of()
-                : checkout.getLinks().stream().map(linkMapper::toEntity).collect(Collectors.toList());
-
         CheckoutEntityJpa entity = new CheckoutEntityJpa();
-        entity.setId(checkout.getId());
         entity.setUuid(checkout.getUuid());
-        entity.setExternalId(checkout.getExternalId());
+        entity.setExternalId(checkout.getGatewayId());
         entity.setExpirationDate(checkout.getExpirationDate());
         entity.setCreatedAt(checkout.getCreatedAt());
         entity.setStatus(checkout.getStatus());
-        entity.setCustomer(customer);
+        entity.setCustomer(customerMapper.toEntity(checkout.getCustomer(), entity));
         entity.setCustomerModifiable(checkout.getCustomerModifiable());
-        entity.setItems(items);
+        entity.setItems(itemMapper.toEntityList(checkout.getItems(), entity));
         entity.setAdditionalAmount(checkout.getAdditionalAmount());
         entity.setDiscountAmount(checkout.getDiscountAmount());
-        entity.setPaymentMethods(paymentMethods);
+        entity.setPaymentMethods(paymentMethodMapper.toEntityList(checkout.getPaymentMethods(), entity));
         entity.setSoftDescriptor(checkout.getSoftDescriptor());
         entity.setRedirectUrl(checkout.getRedirectUrl());
         entity.setReturnUrl(checkout.getReturnUrl());
         entity.setNotificationUrls(checkout.getNotificationUrls());
         entity.setPaymentNotificationUrls(checkout.getPaymentNotificationUrls());
-        entity.setLinks(links);
+        entity.setLinks(linkMapper.toEntityList(checkout.getLinks(), entity));
 
         return entity;
     }
-
 
     /**
      * Manual mapping to toDomain — avoids ambiguous constructor issue without
@@ -88,7 +74,6 @@ public abstract class CheckoutPersistenceMapper {
                 : entity.getLinks().stream().map(linkMapper::toDomain).collect(Collectors.toList());
 
         return new Checkout(
-                entity.getId(),
                 entity.getUuid(),
                 entity.getExternalId(),
                 entity.getExpirationDate(),

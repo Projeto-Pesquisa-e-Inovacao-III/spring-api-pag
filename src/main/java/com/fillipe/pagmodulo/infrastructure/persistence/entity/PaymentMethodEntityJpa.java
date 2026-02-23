@@ -21,13 +21,18 @@ public class PaymentMethodEntityJpa {
     @CollectionTable(name = "payment_config_options")
     private List<PaymentConfigOptionEmbeddableJpa> configOptions;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "checkout_id")
+    CheckoutEntityJpa checkout;
+
     public PaymentMethodEntityJpa() {
     }
 
-    public PaymentMethodEntityJpa(Long id, PaymentType type, List<PaymentConfigOptionEmbeddableJpa> configOptions) {
+    public PaymentMethodEntityJpa(Long id, PaymentType type, List<PaymentConfigOptionEmbeddableJpa> configOptions, CheckoutEntityJpa checkout) {
         this.id = id;
         this.type = type;
         this.configOptions = configOptions;
+        this.checkout = checkout;
     }
 
     public Long getId() {
@@ -42,6 +47,8 @@ public class PaymentMethodEntityJpa {
         return configOptions;
     }
 
+    public CheckoutEntityJpa getCheckout() { return checkout; }
+
     public void setId(Long id) {
         this.id = id;
     }
@@ -50,7 +57,7 @@ public class PaymentMethodEntityJpa {
         this.type = type;
     }
 
-    public void setConfigOptions(List<PaymentConfigOptionEmbeddableJpa> configOptions) {
-        this.configOptions = configOptions;
-    }
+    public void setConfigOptions(List<PaymentConfigOptionEmbeddableJpa> configOptions) { this.configOptions = configOptions; }
+
+    public void setCheckout(CheckoutEntityJpa checkout) { this.checkout = checkout; }
 }

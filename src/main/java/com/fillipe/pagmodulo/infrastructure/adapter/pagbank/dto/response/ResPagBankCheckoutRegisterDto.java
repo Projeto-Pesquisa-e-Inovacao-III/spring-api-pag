@@ -26,7 +26,7 @@ public record ResPagBankCheckoutRegisterDto(
     @Override
     public String toString() {
         return "ResPagBankCheckoutRegisterDto{" +
-                "id='" + id + '\'' +
+                "externalCustomerId='" + id + '\'' +
                 ", referenceId='" + referenceId + '\'' +
                 ", expirationDate='" + expirationDate + '\'' +
                 ", createdAt='" + createdAt + '\'' +

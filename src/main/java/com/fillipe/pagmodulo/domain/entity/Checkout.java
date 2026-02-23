@@ -12,11 +12,9 @@ import java.util.UUID;
 
 public class Checkout {
 
-    private final Long id;
-
     private final UUID uuid;
 
-    private final String externalId;
+    private final String gatewayId;
 
     private final OffsetDateTime expirationDate;
 
@@ -52,10 +50,9 @@ public class Checkout {
     // Todo: descobrir o pq desse campo, talvez algo com charge?
     // private String origin;
 
-    public Checkout(Long id, UUID uuid, String externalId, OffsetDateTime expirationDate, OffsetDateTime createdAt, CheckoutStatus status, Customer customer, Boolean customerModifiable, List<Item> items, Integer additionalAmount, Integer discountAmount, List<PaymentMethod> paymentMethods, String softDescriptor, String redirectUrl, String returnUrl, List<String> notificationUrls, List<String> paymentNotificationUrls, List<Link> links) {
-        this.id = id;
+    public Checkout(UUID uuid, String gatewayId, OffsetDateTime expirationDate, OffsetDateTime createdAt, CheckoutStatus status, Customer customer, Boolean customerModifiable, List<Item> items, Integer additionalAmount, Integer discountAmount, List<PaymentMethod> paymentMethods, String softDescriptor, String redirectUrl, String returnUrl, List<String> notificationUrls, List<String> paymentNotificationUrls, List<Link> links) {
         this.uuid = uuid;
-        this.externalId = externalId;
+        this.gatewayId = gatewayId;
         this.expirationDate = expirationDate;
         this.createdAt = createdAt;
         this.status = status;
@@ -74,9 +71,8 @@ public class Checkout {
     }
 
     public Checkout(Customer customer, List<Item> items, Integer additionalAmount, Integer discountAmount, List<PaymentMethod> paymentMethods, String softDescriptor, String redirectUrl, String returnUrl, List<String> notificationUrls, List<String> paymentNotificationUrls) {
-        this.id = null;
         this.uuid = UUID.randomUUID();
-        this.externalId = null;
+        this.gatewayId = null;
         this.expirationDate = OffsetDateTime.now(ZoneOffset.of("-03:00")).plusHours(1);
         this.createdAt = null;
         this.status = CheckoutStatus.CREATING;
@@ -94,15 +90,12 @@ public class Checkout {
         this.links = List.of();
     }
 
-    public Long getId() {
-        return id;
-    }
 
     public UUID getUuid() {
         return uuid;
     }
 
-    public String getExternalId() { return externalId; }
+    public String getGatewayId() { return gatewayId; }
 
     public OffsetDateTime getExpirationDate() {
         return expirationDate;
@@ -167,9 +160,8 @@ public class Checkout {
     @Override
     public String toString() {
         return "Checkout{" +
-                "id=" + id +
-                ", uuid=" + uuid +
-                ", externalId='" + externalId + '\'' +
+                "uuid=" + uuid +
+                ", gatewayId='" + gatewayId + '\'' +
                 ", expirationDate=" + expirationDate +
                 ", createdAt=" + createdAt +
                 ", status=" + status +

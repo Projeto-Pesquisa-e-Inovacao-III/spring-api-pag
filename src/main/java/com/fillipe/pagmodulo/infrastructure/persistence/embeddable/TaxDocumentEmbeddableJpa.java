@@ -8,6 +8,7 @@ import jakarta.persistence.Embeddable;
 public class TaxDocumentEmbeddableJpa {
     @Column(name = "tax_value")
     private String value;
+    @Column(name = "tax_type")
     private TaxDocumentType type;
 
     public TaxDocumentEmbeddableJpa() {

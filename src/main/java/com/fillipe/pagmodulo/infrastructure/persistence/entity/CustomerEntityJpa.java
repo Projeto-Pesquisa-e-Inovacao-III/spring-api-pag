@@ -22,15 +22,20 @@ public class CustomerEntityJpa {
     @Embedded
     private PhoneEmbeddableJpa phone;
 
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "checkout_id")
+    private CheckoutEntityJpa checkout;
+
     public CustomerEntityJpa() {
     }
 
-    public CustomerEntityJpa(Long id, String name, String email, TaxDocumentEmbeddableJpa taxDocument, PhoneEmbeddableJpa phone) {
+    public CustomerEntityJpa(Long id, String name, String email, TaxDocumentEmbeddableJpa taxDocument, PhoneEmbeddableJpa phone, CheckoutEntityJpa checkout) {
         this.id = id;
         this.name = name;
         this.email = email;
         this.taxDocument = taxDocument;
         this.phone = phone;
+        this.checkout = checkout;
     }
 
     public Long getId() {
@@ -44,6 +49,8 @@ public class CustomerEntityJpa {
     public String getEmail() {
         return email;
     }
+
+    public CheckoutEntityJpa getCheckout() { return checkout; }
 
     public TaxDocumentEmbeddableJpa getTaxDocument() {
         return taxDocument;
@@ -72,4 +79,6 @@ public class CustomerEntityJpa {
     public void setPhone(PhoneEmbeddableJpa phone) {
         this.phone = phone;
     }
+
+    public void setCheckout(CheckoutEntityJpa checkout) { this.checkout = checkout; }
 }

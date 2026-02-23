@@ -5,14 +5,19 @@ import com.fillipe.pagmodulo.domain.valueobject.Phone;
 import com.fillipe.pagmodulo.domain.valueobject.TaxDocument;
 import com.fillipe.pagmodulo.infrastructure.persistence.embeddable.PhoneEmbeddableJpa;
 import com.fillipe.pagmodulo.infrastructure.persistence.embeddable.TaxDocumentEmbeddableJpa;
+import com.fillipe.pagmodulo.infrastructure.persistence.entity.CheckoutEntityJpa;
 import com.fillipe.pagmodulo.infrastructure.persistence.entity.CustomerEntityJpa;
-import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
+import org.mapstruct.*;
 
 @Mapper(componentModel = "spring")
 public interface CustomerPersistenceMapper {
 
-    CustomerEntityJpa toEntity(Customer customer);
+    CustomerEntityJpa toEntity(Customer customer, @Context CheckoutEntityJpa checkout);
+
+    @AfterMapping
+    default void setCheckout(@MappingTarget CustomerEntityJpa entity, @Context CheckoutEntityJpa checkout) {
+        entity.setCheckout(checkout);
+    }
 
     Customer toDomain(CustomerEntityJpa entity);
 

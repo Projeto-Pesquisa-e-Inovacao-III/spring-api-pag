@@ -12,11 +12,11 @@ import java.util.List;
 @Mapper(componentModel = "spring", uses = ConversionMapper.class)
 public interface PagBankItemMapper {
 
-    @Mapping(source = "id", target = "referenceId")
+    @Mapping(source = "externalItemId", target = "referenceId")
     ReqPagBankItemDto toReqPagBankItemDto(Item item);
 
     List<Item> toItemsDomain(List<ResPagBankItemDto> items);
 
-    @Mapping(source = "referenceId", target = "id", qualifiedByName = "toLong")
+    @Mapping(source = "referenceId", target = "externalItemId", qualifiedByName = "toLong")
     Item toItemDomain(ResPagBankItemDto dto);
 }

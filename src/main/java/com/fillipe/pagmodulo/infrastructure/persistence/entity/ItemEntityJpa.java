@@ -9,27 +9,35 @@ public class ItemEntityJpa {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    private String externalItemId;
     private String name;
     private String description;
     private Integer quantity;
     private Integer unitAmount;
     private String imageUrl;
 
-    public ItemEntityJpa() {
-    }
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "checkout_id")
+    CheckoutEntityJpa checkout;
 
-    public ItemEntityJpa(Long id, String name, String description, Integer quantity, Integer unitAmount, String imageUrl) {
+    public ItemEntityJpa() { }
+
+    public ItemEntityJpa(Long id, String externalItemId, String name, String description, Integer quantity, Integer unitAmount, String imageUrl, CheckoutEntityJpa checkout) {
         this.id = id;
+        this.externalItemId = externalItemId;
         this.name = name;
         this.description = description;
         this.quantity = quantity;
         this.unitAmount = unitAmount;
         this.imageUrl = imageUrl;
+        this.checkout = checkout;
     }
 
     public Long getId() {
         return id;
     }
+
+    public String getExternalItemId() { return externalItemId; }
 
     public String getName() {
         return name;
@@ -51,9 +59,13 @@ public class ItemEntityJpa {
         return imageUrl;
     }
 
+    public CheckoutEntityJpa getCheckout() { return checkout; }
+
     public void setId(Long id) {
         this.id = id;
     }
+
+    public void setExternalItemId(String externalItemId) { this.externalItemId = externalItemId; }
 
     public void setName(String name) {
         this.name = name;
@@ -74,4 +86,6 @@ public class ItemEntityJpa {
     public void setImageUrl(String imageUrl) {
         this.imageUrl = imageUrl;
     }
+
+    public void setCheckout(CheckoutEntityJpa checkout) { this.checkout = checkout; }
 }

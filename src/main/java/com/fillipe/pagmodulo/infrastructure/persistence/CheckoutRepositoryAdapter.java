@@ -29,8 +29,8 @@ public class CheckoutRepositoryAdapter implements CheckoutRepository {
     }
 
 //    @Override
-//    public Optional<Checkout> findById(Long id) {
-//        return jpaRepository.findById(id).map(mapper::toDomain);
+//    public Optional<Checkout> findById(Long externalCustomerId) {
+//        return jpaRepository.findById(externalCustomerId).map(mapper::toDomain);
 //    }
 //
 //    @Override

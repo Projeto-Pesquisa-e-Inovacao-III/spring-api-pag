@@ -25,7 +25,7 @@ public class TestCheckoutController {
     public Checkout testCheckout() {
 
         Item item = new Item(
-                1L,
+                "1",
                 "Pacote Anual - PRESENCIAL",
                 "teste",
                 1,
@@ -37,7 +37,7 @@ public class TestCheckoutController {
         TaxDocument taxDocument = new TaxDocument("01415069034", TaxDocumentType.CPF);
 
         Customer customer = new Customer(
-                1L,
+                "1",
                 "João Silva",
                 "joao.silva@example.com",
                 taxDocument,
@@ -54,9 +54,9 @@ public class TestCheckoutController {
                 null,
                 List.of(paymentMethod),
                 null,
-                "https://google.com",
                 null,
-                List.of("https://tinkly-catchable-aurea.ngrok-free.dev/checkouts/pag-status"),
+                null,
+                null,
                 null
         );
 

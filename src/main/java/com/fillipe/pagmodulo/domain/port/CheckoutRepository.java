@@ -9,7 +9,7 @@ public interface CheckoutRepository {
 
     Checkout save(Checkout checkout);
 
-//    Optional<Checkout> findById(Long id);
+//    Optional<Checkout> findById(Long externalCustomerId);
 //
 //    Optional<Checkout> findByUuid(UUID uuid);
 //

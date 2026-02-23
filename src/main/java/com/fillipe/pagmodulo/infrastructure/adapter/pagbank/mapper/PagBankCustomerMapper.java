@@ -19,7 +19,7 @@ public interface PagBankCustomerMapper {
     ReqPagBankPhoneDto toReqPagBankPhoneDto(Phone phone);
 
     @Mapping(source = "taxId", target = "taxDocument", qualifiedByName = "toTaxDocument")
-    @Mapping(target = "id", ignore = true)
+    @Mapping(target = "externalCustomerId", ignore = true)
     Customer toCustomerDomain(ResPagBankCustomerDto dto);
 
     Phone toPhoneDomain(ResPagBankPhoneDto dto);

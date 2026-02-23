@@ -43,7 +43,6 @@ public abstract class PagBankCheckoutMapper {
     @ObjectFactory
     public Checkout toDomain(ResPagBankCheckoutRegisterDto dto){
         return new Checkout(
-                null,
                 conversionMapper.toUUID(dto.referenceId()),
                 dto.id(),
                 OffsetDateTime.parse(dto.expirationDate(), DateTimeFormatter.ISO_OFFSET_DATE_TIME),

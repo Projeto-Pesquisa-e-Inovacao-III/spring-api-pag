@@ -16,7 +16,7 @@ public class CheckoutEntityJpa {
 
     private UUID uuid;
 
-    private String externalId;
+    private String gatewayId;
 
     private OffsetDateTime expirationDate;
 
@@ -25,22 +25,19 @@ public class CheckoutEntityJpa {
     @Enumerated(value = EnumType.STRING)
     private CheckoutStatus status;
 
-    @OneToOne(mappedBy = "checkout", cascade = CascadeType.ALL)
-    @JoinColumn(name = "customer_id")
+    @OneToOne(mappedBy = "checkout", cascade = CascadeType.ALL, orphanRemoval = true)
     private CustomerEntityJpa customer;
 
     private Boolean customerModifiable;
 
-    @OneToMany(mappedBy = "checkout", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    @JoinColumn(name = "checkout_id")
+    @OneToMany(mappedBy = "checkout", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<ItemEntityJpa> items;
 
     private Integer additionalAmount;
 
     private Integer discountAmount;
 
-    @OneToMany(mappedBy = "CheckoutEntityJpa", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    @JoinColumn(name = "checkout_id")
+    @OneToMany(mappedBy = "checkout", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<PaymentMethodEntityJpa> paymentMethods;
 
     private String softDescriptor;
@@ -58,8 +55,7 @@ public class CheckoutEntityJpa {
     @Column(name = "url")
     private List<String> paymentNotificationUrls;
 
-    @OneToMany(cascade = CascadeType.ALL)
-    @JoinColumn(name = "checkout_id")
+    @OneToMany(mappedBy = "checkout", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<LinkEntityJpa> links;
 
     public CheckoutEntityJpa() {
@@ -69,7 +65,7 @@ public class CheckoutEntityJpa {
     public CheckoutEntityJpa(Long id, UUID uuid, String externalId, OffsetDateTime expirationDate, OffsetDateTime createdAt, CheckoutStatus status, CustomerEntityJpa customer, Boolean customerModifiable, List<ItemEntityJpa> items, Integer additionalAmount, Integer discountAmount, List<PaymentMethodEntityJpa> paymentMethods, String softDescriptor, String redirectUrl, String returnUrl, List<String> notificationUrls, List<String> paymentNotificationUrls, List<LinkEntityJpa> links) {
         this.id = id;
         this.uuid = uuid;
-        this.externalId = externalId;
+        this.gatewayId = gatewayId;
         this.expirationDate = expirationDate;
         this.createdAt = createdAt;
         this.status = status;
@@ -90,9 +86,9 @@ public class CheckoutEntityJpa {
     @Override
     public String toString() {
         return "CheckoutEntityJpa{" +
-                "id=" + id +
+                "externalCustomerId=" + id +
                 ", uuid=" + uuid +
-                ", externalId='" + externalId + '\'' +
+                ", externalId='" + gatewayId + '\'' +
                 ", expirationDate=" + expirationDate +
                 ", createdAt=" + createdAt +
                 ", status=" + status +
@@ -121,7 +117,7 @@ public class CheckoutEntityJpa {
     }
 
     public String getExternalId() {
-        return externalId;
+        return gatewayId;
     }
 
     public OffsetDateTime getExpirationDate() {
@@ -193,7 +189,7 @@ public class CheckoutEntityJpa {
     }
 
     public void setExternalId(String externalId) {
-        this.externalId = externalId;
+        this.gatewayId = gatewayId;
     }
 
     public void setExpirationDate(OffsetDateTime expirationDate) {
@@ -248,9 +244,7 @@ public class CheckoutEntityJpa {
         this.notificationUrls = notificationUrls;
     }
 
-    public void setPaymentNotificationUrls(List<String> paymentNotificationUrls) {
-        this.paymentNotificationUrls = paymentNotificationUrls;
-    }
+    public void setPaymentNotificationUrls(List<String> paymentNotificationUrls) { this.paymentNotificationUrls = paymentNotificationUrls; }
 
     public void setLinks(List<LinkEntityJpa> links) {
         this.links = links;

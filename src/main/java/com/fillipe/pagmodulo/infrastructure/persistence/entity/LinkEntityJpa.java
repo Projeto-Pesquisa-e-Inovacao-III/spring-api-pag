@@ -14,14 +14,19 @@ public class LinkEntityJpa {
     private String href;
     private String method;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "checkout_id")
+    CheckoutEntityJpa checkout;
+
     public LinkEntityJpa() {
     }
 
-    public LinkEntityJpa(Long id, String rel, String href, String method) {
+    public LinkEntityJpa(Long id, String rel, String href, String method, CheckoutEntityJpa checkout) {
         this.id = id;
         this.rel = rel;
         this.href = href;
         this.method = method;
+        this.checkout = checkout;
     }
 
     public Long getId() {
@@ -40,6 +45,8 @@ public class LinkEntityJpa {
         return method;
     }
 
+    public CheckoutEntityJpa getCheckout() { return checkout; }
+
     public void setId(Long id) {
         this.id = id;
     }
@@ -55,4 +62,6 @@ public class LinkEntityJpa {
     public void setMethod(String method) {
         this.method = method;
     }
+
+    public void setCheckout(CheckoutEntityJpa checkout) { this.checkout = checkout; }
 }

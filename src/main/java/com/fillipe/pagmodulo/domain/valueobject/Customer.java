@@ -1,7 +1,7 @@
 package com.fillipe.pagmodulo.domain.valueobject;
 
 public record Customer(
-        Long id,
+        String externalCustomerId,
         String name,
         String email,
         TaxDocument taxDocument,
