@@ -1,6 +1,6 @@
-package com.fillipe.pagmodulo.domain.exception;
+package com.fillipe.pagmodulo.domain.checkout.exception;
 
-import com.fillipe.pagmodulo.domain.exception.enums.CheckoutNotFoundReason;
+import com.fillipe.pagmodulo.domain.checkout.exception.enums.CheckoutNotFoundReason;
 
 import java.util.UUID;
 

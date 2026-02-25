@@ -1,9 +1,8 @@
 package com.fillipe.pagmodulo.application.usecase.CreateCheckout;
 
-import com.fillipe.pagmodulo.application.dto.response.ResCheckoutDto;
-import com.fillipe.pagmodulo.domain.entity.Checkout;
-import com.fillipe.pagmodulo.domain.port.out.CheckoutGateway;
-import com.fillipe.pagmodulo.domain.port.out.CheckoutRepository;
+import com.fillipe.pagmodulo.domain.checkout.entity.Checkout;
+import com.fillipe.pagmodulo.domain.checkout.port.out.CheckoutGateway;
+import com.fillipe.pagmodulo.domain.checkout.port.out.CheckoutRepository;
 
 public class CreateCheckoutUseCase {
 

@@ -1,4 +1,4 @@
-package com.fillipe.pagmodulo.domain.valueobject;
+package com.fillipe.pagmodulo.domain.checkout.valueobject;
 
 import java.util.List;
 

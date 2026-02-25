@@ -1,4 +1,4 @@
-package com.fillipe.pagmodulo.domain.exception.enums;
+package com.fillipe.pagmodulo.domain.checkout.exception.enums;
 
 public enum CheckoutNotFoundReason {
     NOT_EXISTS("Não existe");

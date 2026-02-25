@@ -1,10 +1,10 @@
 package com.fillipe.pagmodulo.application.usecase.GetCheckout;
 
-import com.fillipe.pagmodulo.domain.entity.Checkout;
-import com.fillipe.pagmodulo.domain.exception.CheckoutNotFoundException;
-import com.fillipe.pagmodulo.domain.exception.enums.CheckoutNotFoundReason;
-import com.fillipe.pagmodulo.domain.port.out.CheckoutGateway;
-import com.fillipe.pagmodulo.domain.port.out.CheckoutRepository;
+import com.fillipe.pagmodulo.domain.checkout.entity.Checkout;
+import com.fillipe.pagmodulo.domain.checkout.exception.CheckoutNotFoundException;
+import com.fillipe.pagmodulo.domain.checkout.exception.enums.CheckoutNotFoundReason;
+import com.fillipe.pagmodulo.domain.checkout.port.out.CheckoutGateway;
+import com.fillipe.pagmodulo.domain.checkout.port.out.CheckoutRepository;
 
 import java.util.UUID;
 

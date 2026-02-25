@@ -1,6 +1,6 @@
 package com.fillipe.pagmodulo.infrastructure.persistence.embeddable;
 
-import com.fillipe.pagmodulo.domain.valueobject.TaxDocumentType;
+import com.fillipe.pagmodulo.domain.checkout.valueobject.TaxDocumentType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Embeddable;
 import jakarta.persistence.EnumType;

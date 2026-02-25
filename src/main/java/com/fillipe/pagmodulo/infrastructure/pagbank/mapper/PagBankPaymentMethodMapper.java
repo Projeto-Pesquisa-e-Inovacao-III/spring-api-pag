@@ -1,7 +1,7 @@
 package com.fillipe.pagmodulo.infrastructure.pagbank.mapper;
 
-import com.fillipe.pagmodulo.domain.valueobject.PaymentConfigOption;
-import com.fillipe.pagmodulo.domain.valueobject.PaymentMethod;
+import com.fillipe.pagmodulo.domain.checkout.valueobject.PaymentConfigOption;
+import com.fillipe.pagmodulo.domain.checkout.valueobject.PaymentMethod;
 import com.fillipe.pagmodulo.infrastructure.pagbank.dto.common.PagBankConfigOptionDto;
 import com.fillipe.pagmodulo.infrastructure.pagbank.dto.common.PagBankPaymentMethodDto;
 import com.fillipe.pagmodulo.infrastructure.common.mapper.UtilPaymentMethodMapper;

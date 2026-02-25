@@ -1,7 +1,7 @@
 package com.fillipe.pagmodulo.infrastructure.persistence;
 
-import com.fillipe.pagmodulo.domain.entity.Checkout;
-import com.fillipe.pagmodulo.domain.port.out.CheckoutRepository;
+import com.fillipe.pagmodulo.domain.checkout.entity.Checkout;
+import com.fillipe.pagmodulo.domain.checkout.port.out.CheckoutRepository;
 import com.fillipe.pagmodulo.infrastructure.persistence.entity.CheckoutEntityJpa;
 import com.fillipe.pagmodulo.infrastructure.persistence.mapper.CheckoutPersistenceMapper;
 import com.fillipe.pagmodulo.infrastructure.persistence.repository.CheckoutJpaRepository;

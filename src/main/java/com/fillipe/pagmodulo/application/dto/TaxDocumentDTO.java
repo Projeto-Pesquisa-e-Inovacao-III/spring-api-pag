@@ -1,6 +1,6 @@
 package com.fillipe.pagmodulo.application.dto;
 
-import com.fillipe.pagmodulo.domain.valueobject.TaxDocumentType;
+import com.fillipe.pagmodulo.domain.checkout.valueobject.TaxDocumentType;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 

@@ -1,6 +1,6 @@
-package com.fillipe.pagmodulo.domain.valueobject;
+package com.fillipe.pagmodulo.domain.checkout.valueobject;
 
-import com.fillipe.pagmodulo.domain.exception.CnpjIsNotSupportedException;
+import com.fillipe.pagmodulo.domain.checkout.exception.CnpjIsNotSupportedException;
 
 public class TaxDocument {
 

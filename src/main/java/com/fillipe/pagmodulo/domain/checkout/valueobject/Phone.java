@@ -1,4 +1,4 @@
-package com.fillipe.pagmodulo.domain.valueobject;
+package com.fillipe.pagmodulo.domain.checkout.valueobject;
 
 public record Phone(
         String country,
@@ -12,6 +12,7 @@ public record Phone(
     }
 
     private static void validateCountry(String country) {
+        // permitir 55 e +55
         if (country == null)
             throw new IllegalArgumentException("O código do país não pode ser nulo");
         if (country.length() < 2 || country.length() > 3)

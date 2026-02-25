@@ -1,6 +1,6 @@
 package com.fillipe.pagmodulo.infrastructure.persistence.embeddable;
 
-import com.fillipe.pagmodulo.domain.valueobject.PaymentConfigOptionType;
+import com.fillipe.pagmodulo.domain.checkout.valueobject.PaymentConfigOptionType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Embeddable;
 import jakarta.persistence.EnumType;

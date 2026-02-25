@@ -1,6 +1,6 @@
 package com.fillipe.pagmodulo.infrastructure.pagbank.mapper;
 
-import com.fillipe.pagmodulo.domain.entity.Checkout;
+import com.fillipe.pagmodulo.domain.checkout.entity.Checkout;
 import com.fillipe.pagmodulo.infrastructure.pagbank.dto.request.ReqPagBankCheckoutDto;
 import com.fillipe.pagmodulo.infrastructure.pagbank.dto.response.ResPagBankCheckoutDto;
 import com.fillipe.pagmodulo.infrastructure.common.mapper.*;

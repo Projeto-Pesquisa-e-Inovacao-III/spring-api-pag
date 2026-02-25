@@ -1,6 +1,6 @@
 package com.fillipe.pagmodulo.infrastructure.persistence.mapper;
 
-import com.fillipe.pagmodulo.domain.valueobject.Item;
+import com.fillipe.pagmodulo.domain.checkout.valueobject.Item;
 import com.fillipe.pagmodulo.infrastructure.persistence.entity.CheckoutEntityJpa;
 import com.fillipe.pagmodulo.infrastructure.persistence.entity.ItemEntityJpa;
 import org.mapstruct.AfterMapping;

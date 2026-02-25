@@ -1,7 +1,7 @@
 package com.fillipe.pagmodulo.application.mapper;
 
 import com.fillipe.pagmodulo.application.dto.ItemDto;
-import com.fillipe.pagmodulo.domain.valueobject.Item;
+import com.fillipe.pagmodulo.domain.checkout.valueobject.Item;
 import org.mapstruct.Mapper;
 
 import java.util.List;

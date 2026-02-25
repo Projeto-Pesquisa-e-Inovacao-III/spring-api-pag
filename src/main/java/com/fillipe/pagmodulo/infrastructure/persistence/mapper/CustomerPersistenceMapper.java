@@ -1,8 +1,8 @@
 package com.fillipe.pagmodulo.infrastructure.persistence.mapper;
 
-import com.fillipe.pagmodulo.domain.valueobject.Customer;
-import com.fillipe.pagmodulo.domain.valueobject.Phone;
-import com.fillipe.pagmodulo.domain.valueobject.TaxDocument;
+import com.fillipe.pagmodulo.domain.checkout.valueobject.Customer;
+import com.fillipe.pagmodulo.domain.checkout.valueobject.Phone;
+import com.fillipe.pagmodulo.domain.checkout.valueobject.TaxDocument;
 import com.fillipe.pagmodulo.infrastructure.persistence.embeddable.PhoneEmbeddableJpa;
 import com.fillipe.pagmodulo.infrastructure.persistence.embeddable.TaxDocumentEmbeddableJpa;
 import com.fillipe.pagmodulo.infrastructure.persistence.entity.CheckoutEntityJpa;

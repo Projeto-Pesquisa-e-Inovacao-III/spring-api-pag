@@ -1,6 +1,6 @@
 package com.fillipe.pagmodulo.infrastructure.common.mapper;
 
-import com.fillipe.pagmodulo.domain.entity.CheckoutStatus;
+import com.fillipe.pagmodulo.domain.checkout.entity.CheckoutStatus;
 import org.mapstruct.Mapper;
 import org.mapstruct.Named;
 

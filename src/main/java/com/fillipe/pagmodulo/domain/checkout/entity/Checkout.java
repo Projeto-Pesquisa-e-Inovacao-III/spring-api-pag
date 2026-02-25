@@ -1,9 +1,9 @@
-package com.fillipe.pagmodulo.domain.entity;
+package com.fillipe.pagmodulo.domain.checkout.entity;
 
-import com.fillipe.pagmodulo.domain.valueobject.Customer;
-import com.fillipe.pagmodulo.domain.valueobject.Item;
-import com.fillipe.pagmodulo.domain.valueobject.Link;
-import com.fillipe.pagmodulo.domain.valueobject.PaymentMethod;
+import com.fillipe.pagmodulo.domain.checkout.valueobject.Customer;
+import com.fillipe.pagmodulo.domain.checkout.valueobject.Item;
+import com.fillipe.pagmodulo.domain.checkout.valueobject.Link;
+import com.fillipe.pagmodulo.domain.checkout.valueobject.PaymentMethod;
 
 import java.time.OffsetDateTime;
 import java.time.ZoneOffset;
@@ -38,8 +38,8 @@ public class Checkout {
 
     private final String softDescriptor;
 
-    // Todo: saber qual das duas é a verdadeira
     private final String redirectUrl;
+
     private final String returnUrl;
 
     private final List<String> notificationUrls;
@@ -52,7 +52,7 @@ public class Checkout {
     // private String origin;
 
     public boolean isExpired() {
-        return this.expirationDate.isBefore(
+        return !this.expirationDate.isAfter(
                 OffsetDateTime.now(ZoneOffset.of("-03:00"))
         );
     }
@@ -69,7 +69,11 @@ public class Checkout {
     }
 
     public CheckoutStatus mapCheckoutStatus(String value){
-        return CheckoutStatus.valueOf(value);
+        try {
+            return CheckoutStatus.valueOf(value);
+        } catch (IllegalArgumentException e){
+            throw new IllegalArgumentException("Checkout status: " + value + "é invalido");
+        }
     }
 
 

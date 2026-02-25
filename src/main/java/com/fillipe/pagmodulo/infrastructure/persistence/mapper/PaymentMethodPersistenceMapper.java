@@ -1,7 +1,7 @@
 package com.fillipe.pagmodulo.infrastructure.persistence.mapper;
 
-import com.fillipe.pagmodulo.domain.valueobject.PaymentConfigOption;
-import com.fillipe.pagmodulo.domain.valueobject.PaymentMethod;
+import com.fillipe.pagmodulo.domain.checkout.valueobject.PaymentConfigOption;
+import com.fillipe.pagmodulo.domain.checkout.valueobject.PaymentMethod;
 import com.fillipe.pagmodulo.infrastructure.persistence.embeddable.PaymentConfigOptionEmbeddableJpa;
 import com.fillipe.pagmodulo.infrastructure.persistence.entity.CheckoutEntityJpa;
 import com.fillipe.pagmodulo.infrastructure.persistence.entity.PaymentMethodEntityJpa;

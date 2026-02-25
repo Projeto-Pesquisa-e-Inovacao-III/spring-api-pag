@@ -1,6 +1,6 @@
 package com.fillipe.pagmodulo.infrastructure.persistence.entity;
 
-import com.fillipe.pagmodulo.domain.entity.CheckoutStatus;
+import com.fillipe.pagmodulo.domain.checkout.entity.CheckoutStatus;
 import jakarta.persistence.*;
 
 import java.time.OffsetDateTime;

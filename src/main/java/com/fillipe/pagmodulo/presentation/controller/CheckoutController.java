@@ -6,7 +6,7 @@ import com.fillipe.pagmodulo.application.mapper.ApplicationCheckoutMapper;
 import com.fillipe.pagmodulo.application.usecase.CreateCheckout.CreateCheckoutCommand;
 import com.fillipe.pagmodulo.application.usecase.CreateCheckout.CreateCheckoutUseCase;
 import com.fillipe.pagmodulo.application.usecase.GetCheckout.GetCheckoutUseCase;
-import com.fillipe.pagmodulo.domain.entity.Checkout;
+import com.fillipe.pagmodulo.domain.checkout.entity.Checkout;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

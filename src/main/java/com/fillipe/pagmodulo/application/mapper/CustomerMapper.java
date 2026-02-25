@@ -1,7 +1,7 @@
 package com.fillipe.pagmodulo.application.mapper;
 
 import com.fillipe.pagmodulo.application.dto.CustomerDto;
-import com.fillipe.pagmodulo.domain.valueobject.Customer;
+import com.fillipe.pagmodulo.domain.checkout.valueobject.Customer;
 import org.mapstruct.Mapper;
 
 @Mapper(componentModel = "spring")

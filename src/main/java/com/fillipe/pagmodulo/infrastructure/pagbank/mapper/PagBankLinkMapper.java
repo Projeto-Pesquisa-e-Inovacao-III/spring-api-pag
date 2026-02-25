@@ -1,6 +1,6 @@
 package com.fillipe.pagmodulo.infrastructure.pagbank.mapper;
 
-import com.fillipe.pagmodulo.domain.valueobject.Link;
+import com.fillipe.pagmodulo.domain.checkout.valueobject.Link;
 import com.fillipe.pagmodulo.infrastructure.pagbank.dto.response.ResPagBankLinkDto;
 import org.mapstruct.Mapper;
 

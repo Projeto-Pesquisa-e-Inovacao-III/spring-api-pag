@@ -4,7 +4,7 @@ import com.fillipe.pagmodulo.application.dto.CustomerDto;
 import com.fillipe.pagmodulo.application.dto.ItemDto;
 import com.fillipe.pagmodulo.application.dto.LinkDto;
 import com.fillipe.pagmodulo.application.dto.PaymentMethodDto;
-import com.fillipe.pagmodulo.domain.entity.CheckoutStatus;
+import com.fillipe.pagmodulo.domain.checkout.entity.CheckoutStatus;
 
 import java.time.OffsetDateTime;
 import java.util.List;

@@ -1,6 +1,6 @@
 package com.fillipe.pagmodulo.infrastructure.persistence.entity;
 
-import com.fillipe.pagmodulo.domain.valueobject.PaymentType;
+import com.fillipe.pagmodulo.domain.checkout.valueobject.PaymentType;
 import com.fillipe.pagmodulo.infrastructure.persistence.embeddable.PaymentConfigOptionEmbeddableJpa;
 import jakarta.persistence.*;
 

@@ -1,6 +1,6 @@
 package com.fillipe.pagmodulo.application.dto;
 
-import com.fillipe.pagmodulo.domain.valueobject.PaymentType;
+import com.fillipe.pagmodulo.domain.checkout.valueobject.PaymentType;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
 

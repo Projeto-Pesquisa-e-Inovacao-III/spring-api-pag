@@ -1,4 +1,4 @@
-package com.fillipe.pagmodulo.domain.exception;
+package com.fillipe.pagmodulo.domain.checkout.exception;
 
 public class CnpjIsNotSupportedException extends RuntimeException {
     public CnpjIsNotSupportedException() {

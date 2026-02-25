@@ -1,7 +1,7 @@
 package com.fillipe.pagmodulo.infrastructure.common.mapper;
 
-import com.fillipe.pagmodulo.domain.valueobject.PaymentMethod;
-import com.fillipe.pagmodulo.domain.valueobject.PaymentType;
+import com.fillipe.pagmodulo.domain.checkout.valueobject.PaymentMethod;
+import com.fillipe.pagmodulo.domain.checkout.valueobject.PaymentType;
 import org.mapstruct.Mapper;
 import org.mapstruct.Named;
 

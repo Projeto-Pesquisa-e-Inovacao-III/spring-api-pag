@@ -1,6 +1,6 @@
-package com.fillipe.pagmodulo.domain.port.out;
+package com.fillipe.pagmodulo.domain.checkout.port.out;
 
-import com.fillipe.pagmodulo.domain.entity.Checkout;
+import com.fillipe.pagmodulo.domain.checkout.entity.Checkout;
 
 import java.util.Optional;
 import java.util.UUID;

@@ -1,10 +1,10 @@
 package com.fillipe.pagmodulo.infrastructure.persistence.mapper;
 
-import com.fillipe.pagmodulo.domain.entity.Checkout;
-import com.fillipe.pagmodulo.domain.valueobject.Customer;
-import com.fillipe.pagmodulo.domain.valueobject.Item;
-import com.fillipe.pagmodulo.domain.valueobject.Link;
-import com.fillipe.pagmodulo.domain.valueobject.PaymentMethod;
+import com.fillipe.pagmodulo.domain.checkout.entity.Checkout;
+import com.fillipe.pagmodulo.domain.checkout.valueobject.Customer;
+import com.fillipe.pagmodulo.domain.checkout.valueobject.Item;
+import com.fillipe.pagmodulo.domain.checkout.valueobject.Link;
+import com.fillipe.pagmodulo.domain.checkout.valueobject.PaymentMethod;
 import com.fillipe.pagmodulo.infrastructure.persistence.entity.*;
 import org.mapstruct.Mapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -61,7 +61,6 @@ public abstract class CheckoutPersistenceMapper {
     public CheckoutEntityJpa toEntity(Checkout checkout, Long id){
         CheckoutEntityJpa buildedEntity = toEntity(checkout);
         buildedEntity.setId(id);
-        System.out.println("DESGRAÇA 2: " + buildedEntity.getCustomer().toString());
         return buildedEntity;
     }
 

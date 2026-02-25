@@ -1,7 +1,7 @@
 package com.fillipe.pagmodulo.application.mapper;
 
 import com.fillipe.pagmodulo.application.dto.PaymentMethodDto;
-import com.fillipe.pagmodulo.domain.valueobject.PaymentMethod;
+import com.fillipe.pagmodulo.domain.checkout.valueobject.PaymentMethod;
 import org.mapstruct.Mapper;
 
 import java.util.List;

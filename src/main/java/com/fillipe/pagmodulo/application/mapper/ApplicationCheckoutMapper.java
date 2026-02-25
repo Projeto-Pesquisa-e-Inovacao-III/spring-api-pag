@@ -3,7 +3,7 @@ package com.fillipe.pagmodulo.application.mapper;
 import com.fillipe.pagmodulo.application.dto.request.ReqCreateCheckoutDto;
 import com.fillipe.pagmodulo.application.dto.response.ResCheckoutDto;
 import com.fillipe.pagmodulo.application.usecase.CreateCheckout.CreateCheckoutCommand;
-import com.fillipe.pagmodulo.domain.entity.Checkout;
+import com.fillipe.pagmodulo.domain.checkout.entity.Checkout;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
