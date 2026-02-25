@@ -41,21 +41,16 @@ public class CustomerEntityJpa {
     public Long getId() {
         return id;
     }
-
     public String getName() {
         return name;
     }
-
     public String getEmail() {
         return email;
     }
-
     public CheckoutEntityJpa getCheckout() { return checkout; }
-
     public TaxDocumentEmbeddableJpa getTaxDocument() {
         return taxDocument;
     }
-
     public PhoneEmbeddableJpa getPhone() {
         return phone;
     }
@@ -63,22 +58,29 @@ public class CustomerEntityJpa {
     public void setId(Long id) {
         this.id = id;
     }
-
     public void setName(String name) {
         this.name = name;
     }
-
     public void setEmail(String email) {
         this.email = email;
     }
-
     public void setTaxDocument(TaxDocumentEmbeddableJpa taxDocument) {
         this.taxDocument = taxDocument;
     }
-
     public void setPhone(PhoneEmbeddableJpa phone) {
         this.phone = phone;
     }
-
     public void setCheckout(CheckoutEntityJpa checkout) { this.checkout = checkout; }
+
+    @Override
+    public String toString() {
+        return "CustomerEntityJpa{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", email='" + email + '\'' +
+                ", taxDocument=" + taxDocument +
+                ", phone=" + phone +
+                ", checkout=" + checkout.getGatewayId() +
+                '}';
+    }
 }

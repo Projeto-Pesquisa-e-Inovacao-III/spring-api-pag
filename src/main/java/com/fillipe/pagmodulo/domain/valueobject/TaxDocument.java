@@ -2,12 +2,33 @@ package com.fillipe.pagmodulo.domain.valueobject;
 
 import com.fillipe.pagmodulo.domain.exception.CnpjIsNotSupportedException;
 
-public record TaxDocument(
-        String value,
-        TaxDocumentType type
-) {
-    public TaxDocument {
+public class TaxDocument {
+
+    private final String value;
+    private final TaxDocumentType type;
+
+    public TaxDocument(String value, TaxDocumentType type) {
         validateValue(value, type);
+        this.type = type;
+        this.value = cleanValue(value, type);
+    }
+
+    public String getValue() {
+        return value;
+    }
+
+    public TaxDocumentType getType() {
+        return type;
+    }
+
+    private static String cleanValue(String value, TaxDocumentType type) {
+        if (type.equals(TaxDocumentType.CNPJ)) {
+            throw new CnpjIsNotSupportedException();
+        }
+        if (type.equals(TaxDocumentType.CPF)) {
+            return clearCpf(value);
+        }
+        return null;
     }
 
     private static void validateValue(String value, TaxDocumentType type) {
@@ -16,7 +37,7 @@ public record TaxDocument(
                 throw new IllegalArgumentException("CPF inválido: " + value);
             }
         }
-        if(type.equals(TaxDocumentType.CNPJ)){
+        if (type.equals(TaxDocumentType.CNPJ)) {
             throw new CnpjIsNotSupportedException();
         }
     }
@@ -26,7 +47,7 @@ public record TaxDocument(
             return false;
         }
 
-        String cleaned = cpf.replaceAll("[^0-9]", "");
+        String cleaned = clearCpf(cpf);
 
         if (cleaned.length() != 11) {
             return false;
@@ -62,5 +83,9 @@ public record TaxDocument(
 
         int remainder = sum % 11;
         return remainder < 2 ? 0 : 11 - remainder;
+    }
+
+    private static String clearCpf(String cpf) {
+        return cpf.replaceAll("[^0-9]", "");
     }
 }

@@ -7,11 +7,13 @@ import com.fillipe.pagmodulo.domain.valueobject.PaymentMethod;
 
 import java.time.OffsetDateTime;
 import java.time.ZoneOffset;
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.UUID;
 
 public class Checkout {
-
+    //TODO: refatorar para deixar generico e não preso ao pagbank
     private final UUID uuid;
 
     private final String gatewayId;
@@ -32,7 +34,6 @@ public class Checkout {
 
     private final Integer discountAmount;
 
-    // Todo: validar métodos de pagamento repetidos
     private final List<PaymentMethod> paymentMethods;
 
     private final String softDescriptor;
@@ -50,109 +51,107 @@ public class Checkout {
     // Todo: descobrir o pq desse campo, talvez algo com charge?
     // private String origin;
 
-    public Checkout(UUID uuid, String gatewayId, OffsetDateTime expirationDate, OffsetDateTime createdAt, CheckoutStatus status, Customer customer, Boolean customerModifiable, List<Item> items, Integer additionalAmount, Integer discountAmount, List<PaymentMethod> paymentMethods, String softDescriptor, String redirectUrl, String returnUrl, List<String> notificationUrls, List<String> paymentNotificationUrls, List<Link> links) {
-        this.uuid = uuid;
-        this.gatewayId = gatewayId;
-        this.expirationDate = expirationDate;
-        this.createdAt = createdAt;
+    public boolean isExpired() {
+        return this.expirationDate.isBefore(
+                OffsetDateTime.now(ZoneOffset.of("-03:00"))
+        );
+    }
+
+    public void updateStatus(String status) {
+        if(status == null || status.isBlank()){
+            throw new IllegalArgumentException("Atualização de status com valor nulo ou em branco é ilegal.");
+        }
+        this.status = mapCheckoutStatus(status);
+    }
+
+    public void updateStatus(CheckoutStatus status) {
         this.status = status;
-        this.customer = customer;
-        this.customerModifiable = customerModifiable;
-        this.items = items;
-        this.additionalAmount = additionalAmount;
-        this.discountAmount = discountAmount;
-        this.paymentMethods = paymentMethods;
-        this.softDescriptor = softDescriptor;
-        this.redirectUrl = redirectUrl;
-        this.returnUrl = returnUrl;
-        this.notificationUrls = notificationUrls;
-        this.paymentNotificationUrls = paymentNotificationUrls;
-        this.links = links;
     }
 
-    public Checkout(Customer customer, List<Item> items, Integer additionalAmount, Integer discountAmount, List<PaymentMethod> paymentMethods, String softDescriptor, String redirectUrl, String returnUrl, List<String> notificationUrls, List<String> paymentNotificationUrls) {
-        this.uuid = UUID.randomUUID();
-        this.gatewayId = null;
-        this.expirationDate = OffsetDateTime.now(ZoneOffset.of("-03:00")).plusHours(1);
-        this.createdAt = null;
-        this.status = CheckoutStatus.CREATING;
-        this.customer = customer;
-        this.customerModifiable = false;
-        this.items = items;
-        this.additionalAmount = additionalAmount;
-        this.discountAmount = discountAmount;
-        this.paymentMethods = paymentMethods;
-        this.softDescriptor = softDescriptor;
-        this.redirectUrl = redirectUrl;
-        this.returnUrl = returnUrl;
-        this.notificationUrls = notificationUrls;
-        this.paymentNotificationUrls = paymentNotificationUrls;
-        this.links = List.of();
+    public CheckoutStatus mapCheckoutStatus(String value){
+        return CheckoutStatus.valueOf(value);
     }
 
+
+    private Checkout(Builder builder) {
+        this.uuid = builder.uuid;
+        this.gatewayId = builder.gatewayId;
+        this.expirationDate = builder.expirationDate;
+        this.createdAt = builder.createdAt;
+        this.status = builder.status;
+        this.customer = builder.customer;
+        this.customerModifiable = builder.customerModifiable;
+        this.items = builder.items;
+        this.additionalAmount = builder.additionalAmount;
+        this.discountAmount = builder.discountAmount;
+        this.paymentMethods = builder.paymentMethods;
+        this.softDescriptor = builder.softDescriptor;
+        this.redirectUrl = builder.redirectUrl;
+        this.returnUrl = builder.returnUrl;
+        this.notificationUrls = builder.notificationUrls;
+        this.paymentNotificationUrls = builder.paymentNotificationUrls;
+        this.links = builder.links;
+    }
+
+    public static Builder fromExisting() {
+        return new Builder();
+    }
+
+    public static Builder newCheckout() {
+        return new Builder()
+                .uuid(UUID.randomUUID())
+                .expirationDate(OffsetDateTime.now(ZoneOffset.of("-03:00")).plusHours(1))
+                .status(CheckoutStatus.CREATING)
+                .customerModifiable(false)
+                .links(List.of());
+    }
 
     public UUID getUuid() {
         return uuid;
     }
-
     public String getGatewayId() { return gatewayId; }
-
     public OffsetDateTime getExpirationDate() {
         return expirationDate;
     }
-
     public OffsetDateTime getCreatedAt() {
         return createdAt;
     }
-
     public CheckoutStatus getStatus() {
         return status;
     }
-
     public Customer getCustomer() {
         return customer;
     }
-
     public Boolean getCustomerModifiable() {
         return customerModifiable;
     }
-
     public List<Item> getItems() {
         return items;
     }
-
     public Integer getAdditionalAmount() {
         return additionalAmount;
     }
-
     public Integer getDiscountAmount() {
         return discountAmount;
     }
-
     public List<PaymentMethod> getPaymentMethods() {
         return paymentMethods;
     }
-
     public String getSoftDescriptor() {
         return softDescriptor;
     }
-
     public String getRedirectUrl() {
         return redirectUrl;
     }
-
     public String getReturnUrl() {
         return returnUrl;
     }
-
     public List<String> getNotificationUrls() {
         return notificationUrls;
     }
-
     public List<String> getPaymentNotificationUrls() {
         return paymentNotificationUrls;
     }
-
     public List<Link> getLinks() {
         return links;
     }
@@ -178,5 +177,132 @@ public class Checkout {
                 ", paymentNotificationUrls=" + paymentNotificationUrls +
                 ", links=" + links +
                 '}';
+    }
+
+    public static class Builder {
+        private UUID uuid;
+        private String gatewayId;
+        private OffsetDateTime expirationDate;
+        private OffsetDateTime createdAt;
+        private CheckoutStatus status;
+        private Customer customer;
+        private Boolean customerModifiable;
+        private List<Item> items;
+        private Integer additionalAmount;
+        private Integer discountAmount;
+        private List<PaymentMethod> paymentMethods;
+        private String softDescriptor;
+        private String redirectUrl;
+        private String returnUrl;
+        private List<String> notificationUrls;
+        private List<String> paymentNotificationUrls;
+        private List<Link> links;
+
+        public Builder uuid(UUID uuid) {
+            this.uuid = uuid;
+            return this;
+        }
+
+        public Builder gatewayId(String gatewayId) {
+            this.gatewayId = gatewayId;
+            return this;
+        }
+
+        public Builder expirationDate(OffsetDateTime expirationDate) {
+            this.expirationDate = expirationDate;
+            return this;
+        }
+
+        public Builder createdAt(OffsetDateTime createdAt) {
+            this.createdAt = createdAt;
+            return this;
+        }
+
+        public Builder status(CheckoutStatus status) {
+            this.status = status;
+            return this;
+        }
+
+        public Builder customer(Customer customer) {
+            this.customer = customer;
+            return this;
+        }
+
+        public Builder customerModifiable(Boolean customerModifiable) {
+            this.customerModifiable = customerModifiable;
+            return this;
+        }
+
+        public Builder items(List<Item> items) {
+            this.items = items != null ? new ArrayList<>(items) : new ArrayList<>();
+            return this;
+        }
+
+        public Builder additionalAmount(Integer additionalAmount) {
+            this.additionalAmount = additionalAmount;
+            return this;
+        }
+
+        public Builder discountAmount(Integer discountAmount) {
+            this.discountAmount = discountAmount;
+            return this;
+        }
+
+        public Builder paymentMethods(List<PaymentMethod> paymentMethods) {
+            this.paymentMethods = paymentMethods != null ? new ArrayList<>(paymentMethods) : new ArrayList<>();
+            return this;
+        }
+
+        public Builder softDescriptor(String softDescriptor) {
+            this.softDescriptor = softDescriptor;
+            return this;
+        }
+
+        public Builder redirectUrl(String redirectUrl) {
+            this.redirectUrl = redirectUrl;
+            return this;
+        }
+
+        public Builder returnUrl(String returnUrl) {
+            this.returnUrl = returnUrl;
+            return this;
+        }
+
+        public Builder notificationUrls(List<String> notificationUrls) {
+            this.notificationUrls = notificationUrls != null ? new ArrayList<>(notificationUrls) : new ArrayList<>();
+            return this;
+        }
+
+        public Builder paymentNotificationUrls(List<String> paymentNotificationUrls) {
+            this.paymentNotificationUrls = paymentNotificationUrls != null ? new ArrayList<>(paymentNotificationUrls) : new ArrayList<>();
+            return this;
+        }
+
+        public Builder links(List<Link> links) {
+            this.links = links != null ? new ArrayList<>(links) : new ArrayList<>();
+            return this;
+        }
+
+        public Checkout build() {
+            validate();
+            return new Checkout(this);
+        }
+
+        private void validate() {
+            if (customer == null) {
+                throw new IllegalStateException("Customer is required");
+            }
+            if (items == null || items.isEmpty()) {
+                throw new IllegalStateException("At least one item is required");
+            }
+            if (paymentMethods == null || paymentMethods.isEmpty()) {
+                throw new IllegalStateException("At least one payment method is required");
+            }
+
+            HashSet<PaymentMethod> uniqueMethods = new HashSet<>(paymentMethods);
+            if (uniqueMethods.size() != paymentMethods.size()) {
+                throw new IllegalStateException("Duplicate payment methods are not allowed");
+            }
+        }
     }
 }

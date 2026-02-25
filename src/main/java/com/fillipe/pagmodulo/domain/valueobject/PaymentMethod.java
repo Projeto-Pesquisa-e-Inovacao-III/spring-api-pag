@@ -12,7 +12,7 @@ public record PaymentMethod(
     }
 
     public PaymentMethod {
-        configOptions = List.copyOf(configOptions);
+        configOptions = configOptions == null ? List.of() : List.copyOf(configOptions);
     }
 
     public boolean hasConfigs() {

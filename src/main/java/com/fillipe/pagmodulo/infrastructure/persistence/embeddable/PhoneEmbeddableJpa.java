@@ -40,4 +40,13 @@ public class PhoneEmbeddableJpa {
     public void setNumber(String number) {
         this.number = number;
     }
+
+    @Override
+    public String toString() {
+        return "PhoneEmbeddableJpa{" +
+                "country='" + country + '\'' +
+                ", area='" + area + '\'' +
+                ", number='" + number + '\'' +
+                '}';
+    }
 }

@@ -10,6 +10,7 @@ import org.mapstruct.Mapper;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Mapper(componentModel = "spring",
@@ -33,9 +34,11 @@ public abstract class CheckoutPersistenceMapper {
     public CheckoutEntityJpa toEntity(Checkout checkout) {
         if (checkout == null) return null;
 
+        System.out.println("TO ENTITY: "+ checkout.getGatewayId());
+
         CheckoutEntityJpa entity = new CheckoutEntityJpa();
         entity.setUuid(checkout.getUuid());
-        entity.setExternalId(checkout.getGatewayId());
+        entity.setGatewayId(checkout.getGatewayId());
         entity.setExpirationDate(checkout.getExpirationDate());
         entity.setCreatedAt(checkout.getCreatedAt());
         entity.setStatus(checkout.getStatus());
@@ -55,10 +58,13 @@ public abstract class CheckoutPersistenceMapper {
         return entity;
     }
 
-    /**
-     * Manual mapping to toDomain — avoids ambiguous constructor issue without
-     * polluting the domain class with @Default (Clean Architecture).
-     */
+    public CheckoutEntityJpa toEntity(Checkout checkout, Long id){
+        CheckoutEntityJpa buildedEntity = toEntity(checkout);
+        buildedEntity.setId(id);
+        System.out.println("DESGRAÇA 2: " + buildedEntity.getCustomer().toString());
+        return buildedEntity;
+    }
+
     public Checkout toDomain(CheckoutEntityJpa entity) {
         if (entity == null) return null;
 
@@ -73,24 +79,32 @@ public abstract class CheckoutPersistenceMapper {
         List<Link> links = entity.getLinks() == null ? List.of()
                 : entity.getLinks().stream().map(linkMapper::toDomain).collect(Collectors.toList());
 
-        return new Checkout(
-                entity.getUuid(),
-                entity.getExternalId(),
-                entity.getExpirationDate(),
-                entity.getCreatedAt(),
-                entity.getStatus(),
-                customer,
-                entity.getCustomerModifiable(),
-                items,
-                entity.getAdditionalAmount(),
-                entity.getDiscountAmount(),
-                paymentMethods,
-                entity.getSoftDescriptor(),
-                entity.getRedirectUrl(),
-                entity.getReturnUrl(),
-                entity.getNotificationUrls(),
-                entity.getPaymentNotificationUrls(),
-                links
-        );
+        return Checkout.fromExisting()
+                .uuid(entity.getUuid())
+                .gatewayId(entity.getGatewayId())
+                .expirationDate(entity.getExpirationDate())
+                .createdAt(entity.getCreatedAt())
+                .status(entity.getStatus())
+                .customer(customer)
+                .customerModifiable(entity.getCustomerModifiable())
+                .items(items)
+                .additionalAmount(entity.getAdditionalAmount())
+                .discountAmount(entity.getDiscountAmount())
+                .paymentMethods(paymentMethods)
+                .softDescriptor(entity.getSoftDescriptor())
+                .redirectUrl(entity.getRedirectUrl())
+                .returnUrl(entity.getReturnUrl())
+                .notificationUrls(entity.getNotificationUrls())
+                .paymentNotificationUrls(entity.getPaymentNotificationUrls())
+                .links(links)
+                .build();
+    }
+
+    public Optional<Checkout> toDomainOptional(Optional<CheckoutEntityJpa> optionalCheckoutEntityJpa) {
+        return optionalCheckoutEntityJpa.map(this::toDomain);
+    }
+
+    public Optional<CheckoutEntityJpa> toEntityOptional(Optional<Checkout> optionalCheckout) {
+        return optionalCheckout.map(this::toEntity);
     }
 }

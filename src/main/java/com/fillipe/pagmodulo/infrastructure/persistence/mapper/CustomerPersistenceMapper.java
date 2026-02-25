@@ -12,6 +12,7 @@ import org.mapstruct.*;
 @Mapper(componentModel = "spring")
 public interface CustomerPersistenceMapper {
 
+    @Mapping(source = "externalCustomerId", target = "id")
     CustomerEntityJpa toEntity(Customer customer, @Context CheckoutEntityJpa checkout);
 
     @AfterMapping
@@ -19,6 +20,7 @@ public interface CustomerPersistenceMapper {
         entity.setCheckout(checkout);
     }
 
+    @Mapping(source = "id", target = "externalCustomerId")
     Customer toDomain(CustomerEntityJpa entity);
 
     // ---- Phone mappings ----
