@@ -28,8 +28,8 @@ public class CreateCheckoutUseCase {
                 .discountAmount(command.discountAmount())
                 .build();
 
-        Checkout activatedCheckout = checkoutGateway.register(createdCheckout);
-        return checkoutRepository.save(activatedCheckout);
+        Checkout registered = checkoutGateway.register(createdCheckout);
+        return checkoutRepository.save(registered);
     }
 }
 

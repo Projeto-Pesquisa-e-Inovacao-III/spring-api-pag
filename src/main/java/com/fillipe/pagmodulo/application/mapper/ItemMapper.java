@@ -2,19 +2,45 @@ package com.fillipe.pagmodulo.application.mapper;
 
 import com.fillipe.pagmodulo.application.dto.ItemDto;
 import com.fillipe.pagmodulo.domain.checkout.valueobject.Item;
-import org.mapstruct.Mapper;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
-@Mapper(componentModel = "spring")
-public interface ItemMapper {
+public class ItemMapper {
 
-    ItemDto toItemDTO(Item item);
+    private ItemMapper() {}
 
-    Item toItem(ItemDto itemDTO);
+    public static ItemDto toItemDTO(Item item) {
+        if (item == null) return null;
+        return new ItemDto(
+                item.externalItemId(),
+                item.name(),
+                item.description(),
+                item.quantity(),
+                item.unitAmount(),
+                item.imageUrl()
+        );
+    }
 
-    List<ItemDto> toItemDTOList(List<Item> items);
+    public static Item toItem(ItemDto itemDTO) {
+        if (itemDTO == null) return null;
+        return new Item(
+                itemDTO.externalItemId(),
+                itemDTO.name(),
+                itemDTO.description(),
+                itemDTO.quantity(),
+                itemDTO.unitAmount(),
+                itemDTO.imageUrl()
+        );
+    }
 
-    List<Item> toItemList(List<ItemDto> itemDTOs);
+    public static List<ItemDto> toItemDTOList(List<Item> items) {
+        if (items == null) return null;
+        return items.stream().map(ItemMapper::toItemDTO).collect(Collectors.toList());
+    }
+
+    public static List<Item> toItemList(List<ItemDto> itemDTOs) {
+        if (itemDTOs == null) return null;
+        return itemDTOs.stream().map(ItemMapper::toItem).collect(Collectors.toList());
+    }
 }
-

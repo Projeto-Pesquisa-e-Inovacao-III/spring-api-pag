@@ -2,7 +2,7 @@ package com.fillipe.pagmodulo.infrastructure.pagbank.exeception;
 
 public class PagBankNotFoundException extends PagBankException {
     public PagBankNotFoundException(String resourceId) {
-        super("Resource not found: " + resourceId, 404);
+        super("Recurso não encontrado: " + resourceId, 404);
     }
 
     @Override

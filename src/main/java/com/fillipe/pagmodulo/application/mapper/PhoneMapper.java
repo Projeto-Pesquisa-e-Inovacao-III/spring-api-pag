@@ -2,13 +2,18 @@ package com.fillipe.pagmodulo.application.mapper;
 
 import com.fillipe.pagmodulo.application.dto.PhoneDto;
 import com.fillipe.pagmodulo.domain.checkout.valueobject.Phone;
-import org.mapstruct.Mapper;
 
-@Mapper(componentModel = "spring")
-public interface PhoneMapper {
+public class PhoneMapper {
 
-    PhoneDto toPhoneDTO(Phone phone);
+    private PhoneMapper() {}
 
-    Phone toPhone(PhoneDto phoneDTO);
+    public static PhoneDto toPhoneDTO(Phone phone) {
+        if (phone == null) return null;
+        return new PhoneDto(phone.country(), phone.area(), phone.number());
+    }
+
+    public static Phone toPhone(PhoneDto phoneDTO) {
+        if (phoneDTO == null) return null;
+        return new Phone(phoneDTO.country(), phoneDTO.area(), phoneDTO.number());
+    }
 }
-

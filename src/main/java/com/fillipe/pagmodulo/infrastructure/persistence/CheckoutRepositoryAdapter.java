@@ -5,6 +5,7 @@ import com.fillipe.pagmodulo.domain.checkout.port.out.CheckoutRepository;
 import com.fillipe.pagmodulo.infrastructure.persistence.entity.CheckoutEntityJpa;
 import com.fillipe.pagmodulo.infrastructure.persistence.mapper.CheckoutPersistenceMapper;
 import com.fillipe.pagmodulo.infrastructure.persistence.repository.CheckoutJpaRepository;
+import com.fillipe.pagmodulo.infrastructure.persistence.repository.projection.GatewayIdProjection;
 import org.springframework.stereotype.Repository;
 
 import java.util.Optional;
@@ -45,6 +46,12 @@ public class CheckoutRepositoryAdapter implements CheckoutRepository {
     @Override
     public Optional<Checkout> findByGatewayId(String gatewayId) {
         return mapper.toDomainOptional(jpaRepository.findByGatewayId(gatewayId));
+    }
+
+    @Override
+    public Optional<String> getGatewayIdByUuid(UUID uuid) {
+        return jpaRepository.findGatewayIdByUuid(uuid)
+                .map(GatewayIdProjection::getGatewayId);
     }
 
     @Override

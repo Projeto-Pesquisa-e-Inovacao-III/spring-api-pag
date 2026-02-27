@@ -6,7 +6,7 @@ public class PagBankValidationException extends PagBankException {
     private final String description;
 
     public PagBankValidationException(String field, String error, String description) {
-        super(String.format("Validation error on field '%s': %s", field, description), 400);
+        super(String.format("Erro de validação no campo '%s': %s", field, description), 400);
         this.field = field;
         this.error = error;
         this.description = description;

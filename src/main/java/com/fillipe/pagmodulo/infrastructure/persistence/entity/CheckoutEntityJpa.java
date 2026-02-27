@@ -14,16 +14,16 @@ public class CheckoutEntityJpa {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(unique = true, nullable = false)
+    @Column(unique = true, nullable = false, updatable = false)
     private UUID uuid;
 
-    @Column(unique = true, nullable = false)
+    @Column(unique = true)
     private String gatewayId;
 
-    @Column(nullable = false)
+    @Column(nullable = false, updatable = false)
     private OffsetDateTime expirationDate;
 
-    @Column(nullable = false)
+    @Column()
     private OffsetDateTime createdAt;
 
     @Enumerated(value = EnumType.STRING)
@@ -33,22 +33,28 @@ public class CheckoutEntityJpa {
     @OneToOne(mappedBy = "checkout", cascade = CascadeType.ALL, orphanRemoval = true)
     private CustomerEntityJpa customer;
 
-    @Column(nullable = false)
+    @Column(nullable = false, updatable = false)
     private Boolean customerModifiable;
 
     @OneToMany(mappedBy = "checkout", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<ItemEntityJpa> items;
 
+    @Column(updatable = false)
     private Integer additionalAmount;
 
+    @Column(updatable = false)
     private Integer discountAmount;
 
     @OneToMany(mappedBy = "checkout", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<PaymentMethodEntityJpa> paymentMethods;
 
+    @Column(updatable = false)
     private String softDescriptor;
 
+    @Column(updatable = false)
     private String redirectUrl;
+
+    @Column(updatable = false)
     private String returnUrl;
 
     @ElementCollection

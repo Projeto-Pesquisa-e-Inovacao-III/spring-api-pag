@@ -3,7 +3,6 @@ package com.fillipe.pagmodulo.infrastructure.pagbank.dto.response;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 public record ResPagBankLinkDto(
-
         @JsonProperty("rel")
         String rel,
 

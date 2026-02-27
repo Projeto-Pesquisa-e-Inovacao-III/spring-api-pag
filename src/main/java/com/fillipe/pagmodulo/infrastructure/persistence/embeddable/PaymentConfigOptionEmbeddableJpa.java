@@ -9,11 +9,11 @@ import jakarta.persistence.Enumerated;
 @Embeddable
 public class PaymentConfigOptionEmbeddableJpa {
 
-    @Column(name = "config_type")
+    @Column(name = "config_type", nullable = false)
     @Enumerated(EnumType.STRING)
     private PaymentConfigOptionType type;
 
-    @Column(name = "config_value")
+    @Column(name = "config_value", nullable = false)
     private String value;
 
     public PaymentConfigOptionEmbeddableJpa() {

@@ -2,13 +2,30 @@ package com.fillipe.pagmodulo.application.mapper;
 
 import com.fillipe.pagmodulo.application.dto.CustomerDto;
 import com.fillipe.pagmodulo.domain.checkout.valueobject.Customer;
-import org.mapstruct.Mapper;
 
-@Mapper(componentModel = "spring")
-public interface CustomerMapper {
+public class CustomerMapper {
 
-    CustomerDto toCustomerDTO(Customer customer);
+    private CustomerMapper() {}
 
-    Customer toCustomer(CustomerDto customerDTO);
+    public static CustomerDto toCustomerDTO(Customer customer) {
+        if (customer == null) return null;
+        return new CustomerDto(
+                customer.externalCustomerId(),
+                customer.name(),
+                customer.email(),
+                TaxDocumentMapper.toTaxDocumentDTO(customer.taxDocument()),
+                PhoneMapper.toPhoneDTO(customer.phone())
+        );
+    }
+
+    public static Customer toCustomer(CustomerDto customerDTO) {
+        if (customerDTO == null) return null;
+        return new Customer(
+                customerDTO.externalCustomerId(),
+                customerDTO.name(),
+                customerDTO.email(),
+                TaxDocumentMapper.toTaxDocument(customerDTO.taxDocument()),
+                PhoneMapper.toPhone(customerDTO.phone())
+        );
+    }
 }
-

@@ -1,5 +1,7 @@
-package com.fillipe.pagmodulo.application.usecase.GetCheckout;
+package com.fillipe.pagmodulo.application.usecase.ActivateCheckout;
 
+import com.fillipe.pagmodulo.application.dto.external.ExtActivationCheckoutDto;
+import com.fillipe.pagmodulo.application.mapper.LinkMapper;
 import com.fillipe.pagmodulo.domain.checkout.entity.Checkout;
 import com.fillipe.pagmodulo.domain.checkout.exception.CheckoutNotFoundException;
 import com.fillipe.pagmodulo.domain.checkout.exception.enums.CheckoutNotFoundReason;
@@ -8,24 +10,27 @@ import com.fillipe.pagmodulo.domain.checkout.port.out.CheckoutRepository;
 
 import java.util.UUID;
 
-public class GetCheckoutUseCase {
-
-    private final CheckoutGateway checkoutGateway;
+public class ActivateCheckoutUseCase {
     private final CheckoutRepository checkoutRepository;
+    private final CheckoutGateway checkoutGateway;
 
-    public GetCheckoutUseCase(CheckoutGateway checkoutGateway, CheckoutRepository checkoutRepository) {
-        this.checkoutGateway = checkoutGateway;
+    public ActivateCheckoutUseCase(
+            CheckoutGateway checkoutGateway,
+            CheckoutRepository checkoutRepository
+    ) {
         this.checkoutRepository = checkoutRepository;
+        this.checkoutGateway = checkoutGateway;
     }
 
     public Checkout execute(UUID uuid) {
         Checkout persistence = checkoutRepository.findByUuid(uuid)
                 .orElseThrow(() -> new CheckoutNotFoundException(uuid, CheckoutNotFoundReason.NOT_EXISTS));
 
-        Checkout synced = checkoutGateway.sync(persistence.getGatewayId());
-        persistence.updateStatus(synced.getStatus());
-        persistence.updateLinks(synced.getLinks());
+        persistence.validateCanBeActivated();
 
+        ExtActivationCheckoutDto activated = checkoutGateway.activate(persistence);
+        persistence.updateStatus(activated.status());
+        persistence.updateLinks(LinkMapper.toListDomain(activated.links()));
         return checkoutRepository.save(persistence);
     }
 }

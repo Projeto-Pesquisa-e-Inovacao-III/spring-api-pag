@@ -13,6 +13,8 @@ public interface CheckoutRepository {
 
     Optional<Checkout> findByGatewayId(String gatewayId);
 
+    Optional<String> getGatewayIdByUuid(UUID uuid);
+
     boolean existsByGatewayId(String gatewayId);
 
     boolean existsByUuid(UUID uuid);

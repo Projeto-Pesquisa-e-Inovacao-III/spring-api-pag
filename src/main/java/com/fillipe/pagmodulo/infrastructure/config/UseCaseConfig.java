@@ -1,5 +1,7 @@
 package com.fillipe.pagmodulo.infrastructure.config;
 
+import com.fillipe.pagmodulo.application.usecase.ActivateCheckout.ActivateCheckoutUseCase;
+import com.fillipe.pagmodulo.application.usecase.InactivateCheckout.InactivateCheckoutUseCase;
 import com.fillipe.pagmodulo.application.usecase.GetCheckout.GetCheckoutUseCase;
 import com.fillipe.pagmodulo.domain.checkout.port.out.CheckoutGateway;
 import com.fillipe.pagmodulo.domain.checkout.port.out.CheckoutRepository;
@@ -24,6 +26,23 @@ public class UseCaseConfig {
             CheckoutRepository checkoutRepository
     ) {
         return new GetCheckoutUseCase(checkoutGateway, checkoutRepository);
+    }
+
+    @Bean
+    public ActivateCheckoutUseCase activateCheckoutUseCase(
+            CheckoutGateway checkoutGateway,
+            CheckoutRepository checkoutRepository
+    ) {
+        return new ActivateCheckoutUseCase(checkoutGateway, checkoutRepository);
+    }
+
+
+    @Bean
+    public InactivateCheckoutUseCase inactivateCheckoutUseCase(
+            CheckoutGateway checkoutGateway,
+            CheckoutRepository checkoutRepository
+    ) {
+        return new InactivateCheckoutUseCase(checkoutGateway, checkoutRepository);
     }
 }
 

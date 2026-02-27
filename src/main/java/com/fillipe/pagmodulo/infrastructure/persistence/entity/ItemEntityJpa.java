@@ -17,7 +17,7 @@ public class ItemEntityJpa {
     private String imageUrl;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "checkout_id")
+    @JoinColumn(name = "checkout_id", nullable = false)
     CheckoutEntityJpa checkout;
 
     public ItemEntityJpa() { }

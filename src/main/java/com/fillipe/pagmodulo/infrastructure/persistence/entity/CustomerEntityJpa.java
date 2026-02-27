@@ -23,7 +23,7 @@ public class CustomerEntityJpa {
     private PhoneEmbeddableJpa phone;
 
     @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "checkout_id")
+    @JoinColumn(name = "checkout_id", nullable = false)
     private CheckoutEntityJpa checkout;
 
     public CustomerEntityJpa() {

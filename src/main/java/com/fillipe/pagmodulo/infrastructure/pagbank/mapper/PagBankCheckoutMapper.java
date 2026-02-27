@@ -1,9 +1,13 @@
 package com.fillipe.pagmodulo.infrastructure.pagbank.mapper;
 
+import com.fillipe.pagmodulo.application.dto.external.ExtActivationCheckoutDto;
+import com.fillipe.pagmodulo.application.dto.external.ExtInactivationCheckoutDto;
 import com.fillipe.pagmodulo.domain.checkout.entity.Checkout;
 import com.fillipe.pagmodulo.infrastructure.pagbank.dto.request.ReqPagBankCheckoutDto;
+import com.fillipe.pagmodulo.infrastructure.pagbank.dto.response.ResPagBankActivationCheckoutDto;
 import com.fillipe.pagmodulo.infrastructure.pagbank.dto.response.ResPagBankCheckoutDto;
 import com.fillipe.pagmodulo.infrastructure.common.mapper.*;
+import com.fillipe.pagmodulo.infrastructure.pagbank.dto.response.ResPagBankInactivationCheckoutDto;
 import org.mapstruct.*;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -62,4 +66,10 @@ public abstract class PagBankCheckoutMapper {
                 .links(pagBankLinkMapper.toLinksDomain(dto.links()))
                 .build();
     }
+
+    // Activation Dto
+    public abstract ExtActivationCheckoutDto toResActivationDto(ResPagBankActivationCheckoutDto dto);
+
+    // Inactivate
+    public abstract ExtInactivationCheckoutDto toResInactivationCheckoutDto(ResPagBankInactivationCheckoutDto dto);
 }

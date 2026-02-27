@@ -13,7 +13,7 @@ public class PaymentMethodEntityJpa {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "payment_type")
+    @Column(name = "payment_type", nullable = false)
     @Enumerated(EnumType.STRING)
     private PaymentType type;
 
@@ -22,7 +22,7 @@ public class PaymentMethodEntityJpa {
     private List<PaymentConfigOptionEmbeddableJpa> configOptions;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "checkout_id")
+    @JoinColumn(name = "checkout_id", nullable = false)
     CheckoutEntityJpa checkout;
 
     public PaymentMethodEntityJpa() {

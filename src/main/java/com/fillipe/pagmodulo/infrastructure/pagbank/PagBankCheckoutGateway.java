@@ -1,10 +1,14 @@
 package com.fillipe.pagmodulo.infrastructure.pagbank;
 
+import com.fillipe.pagmodulo.application.dto.external.ExtActivationCheckoutDto;
+import com.fillipe.pagmodulo.application.dto.external.ExtInactivationCheckoutDto;
 import com.fillipe.pagmodulo.domain.checkout.entity.Checkout;
 import com.fillipe.pagmodulo.domain.checkout.port.out.CheckoutGateway;
 import com.fillipe.pagmodulo.infrastructure.pagbank.dto.request.ReqPagBankCheckoutDto;
+import com.fillipe.pagmodulo.infrastructure.pagbank.dto.response.ResPagBankActivationCheckoutDto;
 import com.fillipe.pagmodulo.infrastructure.pagbank.dto.response.ResPagBankCheckoutDto;
 import com.fillipe.pagmodulo.infrastructure.pagbank.dto.response.ResPagBankErrorDto;
+import com.fillipe.pagmodulo.infrastructure.pagbank.dto.response.ResPagBankInactivationCheckoutDto;
 import com.fillipe.pagmodulo.infrastructure.pagbank.exeception.*;
 import com.fillipe.pagmodulo.infrastructure.pagbank.mapper.PagBankCheckoutMapper;
 import org.slf4j.Logger;
@@ -44,9 +48,10 @@ public class PagBankCheckoutGateway implements CheckoutGateway {
 
     @Override
     public Checkout register(Checkout checkout) {
+        log.info("Registrando checkout | uuid: {} | gatewayId: {}", checkout.getUuid(), checkout.getGatewayId());
+
         ReqPagBankCheckoutDto request = mapper.toReqPagBankCheckoutRegisterDto(checkout);
 
-        log.info("Checkout dados: {}", checkout.toString());
 
         RestClient.RequestHeadersSpec<?> spec = restClient.post()
                 .uri("/checkouts")
@@ -66,6 +71,8 @@ public class PagBankCheckoutGateway implements CheckoutGateway {
 
     @Override
     public Checkout sync(String gatewayId) {
+        log.info("Sincronizando checkout | gatewayId: {}", gatewayId);
+
         RestClient.RequestHeadersSpec<?> spec = restClient.get()
                 .uri("/checkouts/" + gatewayId)
                 .header("Authorization", "Bearer " + apiToken);
@@ -77,6 +84,40 @@ public class PagBankCheckoutGateway implements CheckoutGateway {
         );
 
         return mapper.toDomain(response);
+    }
+
+    @Override
+    public ExtActivationCheckoutDto activate(Checkout checkout) {
+        log.info("Ativando checkout | uuid: {} | gatewayId: {}", checkout.getUuid(), checkout.getGatewayId());
+
+        RestClient.RequestHeadersSpec<?> spec = restClient.post()
+                .uri("/checkouts/"+checkout.getGatewayId()+"/activate")
+                .header("Authorization", "Bearer " + apiToken);
+
+        ResPagBankActivationCheckoutDto response = executeRequest(
+                spec,
+                ResPagBankActivationCheckoutDto.class,
+                "ativação do checkout com ID: " + checkout.getUuid()
+        );
+
+        return mapper.toResActivationDto(response);
+    }
+
+    @Override
+    public ExtInactivationCheckoutDto inactivate(Checkout checkout) {
+        log.info("Inativando checkout | uuid: {} | gatewayId: {}", checkout.getUuid(), checkout.getGatewayId());
+
+        RestClient.RequestHeadersSpec<?> spec = restClient.post()
+                .uri("/checkouts/"+checkout.getGatewayId()+"/inactivate")
+                .header("Authorization", "Bearer " + apiToken);
+
+        ResPagBankInactivationCheckoutDto response = executeRequest(
+                spec,
+                ResPagBankInactivationCheckoutDto.class,
+                "inativação do checkout com ID: " + checkout.getUuid()
+        );
+
+        return mapper.toResInactivationCheckoutDto(response);
     }
 
     private <T> T executeRequest(

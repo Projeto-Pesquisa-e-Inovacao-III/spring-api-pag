@@ -1,5 +1,7 @@
 package com.fillipe.pagmodulo.domain.checkout.entity;
 
+import com.fillipe.pagmodulo.domain.checkout.exception.CheckoutExpiredException;
+import com.fillipe.pagmodulo.domain.checkout.exception.CheckoutInvalidStatusException;
 import com.fillipe.pagmodulo.domain.checkout.valueobject.Customer;
 import com.fillipe.pagmodulo.domain.checkout.valueobject.Item;
 import com.fillipe.pagmodulo.domain.checkout.valueobject.Link;
@@ -46,7 +48,7 @@ public class Checkout {
 
     private final List<String> paymentNotificationUrls;
 
-    private final List<Link> links;
+    private List<Link> links;
 
     // Todo: descobrir o pq desse campo, talvez algo com charge?
     // private String origin;
@@ -61,11 +63,17 @@ public class Checkout {
         if(status == null || status.isBlank()){
             throw new IllegalArgumentException("Atualização de status com valor nulo ou em branco é ilegal.");
         }
-        this.status = mapCheckoutStatus(status);
+        updateStatus(mapCheckoutStatus(status));
     }
 
     public void updateStatus(CheckoutStatus status) {
+        if(isExpired()) throw new CheckoutExpiredException(uuid, "updateStatus");
         this.status = status;
+    }
+
+    public void updateLinks(List<Link> links){
+        if(links == null || links.isEmpty()) throw new IllegalArgumentException("Atualização de status com valor nulo ou vazio é ilegal.");
+        this.links = links;
     }
 
     public CheckoutStatus mapCheckoutStatus(String value){
@@ -73,6 +81,36 @@ public class Checkout {
             return CheckoutStatus.valueOf(value);
         } catch (IllegalArgumentException e){
             throw new IllegalArgumentException("Checkout status: " + value + "é invalido");
+        }
+    }
+
+    public void validateCanBeActivated() {
+        if (isExpired()) {
+            throw new CheckoutExpiredException(uuid, "ativar");
+        }
+
+        if (!this.status.equals(CheckoutStatus.INACTIVE)) {
+            throw new CheckoutInvalidStatusException(
+                    uuid,
+                    this.status,
+                    CheckoutStatus.INACTIVE,
+                    "ativar"
+            );
+        }
+    }
+
+    public void validateCanBeInactivated() {
+        if (isExpired()) {
+            throw new CheckoutExpiredException(uuid, "inativar");
+        }
+
+        if (!this.status.equals(CheckoutStatus.ACTIVE)) {
+            throw new CheckoutInvalidStatusException(
+                    uuid,
+                    this.status,
+                    CheckoutStatus.ACTIVE,
+                    "inativar"
+            );
         }
     }
 
