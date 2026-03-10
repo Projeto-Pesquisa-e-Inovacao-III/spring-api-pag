@@ -1,9 +1,11 @@
 package com.fillipe.pagmodulo.infrastructure.pagbank;
 
-import com.fillipe.pagmodulo.application.dto.external.ExtActivationCheckoutDto;
-import com.fillipe.pagmodulo.application.dto.external.ExtInactivationCheckoutDto;
+import com.fillipe.pagmodulo.application.dto.checkout.external.ExtActivationCheckoutDto;
+import com.fillipe.pagmodulo.application.dto.checkout.external.ExtInactivationCheckoutDto;
 import com.fillipe.pagmodulo.domain.checkout.entity.Checkout;
 import com.fillipe.pagmodulo.domain.checkout.port.out.CheckoutGateway;
+import com.fillipe.pagmodulo.infrastructure.config.GatewayConfig;
+import com.fillipe.pagmodulo.infrastructure.pagbank.dto.common.PagBankConfigDto;
 import com.fillipe.pagmodulo.infrastructure.pagbank.dto.request.ReqPagBankCheckoutDto;
 import com.fillipe.pagmodulo.infrastructure.pagbank.dto.response.ResPagBankActivationCheckoutDto;
 import com.fillipe.pagmodulo.infrastructure.pagbank.dto.response.ResPagBankCheckoutDto;
@@ -33,24 +35,27 @@ public class PagBankCheckoutGateway implements CheckoutGateway {
     private final String apiToken;
     private final PagBankCheckoutMapper mapper;
     private final ObjectMapper objectMapper;
+    private final GatewayConfig gatewayConfig;
 
     public PagBankCheckoutGateway(
             @Value("${pagbank.api.url}") String apiUrl,
             @Value("${pagbank.api.token}") String apiToken,
             PagBankCheckoutMapper mapper,
-            ObjectMapper objectMapper
+            ObjectMapper objectMapper,
+            GatewayConfig gatewayConfig
     ) {
         this.mapper = mapper;
         this.objectMapper = objectMapper;
         this.restClient = RestClient.builder().baseUrl(apiUrl).build();
         this.apiToken = apiToken;
+        this.gatewayConfig = gatewayConfig;
     }
 
     @Override
     public Checkout register(Checkout checkout) {
-        log.info("Registrando checkout | uuid: {} | gatewayId: {}", checkout.getUuid(), checkout.getGatewayId());
+        log.info("Registrando checkout | uuid: {} | gatewayId: {}", checkout.getId(), checkout.getGatewayId());
 
-        ReqPagBankCheckoutDto request = mapper.toReqPagBankCheckoutRegisterDto(checkout);
+        ReqPagBankCheckoutDto request = mapper.toReqPagBankCheckoutRegisterDto(checkout, mapConfigToDto(gatewayConfig));
 
 
         RestClient.RequestHeadersSpec<?> spec = restClient.post()
@@ -63,8 +68,6 @@ public class PagBankCheckoutGateway implements CheckoutGateway {
                 ResPagBankCheckoutDto.class,
                 "registro de checkout"
         );
-
-        log.info("Pagbank: {}", response);
 
         return mapper.toDomain(response);
     }
@@ -88,7 +91,7 @@ public class PagBankCheckoutGateway implements CheckoutGateway {
 
     @Override
     public ExtActivationCheckoutDto activate(Checkout checkout) {
-        log.info("Ativando checkout | uuid: {} | gatewayId: {}", checkout.getUuid(), checkout.getGatewayId());
+        log.info("Ativando checkout | uuid: {} | gatewayId: {}", checkout.getId(), checkout.getGatewayId());
 
         RestClient.RequestHeadersSpec<?> spec = restClient.post()
                 .uri("/checkouts/"+checkout.getGatewayId()+"/activate")
@@ -97,7 +100,7 @@ public class PagBankCheckoutGateway implements CheckoutGateway {
         ResPagBankActivationCheckoutDto response = executeRequest(
                 spec,
                 ResPagBankActivationCheckoutDto.class,
-                "ativação do checkout com ID: " + checkout.getUuid()
+                "ativação do checkout com ID: " + checkout.getId()
         );
 
         return mapper.toResActivationDto(response);
@@ -105,7 +108,7 @@ public class PagBankCheckoutGateway implements CheckoutGateway {
 
     @Override
     public ExtInactivationCheckoutDto inactivate(Checkout checkout) {
-        log.info("Inativando checkout | uuid: {} | gatewayId: {}", checkout.getUuid(), checkout.getGatewayId());
+        log.info("Inativando checkout | uuid: {} | gatewayId: {}", checkout.getId(), checkout.getGatewayId());
 
         RestClient.RequestHeadersSpec<?> spec = restClient.post()
                 .uri("/checkouts/"+checkout.getGatewayId()+"/inactivate")
@@ -114,7 +117,7 @@ public class PagBankCheckoutGateway implements CheckoutGateway {
         ResPagBankInactivationCheckoutDto response = executeRequest(
                 spec,
                 ResPagBankInactivationCheckoutDto.class,
-                "inativação do checkout com ID: " + checkout.getUuid()
+                "inativação do checkout com ID: " + checkout.getId()
         );
 
         return mapper.toResInactivationCheckoutDto(response);
@@ -210,5 +213,9 @@ public class PagBankCheckoutGateway implements CheckoutGateway {
             }
         }
         return null;
+    }
+
+    private PagBankConfigDto mapConfigToDto(GatewayConfig config){
+        return new PagBankConfigDto(config.getNotificationWebhookUrls(), config.getPaymentNotificationUrls(), config.getSoftDescriptor(), config.getReturnUrl(), config.getRedirectUrl());
     }
 }

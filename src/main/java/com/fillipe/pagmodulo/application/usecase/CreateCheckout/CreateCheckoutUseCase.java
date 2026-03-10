@@ -19,11 +19,6 @@ public class CreateCheckoutUseCase {
                 .customer(command.customer())
                 .items(command.items())
                 .paymentMethods(command.paymentMethods())
-                .softDescriptor(command.softDescriptor())
-                .redirectUrl(command.redirectUrl())
-                .returnUrl(command.returnUrl())
-                .notificationUrls(command.notificationUrls())
-                .paymentNotificationUrls(command.paymentNotificationUrls())
                 .additionalAmount(command.additionalAmount())
                 .discountAmount(command.discountAmount())
                 .build();

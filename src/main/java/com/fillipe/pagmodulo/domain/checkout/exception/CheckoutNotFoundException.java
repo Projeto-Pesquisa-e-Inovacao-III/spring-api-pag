@@ -1,25 +1,16 @@
 package com.fillipe.pagmodulo.domain.checkout.exception;
 
-import com.fillipe.pagmodulo.domain.checkout.exception.enums.CheckoutNotFoundReason;
+import com.fillipe.pagmodulo.domain.shared.valueobjects.CheckoutId;
 
 import java.util.UUID;
 
 public class CheckoutNotFoundException extends RuntimeException {
-    private final UUID uuid;
-    private final CheckoutNotFoundReason reason;
-
-    public CheckoutNotFoundException(UUID uuid, CheckoutNotFoundReason reason) {
-        super(String.format("Checkout %s não encontrado: %s", uuid, reason.getMessage()));
-        this.uuid = uuid;
-        this.reason = reason;
+    public CheckoutNotFoundException(CheckoutId checkoutId, String operacao) {
+        super(String.format("Checkout %s não encontrado durante a operacao '%s' ", checkoutId.value(), operacao));
     }
 
-    public UUID getUuid() {
-        return uuid;
-    }
-
-    public CheckoutNotFoundReason getReason() {
-        return reason;
+    public CheckoutNotFoundException(UUID uuid, String operacao) {
+        super(String.format("Checkout %s não encontrado durante a operacao '%s' ", uuid, operacao));
     }
 }
 

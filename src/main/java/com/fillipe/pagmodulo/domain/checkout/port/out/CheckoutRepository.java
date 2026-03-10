@@ -9,6 +9,8 @@ public interface CheckoutRepository {
 
     Checkout save(Checkout checkout);
 
+    Checkout update(Checkout checkout);
+
     Optional<Checkout> findByUuid(UUID uuid);
 
     Optional<Checkout> findByGatewayId(String gatewayId);

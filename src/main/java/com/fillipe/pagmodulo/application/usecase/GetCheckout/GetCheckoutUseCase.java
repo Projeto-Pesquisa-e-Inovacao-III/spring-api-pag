@@ -2,7 +2,6 @@ package com.fillipe.pagmodulo.application.usecase.GetCheckout;
 
 import com.fillipe.pagmodulo.domain.checkout.entity.Checkout;
 import com.fillipe.pagmodulo.domain.checkout.exception.CheckoutNotFoundException;
-import com.fillipe.pagmodulo.domain.checkout.exception.enums.CheckoutNotFoundReason;
 import com.fillipe.pagmodulo.domain.checkout.port.out.CheckoutGateway;
 import com.fillipe.pagmodulo.domain.checkout.port.out.CheckoutRepository;
 
@@ -20,12 +19,11 @@ public class GetCheckoutUseCase {
 
     public Checkout execute(UUID uuid) {
         Checkout persistence = checkoutRepository.findByUuid(uuid)
-                .orElseThrow(() -> new CheckoutNotFoundException(uuid, CheckoutNotFoundReason.NOT_EXISTS));
+                .orElseThrow(() -> new CheckoutNotFoundException(uuid, "Get"));
 
         Checkout synced = checkoutGateway.sync(persistence.getGatewayId());
         persistence.updateStatus(synced.getStatus());
-        persistence.updateLinks(synced.getLinks());
 
-        return checkoutRepository.save(persistence);
+        return checkoutRepository.update(persistence);
     }
 }

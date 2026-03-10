@@ -1,7 +1,7 @@
 package com.fillipe.pagmodulo.infrastructure.pagbank.mapper;
 
-import com.fillipe.pagmodulo.domain.checkout.valueobject.Customer;
-import com.fillipe.pagmodulo.domain.checkout.valueobject.Phone;
+import com.fillipe.pagmodulo.domain.shared.valueobjects.Customer;
+import com.fillipe.pagmodulo.domain.shared.valueobjects.Phone;
 import com.fillipe.pagmodulo.infrastructure.pagbank.dto.common.PagBankCustomerDto;
 import com.fillipe.pagmodulo.infrastructure.pagbank.dto.common.PagBankPhoneDto;
 import com.fillipe.pagmodulo.infrastructure.common.mapper.UtilCustomerMapper;

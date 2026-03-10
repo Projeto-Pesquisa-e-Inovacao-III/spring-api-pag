@@ -1,7 +1,7 @@
 package com.fillipe.pagmodulo.domain.checkout.port.out;
 
-import com.fillipe.pagmodulo.application.dto.external.ExtActivationCheckoutDto;
-import com.fillipe.pagmodulo.application.dto.external.ExtInactivationCheckoutDto;
+import com.fillipe.pagmodulo.application.dto.checkout.external.ExtActivationCheckoutDto;
+import com.fillipe.pagmodulo.application.dto.checkout.external.ExtInactivationCheckoutDto;
 import com.fillipe.pagmodulo.domain.checkout.entity.Checkout;
 
 public interface CheckoutGateway {

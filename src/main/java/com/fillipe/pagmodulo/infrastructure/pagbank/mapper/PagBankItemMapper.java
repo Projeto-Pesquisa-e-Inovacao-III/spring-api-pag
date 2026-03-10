@@ -1,6 +1,6 @@
 package com.fillipe.pagmodulo.infrastructure.pagbank.mapper;
 
-import com.fillipe.pagmodulo.domain.checkout.valueobject.Item;
+import com.fillipe.pagmodulo.domain.shared.valueobjects.Item;
 import com.fillipe.pagmodulo.infrastructure.pagbank.dto.common.PagBankItemDto;
 import com.fillipe.pagmodulo.infrastructure.common.mapper.ConversionMapper;
 import org.mapstruct.Mapper;

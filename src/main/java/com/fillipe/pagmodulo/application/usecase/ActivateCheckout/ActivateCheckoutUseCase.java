@@ -1,10 +1,8 @@
 package com.fillipe.pagmodulo.application.usecase.ActivateCheckout;
 
-import com.fillipe.pagmodulo.application.dto.external.ExtActivationCheckoutDto;
-import com.fillipe.pagmodulo.application.mapper.LinkMapper;
+import com.fillipe.pagmodulo.application.dto.checkout.external.ExtActivationCheckoutDto;
 import com.fillipe.pagmodulo.domain.checkout.entity.Checkout;
 import com.fillipe.pagmodulo.domain.checkout.exception.CheckoutNotFoundException;
-import com.fillipe.pagmodulo.domain.checkout.exception.enums.CheckoutNotFoundReason;
 import com.fillipe.pagmodulo.domain.checkout.port.out.CheckoutGateway;
 import com.fillipe.pagmodulo.domain.checkout.port.out.CheckoutRepository;
 
@@ -24,13 +22,12 @@ public class ActivateCheckoutUseCase {
 
     public Checkout execute(UUID uuid) {
         Checkout persistence = checkoutRepository.findByUuid(uuid)
-                .orElseThrow(() -> new CheckoutNotFoundException(uuid, CheckoutNotFoundReason.NOT_EXISTS));
+                .orElseThrow(() -> new CheckoutNotFoundException(uuid, "ativa"));
 
         persistence.validateCanBeActivated();
 
         ExtActivationCheckoutDto activated = checkoutGateway.activate(persistence);
         persistence.updateStatus(activated.status());
-        persistence.updateLinks(LinkMapper.toListDomain(activated.links()));
         return checkoutRepository.save(persistence);
     }
 }

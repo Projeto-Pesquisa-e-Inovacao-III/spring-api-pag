@@ -1,8 +1,9 @@
 package com.fillipe.pagmodulo.infrastructure.pagbank.mapper;
 
-import com.fillipe.pagmodulo.application.dto.external.ExtActivationCheckoutDto;
-import com.fillipe.pagmodulo.application.dto.external.ExtInactivationCheckoutDto;
+import com.fillipe.pagmodulo.application.dto.checkout.external.ExtActivationCheckoutDto;
+import com.fillipe.pagmodulo.application.dto.checkout.external.ExtInactivationCheckoutDto;
 import com.fillipe.pagmodulo.domain.checkout.entity.Checkout;
+import com.fillipe.pagmodulo.infrastructure.pagbank.dto.common.PagBankConfigDto;
 import com.fillipe.pagmodulo.infrastructure.pagbank.dto.request.ReqPagBankCheckoutDto;
 import com.fillipe.pagmodulo.infrastructure.pagbank.dto.response.ResPagBankActivationCheckoutDto;
 import com.fillipe.pagmodulo.infrastructure.pagbank.dto.response.ResPagBankCheckoutDto;
@@ -21,7 +22,6 @@ import java.time.format.DateTimeFormatter;
                 PagBankPaymentMethodMapper.class,
                 PagBankCustomerMapper.class,
                 PagBankItemMapper.class,
-                PagBankLinkMapper.class,
                 PagBankPaymentMethodMapper.class
         })
 public abstract class PagBankCheckoutMapper {
@@ -35,17 +35,19 @@ public abstract class PagBankCheckoutMapper {
     @Autowired
     private PagBankPaymentMethodMapper pagBankPaymentMethodMapper;
     @Autowired
-    private PagBankLinkMapper pagBankLinkMapper;
-    @Autowired
     private ConversionMapper conversionMapper;
 
-
-    @Mapping(source = "uuid", target = "referenceId")
-    @Mapping(source = "expirationDate", target = "expirationDate", qualifiedByName = "fromOffsetDateTime")
-    public abstract ReqPagBankCheckoutDto toReqPagBankCheckoutRegisterDto(Checkout checkout);
+    @Mapping(source = "checkout.id", target = "referenceId")
+    @Mapping(source = "checkout.expirationDate", target = "expirationDate", qualifiedByName = "fromOffsetDateTime")
+    @Mapping(source = "config.notificationWebhookUrls", target = "notificationUrls")
+    @Mapping(source = "config.paymentNotificationUrls", target = "paymentNotificationUrls")
+    @Mapping(source = "config.returnUrl", target = "returnUrl")
+    @Mapping(source = "config.redirectUrl", target = "redirectUrl")
+    @Mapping(source = "config.softDescriptor", target = "softDescriptor")
+    public abstract ReqPagBankCheckoutDto toReqPagBankCheckoutRegisterDto(Checkout checkout, PagBankConfigDto config);
 
     @ObjectFactory
-    public Checkout toDomain(ResPagBankCheckoutDto dto){
+    public Checkout toDomain(ResPagBankCheckoutDto dto) {
         return Checkout.fromExisting()
                 .uuid(conversionMapper.toUUID(dto.referenceId()))
                 .gatewayId(dto.id())
@@ -53,21 +55,14 @@ public abstract class PagBankCheckoutMapper {
                 .createdAt(OffsetDateTime.parse(dto.createdAt(), DateTimeFormatter.ISO_OFFSET_DATE_TIME))
                 .status(utilCheckoutMapper.toStatus(dto.status()))
                 .customer(pagBankCustomerMapper.toCustomerDomain(dto.customer()))
-                .customerModifiable(dto.customerModifiable())
                 .items(pagBankItemMapper.toItemsDomain(dto.items()))
                 .additionalAmount(dto.additionalAmount())
                 .discountAmount(dto.discountAmount())
                 .paymentMethods(pagBankPaymentMethodMapper.toPaymentMethodsDomain(dto.paymentMethods()))
-                .softDescriptor(dto.softDescriptor())
-                .redirectUrl(dto.redirectUrl())
-                .returnUrl(dto.returnUrl())
-                .notificationUrls(dto.notificationUrls())
-                .paymentNotificationUrls(dto.paymentNotificationUrls())
-                .links(pagBankLinkMapper.toLinksDomain(dto.links()))
                 .build();
     }
 
-    // Activation Dto
+    // Activation
     public abstract ExtActivationCheckoutDto toResActivationDto(ResPagBankActivationCheckoutDto dto);
 
     // Inactivate

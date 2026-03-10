@@ -1,0 +1,17 @@
+package com.fillipe.pagmodulo.infrastructure.pagbank;
+
+import com.fillipe.pagmodulo.application.gateway.WebhookGatewayValidator;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
+
+@Component
+public class PagBankSignatureValidator implements WebhookGatewayValidator {
+
+    @Value("${pagbank.api.token}")
+    private String token;
+
+    @Override
+    public void validate(String signature, String payload) {
+        PagBankValidateCertification.validate(token, payload, signature);
+    }
+}

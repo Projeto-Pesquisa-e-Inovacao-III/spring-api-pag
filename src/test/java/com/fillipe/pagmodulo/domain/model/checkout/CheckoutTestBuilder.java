@@ -1,24 +1,27 @@
 package com.fillipe.pagmodulo.domain.model.checkout;
 
 import com.fillipe.pagmodulo.domain.checkout.entity.Checkout;
-import com.fillipe.pagmodulo.domain.checkout.entity.CheckoutStatus;
-import com.fillipe.pagmodulo.domain.checkout.valueobject.*;
+import com.fillipe.pagmodulo.domain.checkout.enums.CheckoutStatus;
+import com.fillipe.pagmodulo.domain.checkout.valueobject.paymentMethod.PaymentMethod;
+import com.fillipe.pagmodulo.domain.checkout.valueobject.paymentMethod.PixPaymentMethod;
+import com.fillipe.pagmodulo.domain.shared.valueobjects.*;
 
 import java.time.OffsetDateTime;
 import java.time.ZoneOffset;
 import java.util.List;
-import java.util.UUID;
 
 public class CheckoutTestBuilder {
 
     private final Checkout.Builder builder;
+
+    private static final ZoneOffset ZONE_OFFSET = ZoneOffset.ofHours(-3);
 
     private CheckoutTestBuilder() {
         // Start with valid defaults
         this.builder = Checkout.newCheckout()
                 .customer(validCustomer())
                 .items(List.of(validItem()))
-                .paymentMethods(List.of(new PaymentMethod(PaymentType.PIX)));
+                .paymentMethods(List.of(new PixPaymentMethod()));
     }
 
     public static CheckoutTestBuilder aCheckout() {
@@ -27,7 +30,7 @@ public class CheckoutTestBuilder {
 
     public static CheckoutTestBuilder anExpiredCheckout() {
         return new CheckoutTestBuilder()
-                .withExpirationDate(OffsetDateTime.now(ZoneOffset.of("-03:00")).minusHours(1));
+                .withExpirationDate(OffsetDateTime.now(ZONE_OFFSET).minusHours(1));
     }
 
     public CheckoutTestBuilder withCustomer(Customer customer) {

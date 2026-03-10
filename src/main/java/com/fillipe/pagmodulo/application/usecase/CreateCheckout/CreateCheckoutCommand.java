@@ -1,8 +1,8 @@
 package com.fillipe.pagmodulo.application.usecase.CreateCheckout;
 
-import com.fillipe.pagmodulo.domain.checkout.valueobject.Customer;
-import com.fillipe.pagmodulo.domain.checkout.valueobject.Item;
-import com.fillipe.pagmodulo.domain.checkout.valueobject.PaymentMethod;
+import com.fillipe.pagmodulo.domain.shared.valueobjects.Customer;
+import com.fillipe.pagmodulo.domain.shared.valueobjects.Item;
+import com.fillipe.pagmodulo.domain.checkout.valueobject.paymentMethod.PaymentMethod;
 
 import java.time.LocalDateTime;
 import java.util.List;

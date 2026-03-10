@@ -15,18 +15,11 @@ public record ResPagBankCheckoutDto(
         @JsonProperty("created_at") String createdAt,
         @JsonProperty("status") String status,
         @JsonProperty("customer") PagBankCustomerDto customer,
-        @JsonProperty("customer_modifiable") Boolean customerModifiable,
         @JsonProperty("items") List<PagBankItemDto> items,
         @JsonProperty("additional_amount") Integer additionalAmount,
         @JsonProperty("discount_amount") Integer discountAmount,
         @JsonProperty("payment_methods") List<PagBankPaymentMethodDto> paymentMethods,
-        @JsonProperty("payment_methods_configs") List<PagBankPaymentMethodConfigDto> paymentMethodsConfigs,
-        @JsonProperty("soft_descriptor") String softDescriptor,
-        @JsonProperty("redirect_url") String redirectUrl,
-        @JsonProperty("return_url") String returnUrl,
-        @JsonProperty("notification_urls") List<String> notificationUrls,
-        @JsonProperty("payment_notification_urls") List<String> paymentNotificationUrls,
-        @JsonProperty("links") List<ResPagBankLinkDto> links
+        @JsonProperty("payment_methods_configs") List<PagBankPaymentMethodConfigDto> paymentMethodsConfigs
 ) {
     @Override
     public String toString() {
@@ -37,18 +30,11 @@ public record ResPagBankCheckoutDto(
                 ", createdAt='" + createdAt + '\'' +
                 ", status='" + status + '\'' +
                 ", customer=" + customer +
-                ", customerModifiable=" + customerModifiable +
                 ", items=" + items +
                 ", additionalAmount=" + additionalAmount +
                 ", discountAmount=" + discountAmount +
                 ", paymentMethods=" + paymentMethods +
                 ", paymentMethodsConfigs=" + paymentMethodsConfigs +
-                ", softDescriptor='" + softDescriptor + '\'' +
-                ", redirectUrl='" + redirectUrl + '\'' +
-                ", returnUrl='" + returnUrl + '\'' +
-                ", notificationUrls=" + notificationUrls +
-                ", paymentNotificationUrls=" + paymentNotificationUrls +
-                ", links=" + links +
                 '}';
     }
 }

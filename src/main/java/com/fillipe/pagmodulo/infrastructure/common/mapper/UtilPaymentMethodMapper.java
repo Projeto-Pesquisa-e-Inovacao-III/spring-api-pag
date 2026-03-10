@@ -1,32 +1,19 @@
 package com.fillipe.pagmodulo.infrastructure.common.mapper;
-
-import com.fillipe.pagmodulo.domain.checkout.valueobject.PaymentMethod;
-import com.fillipe.pagmodulo.domain.checkout.valueobject.PaymentType;
+import com.fillipe.pagmodulo.domain.checkout.valueobject.paymentMethod.*;
 import org.mapstruct.Mapper;
 import org.mapstruct.Named;
 
 @Mapper(componentModel = "spring")
 public interface UtilPaymentMethodMapper {
+
     @Named("fromPaymentMethodType")
     default String fromPaymentMethodType(PaymentMethod paymentMethod) {
-        return paymentMethod != null ? paymentMethod.type().name() : null;
-    }
-
-    @Named("fromPaymentType")
-    default String fromPaymentType(PaymentType type) {
-        return type != null ? type.name() : null;
-    }
-
-    @Named("toPaymentType")
-    default PaymentType toPaymentType(String type) {
-        if (type == null) return null;
-        return switch (type.toUpperCase()) {
-            case "CREDIT_CARD" -> PaymentType.CREDIT_CARD;
-            case "DEBIT_CARD" -> PaymentType.DEBIT_CARD;
-            case "BOLETO" -> PaymentType.BOLETO;
-            case "PIX" -> PaymentType.PIX;
-            default -> null;
+        if (paymentMethod == null) return null;
+        return switch (paymentMethod) {
+            case PixPaymentMethod ignored -> "PIX";
+            case BoletoPaymentMethod ignored -> "BOLETO";
+            case CreditCardPaymentMethod ignored -> "CREDIT_CARD";
+            case DebitCardPaymentMethod ignored -> "DEBIT_CARD";
         };
     }
-
 }

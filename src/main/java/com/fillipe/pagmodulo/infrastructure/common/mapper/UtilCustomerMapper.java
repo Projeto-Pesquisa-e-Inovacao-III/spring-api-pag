@@ -1,7 +1,7 @@
 package com.fillipe.pagmodulo.infrastructure.common.mapper;
 
-import com.fillipe.pagmodulo.domain.checkout.valueobject.TaxDocument;
-import com.fillipe.pagmodulo.domain.checkout.valueobject.TaxDocumentType;
+import com.fillipe.pagmodulo.domain.shared.valueobjects.TaxDocument;
+import com.fillipe.pagmodulo.domain.shared.valueobjects.TaxDocumentType;
 import org.mapstruct.Mapper;
 import org.mapstruct.Named;
 

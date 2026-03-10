@@ -1,8 +1,10 @@
 package com.fillipe.pagmodulo.domain.model.checkout;
 
 import com.fillipe.pagmodulo.domain.checkout.entity.Checkout;
-import com.fillipe.pagmodulo.domain.checkout.entity.CheckoutStatus;
-import com.fillipe.pagmodulo.domain.checkout.valueobject.*;
+import com.fillipe.pagmodulo.domain.checkout.enums.CheckoutStatus;
+import com.fillipe.pagmodulo.domain.checkout.valueobject.paymentMethod.PixPaymentMethod;
+import com.fillipe.pagmodulo.domain.shared.exceptions.InvalidFieldException;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
@@ -16,6 +18,8 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class CheckoutTest {
 
+    private static final ZoneOffset ZONE_OFFSET = ZoneOffset.ofHours(-3);
+
     @Nested
     class Construction {
 
@@ -23,36 +27,35 @@ public class CheckoutTest {
         void shouldCreateCheckoutWithValidData() {
             Checkout checkout = aCheckout().build();
 
-            assertNotNull(checkout.getUuid());
+            assertNotNull(checkout.getId());
             assertEquals(CheckoutStatus.CREATING, checkout.getStatus());
-            assertFalse(checkout.getCustomerModifiable());
         }
 
         @Test
         void shouldRejectNullCustomer() {
-            assertThrows(IllegalStateException.class,
+            assertThrows(InvalidFieldException.class,
                     () -> aCheckout().withCustomer(null).build());
         }
 
         @Test
         void shouldRejectEmptyItems() {
-            assertThrows(IllegalStateException.class,
+            assertThrows(InvalidFieldException.class,
                     () -> aCheckout().withNoItems().build());
         }
 
         @Test
         void shouldRejectEmptyPaymentMethods() {
-            assertThrows(IllegalStateException.class,
+            assertThrows(InvalidFieldException.class,
                     () -> aCheckout().withNoPaymentMethods().build());
         }
 
         @Test
         void shouldRejectDuplicatePaymentMethods() {
-            assertThrows(IllegalStateException.class,
+            assertThrows(InvalidFieldException.class,
                     () -> aCheckout()
                             .withPaymentMethods(
-                                    new PaymentMethod(PaymentType.PIX),
-                                    new PaymentMethod(PaymentType.PIX)
+                                    new PixPaymentMethod(),
+                                    new PixPaymentMethod()
                             )
                             .build());
         }
@@ -64,7 +67,7 @@ public class CheckoutTest {
         @Test
         void shouldNotBeExpiredWhenExpirationDateIsInFuture() {
             Checkout checkout = aCheckout()
-                    .withExpirationDate(OffsetDateTime.now(ZoneOffset.of("-03:00")).plusHours(1))
+                    .withExpirationDate(OffsetDateTime.now(ZONE_OFFSET).plusHours(1))
                     .build();
 
             assertFalse(checkout.isExpired());
@@ -80,7 +83,7 @@ public class CheckoutTest {
         @Test
         void shouldBeExpiredWhenExpirationDateIsNow() {
             Checkout checkout = aCheckout()
-                    .withExpirationDate(OffsetDateTime.now(ZoneOffset.of("-03:00")).minusSeconds(1))
+                    .withExpirationDate(OffsetDateTime.now(ZONE_OFFSET))
                     .build();
 
             assertTrue(checkout.isExpired());
@@ -112,7 +115,7 @@ public class CheckoutTest {
         void shouldRejectNullStatusString() {
             Checkout checkout = aCheckout().build();
 
-            assertThrows(IllegalArgumentException.class,
+            assertThrows(InvalidFieldException.class,
                     () -> checkout.updateStatus((String) null));
         }
 
@@ -120,7 +123,7 @@ public class CheckoutTest {
         void shouldRejectBlankStatusString() {
             Checkout checkout = aCheckout().build();
 
-            assertThrows(IllegalArgumentException.class,
+            assertThrows(InvalidFieldException.class,
                     () -> checkout.updateStatus("   "));
         }
 
@@ -128,13 +131,13 @@ public class CheckoutTest {
         void shouldRejectInvalidStatusString() {
             Checkout checkout = aCheckout().build();
 
-            IllegalArgumentException ex = assertThrows(
-                    IllegalArgumentException.class,
+            InvalidFieldException ex = assertThrows(
+                    InvalidFieldException.class,
                     () -> checkout.updateStatus("INVALID_STATUS")
             );
 
             assertTrue(ex.getMessage().contains("INVALID_STATUS"));
-            assertTrue(ex.getMessage().contains("invalido"));
+            assertTrue(ex.getMessage().contains("desconhecido"));
         }
     }
 
@@ -154,7 +157,7 @@ public class CheckoutTest {
         void shouldThrowForInvalidStatusString() {
             Checkout checkout = aCheckout().build();
 
-            assertThrows(IllegalArgumentException.class,
+            assertThrows(InvalidFieldException.class,
                     () -> checkout.mapCheckoutStatus("DOES_NOT_EXIST"));
         }
     }
