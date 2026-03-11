@@ -1,4 +1,4 @@
-package com.fillipe.pagmodulo.application.mapper.Checkout;
+package com.fillipe.pagmodulo.application.mapper.checkout;
 
 import com.fillipe.pagmodulo.application.dto.checkout.TaxDocumentDto;
 import com.fillipe.pagmodulo.domain.shared.valueobjects.TaxDocument;

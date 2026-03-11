@@ -7,6 +7,7 @@ import com.fillipe.pagmodulo.domain.shared.valueobjects.Item;
 import com.fillipe.pagmodulo.domain.checkout.valueobject.paymentMethod.PaymentMethod;
 import com.fillipe.pagmodulo.infrastructure.persistence.checkout.entity.CheckoutEntityJpa;
 import com.fillipe.pagmodulo.infrastructure.persistence.checkout.entity.enums.CheckoutStatusJpa;
+import com.fillipe.pagmodulo.infrastructure.persistence.shared.mapper.CustomerPersistenceMapper;
 import org.mapstruct.Mapper;
 import org.springframework.beans.factory.annotation.Autowired;
 

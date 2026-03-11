@@ -5,7 +5,7 @@ import com.fillipe.pagmodulo.domain.checkout.exception.CheckoutNotFoundException
 import com.fillipe.pagmodulo.domain.checkout.port.out.CheckoutRepository;
 import com.fillipe.pagmodulo.infrastructure.persistence.checkout.entity.CheckoutEntityJpa;
 import com.fillipe.pagmodulo.infrastructure.persistence.checkout.mapper.CheckoutPersistenceMapper;
-import com.fillipe.pagmodulo.infrastructure.persistence.checkout.repository.CheckoutJpaRepository;
+import com.fillipe.pagmodulo.infrastructure.persistence.checkout.repository.CheckoutRepositoryJpa;
 import com.fillipe.pagmodulo.infrastructure.persistence.checkout.repository.projection.GatewayIdProjection;
 import org.springframework.stereotype.Repository;
 
@@ -15,10 +15,10 @@ import java.util.UUID;
 @Repository
 public class CheckoutRepositoryAdapter implements CheckoutRepository {
 
-    private final CheckoutJpaRepository jpaRepository;
+    private final CheckoutRepositoryJpa jpaRepository;
     private final CheckoutPersistenceMapper mapper;
 
-    public CheckoutRepositoryAdapter(CheckoutJpaRepository jpaRepository,
+    public CheckoutRepositoryAdapter(CheckoutRepositoryJpa jpaRepository,
                                      CheckoutPersistenceMapper mapper) {
         this.jpaRepository = jpaRepository;
         this.mapper = mapper;

@@ -1,6 +1,8 @@
-package com.fillipe.pagmodulo.application.mapper.Checkout;
+package com.fillipe.pagmodulo.application.mapper.shared;
 
 import com.fillipe.pagmodulo.application.dto.checkout.CustomerDto;
+import com.fillipe.pagmodulo.application.mapper.checkout.PhoneMapper;
+import com.fillipe.pagmodulo.application.mapper.checkout.TaxDocumentMapper;
 import com.fillipe.pagmodulo.domain.shared.valueobjects.Customer;
 
 public class CustomerMapper {

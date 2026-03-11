@@ -1,15 +1,16 @@
-package com.fillipe.pagmodulo.application.mapper.Checkout;
+package com.fillipe.pagmodulo.application.mapper.checkout;
 
 import com.fillipe.pagmodulo.application.dto.checkout.request.ReqCreateCheckoutDto;
 import com.fillipe.pagmodulo.application.dto.checkout.response.ResCheckoutDto;
+import com.fillipe.pagmodulo.application.mapper.shared.CustomerMapper;
 import com.fillipe.pagmodulo.application.usecase.CreateCheckout.CreateCheckoutCommand;
 import com.fillipe.pagmodulo.domain.checkout.entity.Checkout;
 
 import java.time.LocalDateTime;
 
-public class ApplicationCheckoutMapper {
+public class CheckoutMapper {
 
-    private ApplicationCheckoutMapper() {}
+    private CheckoutMapper() {}
 
     public static CreateCheckoutCommand toCreateCheckoutCommand(ReqCreateCheckoutDto requestDTO) {
         if (requestDTO == null) return null;

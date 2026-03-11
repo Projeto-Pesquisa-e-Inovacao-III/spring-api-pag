@@ -4,7 +4,7 @@ import com.fillipe.pagmodulo.application.dto.checkout.request.ReqCreateCheckoutD
 import com.fillipe.pagmodulo.application.dto.checkout.response.ResActivateCheckoutDto;
 import com.fillipe.pagmodulo.application.dto.checkout.response.ResCheckoutDto;
 import com.fillipe.pagmodulo.application.dto.checkout.response.ResInactivateCheckoutDto;
-import com.fillipe.pagmodulo.application.mapper.Checkout.ApplicationCheckoutMapper;
+import com.fillipe.pagmodulo.application.mapper.checkout.CheckoutMapper;
 import com.fillipe.pagmodulo.application.usecase.ActivateCheckout.ActivateCheckoutUseCase;
 import com.fillipe.pagmodulo.application.usecase.InactivateCheckout.InactivateCheckoutUseCase;
 import com.fillipe.pagmodulo.application.usecase.CreateCheckout.CreateCheckoutCommand;
@@ -39,10 +39,10 @@ public class CheckoutController {
 
     @PostMapping
     public ResponseEntity<ResCheckoutDto> createCheckout(@Valid @RequestBody ReqCreateCheckoutDto request) {
-        CreateCheckoutCommand command = ApplicationCheckoutMapper.toCreateCheckoutCommand(request);
+        CreateCheckoutCommand command = CheckoutMapper.toCreateCheckoutCommand(request);
         Checkout checkout = createCheckoutUseCase.execute(command);
 
-        ResCheckoutDto response = ApplicationCheckoutMapper.toCheckoutResponseDTO(checkout);
+        ResCheckoutDto response = CheckoutMapper.toCheckoutResponseDTO(checkout);
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
 
@@ -50,7 +50,7 @@ public class CheckoutController {
     public ResponseEntity<ResCheckoutDto> getCheckout(@PathVariable UUID uuid) {
         Checkout checkout = getCheckoutUseCase.execute(uuid);
 
-        ResCheckoutDto response = ApplicationCheckoutMapper.toCheckoutResponseDTO(checkout);
+        ResCheckoutDto response = CheckoutMapper.toCheckoutResponseDTO(checkout);
         return ResponseEntity.status(HttpStatus.FOUND).body(response);
     }
 

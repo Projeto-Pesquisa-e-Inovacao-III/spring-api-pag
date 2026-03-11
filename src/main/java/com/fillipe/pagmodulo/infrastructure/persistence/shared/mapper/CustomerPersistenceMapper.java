@@ -1,4 +1,4 @@
-package com.fillipe.pagmodulo.infrastructure.persistence.checkout.mapper;
+package com.fillipe.pagmodulo.infrastructure.persistence.shared.mapper;
 
 import com.fillipe.pagmodulo.domain.shared.valueobjects.Customer;
 import com.fillipe.pagmodulo.domain.shared.valueobjects.Phone;

@@ -7,7 +7,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.Optional;
 import java.util.UUID;
 
-public interface CheckoutJpaRepository extends JpaRepository<CheckoutEntityJpa, Long> {
+public interface CheckoutRepositoryJpa extends JpaRepository<CheckoutEntityJpa, Long> {
 
     Optional<CheckoutEntityJpa> findByUuid(UUID uuid);
 
