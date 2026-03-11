@@ -3,6 +3,7 @@ package com.fillipe.pagmodulo.infrastructure.persistence.checkout.entity;
 import com.fillipe.pagmodulo.infrastructure.persistence.checkout.embeddable.PaymentConfigOptionEmbeddableJpa;
 import com.fillipe.pagmodulo.infrastructure.persistence.checkout.embeddable.PaymentMethodEmbeddableJpa;
 import com.fillipe.pagmodulo.infrastructure.persistence.checkout.entity.enums.CheckoutStatusJpa;
+import com.fillipe.pagmodulo.infrastructure.persistence.shared.embeddable.CustomerEmbeddableJpa;
 import jakarta.persistence.*;
 
 import java.time.OffsetDateTime;
@@ -33,8 +34,8 @@ public class CheckoutEntityJpa {
     @Column(nullable = false)
     private CheckoutStatusJpa status;
 
-    @OneToOne(mappedBy = "checkout", cascade = CascadeType.ALL, orphanRemoval = true)
-    private CustomerEntityJpa customer;
+    @Embedded
+    private CustomerEmbeddableJpa customer;
 
     @OneToMany(mappedBy = "checkout", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<ItemEntityJpa> items;
@@ -67,17 +68,12 @@ public class CheckoutEntityJpa {
             OffsetDateTime expirationDate,
             OffsetDateTime createdAt,
             CheckoutStatusJpa status,
-            CustomerEntityJpa customer,
+            CustomerEmbeddableJpa customer,
             List<ItemEntityJpa> items,
             Integer additionalAmount,
             Integer discountAmount,
             List<PaymentMethodEmbeddableJpa> paymentMethods,
-            List<PaymentConfigOptionEmbeddableJpa> configOptions,
-            String softDescriptor,
-            String redirectUrl,
-            String returnUrl,
-            List<String> notificationUrls,
-            List<String> paymentNotificationUrls
+            List<PaymentConfigOptionEmbeddableJpa> configOptions
     ) {
         this.uuid = uuid;
         this.gatewayId = gatewayId;
@@ -98,7 +94,7 @@ public class CheckoutEntityJpa {
     public OffsetDateTime getExpirationDate() { return expirationDate; }
     public OffsetDateTime getCreatedAt() { return createdAt; }
     public CheckoutStatusJpa getStatus() { return status; }
-    public CustomerEntityJpa getCustomer() { return customer; }
+    public CustomerEmbeddableJpa getCustomer() { return customer; }
     public List<ItemEntityJpa> getItems() { return items; }
     public Integer getAdditionalAmount() { return additionalAmount; }
     public Integer getDiscountAmount() { return discountAmount; }
@@ -108,23 +104,13 @@ public class CheckoutEntityJpa {
     public void setGatewayId(String gatewayId) { this.gatewayId = gatewayId; }
     public void setCreatedAt(OffsetDateTime createdAt) { this.createdAt = createdAt; }
     public void setStatus(CheckoutStatusJpa status) { this.status = status; }
-    public void setCustomer(CustomerEntityJpa customer) { this.customer = customer; }
+    public void setCustomer(CustomerEmbeddableJpa customer) { this.customer = customer; }
     public void setItems(List<ItemEntityJpa> items) { this.items = items; }
-    public void setId(Long id) {
-        this.id = id;
-    }
-    public void setUuid(UUID uuid) {
-        this.uuid = uuid;
-    }
-    public void setExpirationDate(OffsetDateTime expirationDate) {
-        this.expirationDate = expirationDate;
-    }
-    public void setAdditionalAmount(Integer additionalAmount) {
-        this.additionalAmount = additionalAmount;
-    }
-    public void setDiscountAmount(Integer discountAmount) {
-        this.discountAmount = discountAmount;
-    }
-    public void setPaymentMethods(List<PaymentMethodEmbeddableJpa> paymentMethods) {this.paymentMethods = paymentMethods;}
-    public void setConfigOptions(List<PaymentConfigOptionEmbeddableJpa> configOptions) {this.configOptions = configOptions;}
+    public void setId(Long id) { this.id = id; }
+    public void setUuid(UUID uuid) { this.uuid = uuid; }
+    public void setExpirationDate(OffsetDateTime expirationDate) { this.expirationDate = expirationDate; }
+    public void setAdditionalAmount(Integer additionalAmount) { this.additionalAmount = additionalAmount; }
+    public void setDiscountAmount(Integer discountAmount) { this.discountAmount = discountAmount; }
+    public void setPaymentMethods(List<PaymentMethodEmbeddableJpa> paymentMethods) { this.paymentMethods = paymentMethods; }
+    public void setConfigOptions(List<PaymentConfigOptionEmbeddableJpa> configOptions) { this.configOptions = configOptions; }
 }

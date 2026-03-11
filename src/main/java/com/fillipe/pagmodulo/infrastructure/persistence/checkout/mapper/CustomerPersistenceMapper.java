@@ -5,23 +5,15 @@ import com.fillipe.pagmodulo.domain.shared.valueobjects.Phone;
 import com.fillipe.pagmodulo.domain.shared.valueobjects.TaxDocument;
 import com.fillipe.pagmodulo.infrastructure.persistence.checkout.embeddable.PhoneEmbeddableJpa;
 import com.fillipe.pagmodulo.infrastructure.persistence.checkout.embeddable.TaxDocumentEmbeddableJpa;
-import com.fillipe.pagmodulo.infrastructure.persistence.checkout.entity.CheckoutEntityJpa;
-import com.fillipe.pagmodulo.infrastructure.persistence.checkout.entity.CustomerEntityJpa;
+import com.fillipe.pagmodulo.infrastructure.persistence.shared.embeddable.CustomerEmbeddableJpa;
 import org.mapstruct.*;
 
 @Mapper(componentModel = "spring")
 public interface CustomerPersistenceMapper {
 
-    @Mapping(source = "externalCustomerId", target = "id")
-    CustomerEntityJpa toEntity(Customer customer, @Context CheckoutEntityJpa checkout);
+    CustomerEmbeddableJpa toEmbeddable(Customer customer);
 
-    @AfterMapping
-    default void setCheckout(@MappingTarget CustomerEntityJpa entity, @Context CheckoutEntityJpa checkout) {
-        entity.setCheckout(checkout);
-    }
-
-    @Mapping(source = "id", target = "externalCustomerId")
-    Customer toDomain(CustomerEntityJpa entity);
+    Customer toDomain(CustomerEmbeddableJpa embeddable);
 
     // ---- Phone mappings ----
 
@@ -35,4 +27,3 @@ public interface CustomerPersistenceMapper {
 
     TaxDocument toDomainTaxDocument(TaxDocumentEmbeddableJpa embeddable);
 }
-

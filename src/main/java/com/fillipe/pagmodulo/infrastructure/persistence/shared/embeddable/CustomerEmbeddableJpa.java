@@ -1,86 +1,101 @@
-package com.fillipe.pagmodulo.infrastructure.persistence.checkout.entity;
+package com.fillipe.pagmodulo.infrastructure.persistence.shared.embeddable;
 
 import com.fillipe.pagmodulo.infrastructure.persistence.checkout.embeddable.PhoneEmbeddableJpa;
 import com.fillipe.pagmodulo.infrastructure.persistence.checkout.embeddable.TaxDocumentEmbeddableJpa;
 import jakarta.persistence.*;
 
-@Entity
-@Table(name="customer")
-public class CustomerEntityJpa {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+@Embeddable
+public class CustomerEmbeddableJpa {
 
+    @Column(name = "customer_external_id")
+    private String externalCustomerId;
+
+    @Column(name = "customer_name")
     private String name;
 
+    @Column(name = "customer_email")
     private String email;
 
     @Embedded
-    @Column(name = "tax_document")
+    @AttributeOverrides({
+            @AttributeOverride(name = "value", column = @Column(name = "customer_tax_value")),
+            @AttributeOverride(name = "type",  column = @Column(name = "customer_tax_type"))
+    })
     private TaxDocumentEmbeddableJpa taxDocument;
 
     @Embedded
+    @AttributeOverrides({
+            @AttributeOverride(name = "country", column = @Column(name = "customer_phone_country")),
+            @AttributeOverride(name = "area",    column = @Column(name = "customer_phone_area")),
+            @AttributeOverride(name = "number",  column = @Column(name = "customer_phone_number"))
+    })
     private PhoneEmbeddableJpa phone;
 
-    @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "checkout_id", nullable = false)
-    private CheckoutEntityJpa checkout;
-
-    public CustomerEntityJpa() {
+    public CustomerEmbeddableJpa() {
     }
 
-    public CustomerEntityJpa(Long id, String name, String email, TaxDocumentEmbeddableJpa taxDocument, PhoneEmbeddableJpa phone, CheckoutEntityJpa checkout) {
-        this.id = id;
+    public CustomerEmbeddableJpa(String externalCustomerId, String name, String email, TaxDocumentEmbeddableJpa taxDocument, PhoneEmbeddableJpa phone) {
+        this.externalCustomerId = externalCustomerId;
         this.name = name;
         this.email = email;
         this.taxDocument = taxDocument;
         this.phone = phone;
-        this.checkout = checkout;
     }
 
-    public Long getId() {
-        return id;
+    public String getExternalCustomerId() {
+        return externalCustomerId;
     }
+
     public String getName() {
         return name;
     }
+
     public String getEmail() {
         return email;
     }
-    public CheckoutEntityJpa getCheckout() { return checkout; }
+
     public TaxDocumentEmbeddableJpa getTaxDocument() {
         return taxDocument;
     }
+
     public PhoneEmbeddableJpa getPhone() {
         return phone;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public void setExternalCustomerId(String externalCustomerId) {
+        this.externalCustomerId = externalCustomerId;
     }
+
     public void setName(String name) {
         this.name = name;
     }
+
     public void setEmail(String email) {
         this.email = email;
     }
+
     public void setTaxDocument(TaxDocumentEmbeddableJpa taxDocument) {
         this.taxDocument = taxDocument;
     }
+
     public void setPhone(PhoneEmbeddableJpa phone) {
         this.phone = phone;
     }
-    public void setCheckout(CheckoutEntityJpa checkout) { this.checkout = checkout; }
 
     @Override
     public String toString() {
-        return "CustomerEntityJpa{" +
-                "id=" + id +
+        return "CustomerEmbeddableJpa{" +
+                "externalCustomerId='" + externalCustomerId + '\'' +
                 ", name='" + name + '\'' +
                 ", email='" + email + '\'' +
                 ", taxDocument=" + taxDocument +
                 ", phone=" + phone +
-                ", checkout=" + checkout.getGatewayId() +
                 '}';
     }
 }
+
+
+
+
+
+

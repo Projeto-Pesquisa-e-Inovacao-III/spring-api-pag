@@ -38,7 +38,7 @@ public abstract class CheckoutPersistenceMapper {
         entity.setExpirationDate(checkout.getExpirationDate());
         entity.setCreatedAt(checkout.getCreatedAt());
         entity.setStatus(toStatusJpa(checkout.getStatus()));
-        entity.setCustomer(customerMapper.toEntity(checkout.getCustomer(), entity));
+        entity.setCustomer(customerMapper.toEmbeddable(checkout.getCustomer()));
         entity.setItems(itemMapper.toEntityList(checkout.getItems(), entity));
         entity.setAdditionalAmount(checkout.getAdditionalAmount());
         entity.setDiscountAmount(checkout.getDiscountAmount());
@@ -90,9 +90,8 @@ public abstract class CheckoutPersistenceMapper {
         if (status == null) return null;
         return switch (status) {
             case ACTIVE -> CheckoutStatusJpa.ACTIVE;
-            case INACTIVE -> CheckoutStatusJpa.INACTIVE;
+            case INACTIVE, CREATING, PAID -> CheckoutStatusJpa.INACTIVE;
             case EXPIRED -> CheckoutStatusJpa.EXPIRED;
-            case CREATING, PAID -> CheckoutStatusJpa.INACTIVE;
         };
     }
 
