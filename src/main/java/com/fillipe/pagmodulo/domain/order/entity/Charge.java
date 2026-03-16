@@ -7,7 +7,6 @@ import com.fillipe.pagmodulo.domain.order.valueobject.paymentInstruction.Payment
 import com.fillipe.pagmodulo.domain.shared.valueobjects.ChargeId;
 
 import java.time.OffsetDateTime;
-import java.util.UUID;
 
 public class Charge {
     ChargeId id;
@@ -30,6 +29,10 @@ public class Charge {
         this.amount = amount;
         this.paymentResponse = paymentResponse;
         this.paymentInstruction = paymentInstruction;
+    }
+
+    public boolean isPaid() {
+        return BillingStatus.PAID.equals(status);
     }
 
     public ChargeId getId() {

@@ -34,11 +34,11 @@ public record ReqPagBankCheckoutDto(
                 ", expirationDate='" + expirationDate + '\'' +
                 ", customer=" + customer +
                 ", customerModifiable=" + customerModifiable +
-                ", items=" + items.toString() +
+                ", items=" + items +
                 ", additionalAmount=" + additionalAmount +
                 ", discountAmount=" + discountAmount +
-                ", paymentMethods=" + paymentMethods.toString() +
-                ", paymentMethodsConfigs=" + paymentMethodsConfigs.toString() +
+                ", paymentMethods=" + paymentMethods +
+                ", paymentMethodsConfigs=" + paymentMethodsConfigs +
                 ", softDescriptor='" + softDescriptor + '\'' +
                 ", redirectUrl='" + redirectUrl + '\'' +
                 ", returnUrl='" + returnUrl + '\'' +

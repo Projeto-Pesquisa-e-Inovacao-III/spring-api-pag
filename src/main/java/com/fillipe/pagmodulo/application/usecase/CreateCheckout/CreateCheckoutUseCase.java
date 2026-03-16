@@ -14,7 +14,7 @@ public class CreateCheckoutUseCase {
         this.checkoutGateway = checkoutGateway;
     }
 
-    public Checkout execute(CreateCheckoutCommand command) {
+    public CreateCheckoutResponse execute(CreateCheckoutCommand command) {
         Checkout createdCheckout = Checkout.newCheckout()
                 .customer(command.customer())
                 .items(command.items())
@@ -24,7 +24,10 @@ public class CreateCheckoutUseCase {
                 .build();
 
         Checkout registered = checkoutGateway.register(createdCheckout);
-        return checkoutRepository.save(registered);
+        Checkout saved = checkoutRepository.save(registered);
+        String payLink = checkoutGateway.getGatewayPayUrl(saved);
+
+        return new CreateCheckoutResponse(saved, payLink);
     }
 }
 

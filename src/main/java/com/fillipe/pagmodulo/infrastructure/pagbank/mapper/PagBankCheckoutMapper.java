@@ -44,6 +44,7 @@ public abstract class PagBankCheckoutMapper {
     @Mapping(source = "config.returnUrl", target = "returnUrl")
     @Mapping(source = "config.redirectUrl", target = "redirectUrl")
     @Mapping(source = "config.softDescriptor", target = "softDescriptor")
+    @Mapping(source = "config.customerModifiable", target = "customerModifiable")
     public abstract ReqPagBankCheckoutDto toReqPagBankCheckoutRegisterDto(Checkout checkout, PagBankConfigDto config);
 
     @ObjectFactory

@@ -1,4 +1,4 @@
-package com.fillipe.pagmodulo.application.mapper.checkout;
+package com.fillipe.pagmodulo.presentation.mapper.checkout;
 
 import com.fillipe.pagmodulo.application.dto.checkout.PaymentMethodDto;
 import com.fillipe.pagmodulo.application.dto.checkout.enums.PaymentMethodType;

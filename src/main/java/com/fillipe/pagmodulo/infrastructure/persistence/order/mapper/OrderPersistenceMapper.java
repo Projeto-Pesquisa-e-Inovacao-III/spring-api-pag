@@ -51,7 +51,7 @@ public class OrderPersistenceMapper {
 
         List<Charge> charges = chargeMapper.toDomainList(entity.getCharges());
 
-        return Order.builder()
+        return Order.fromExisting()
                 .orderId(new OrderId(entity.getUuid()))
                 .checkoutId(new CheckoutId(entity.getCheckoutId()))
                 .gatewayOrderId(entity.getGatewayOrderId())

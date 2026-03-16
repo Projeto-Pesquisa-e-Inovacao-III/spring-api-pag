@@ -1,4 +1,4 @@
-package com.fillipe.pagmodulo.application.dto.checkout;
+package com.fillipe.pagmodulo.application.dto.shared;
 
 import jakarta.validation.constraints.*;
 

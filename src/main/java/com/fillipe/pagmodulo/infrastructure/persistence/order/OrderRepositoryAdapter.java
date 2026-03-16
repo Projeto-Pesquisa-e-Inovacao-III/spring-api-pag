@@ -5,7 +5,9 @@ import com.fillipe.pagmodulo.domain.order.port.OrderRepository;
 import com.fillipe.pagmodulo.infrastructure.persistence.order.entity.OrderEntityJpa;
 import com.fillipe.pagmodulo.infrastructure.persistence.order.mapper.OrderPersistenceMapper;
 import com.fillipe.pagmodulo.infrastructure.persistence.order.repository.OrderRepositoryJpa;
+import org.springframework.stereotype.Repository;
 
+@Repository
 public class OrderRepositoryAdapter implements OrderRepository {
 
     private final OrderPersistenceMapper mapper;

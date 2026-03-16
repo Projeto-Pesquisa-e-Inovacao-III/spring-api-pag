@@ -1,8 +1,9 @@
-package com.fillipe.pagmodulo.application.mapper.checkout;
+package com.fillipe.pagmodulo.presentation.mapper.checkout;
 
 import com.fillipe.pagmodulo.application.dto.checkout.request.ReqCreateCheckoutDto;
+import com.fillipe.pagmodulo.application.dto.checkout.response.ResCheckoutCreatedDto;
 import com.fillipe.pagmodulo.application.dto.checkout.response.ResCheckoutDto;
-import com.fillipe.pagmodulo.application.mapper.shared.CustomerMapper;
+import com.fillipe.pagmodulo.presentation.mapper.shared.CustomerMapper;
 import com.fillipe.pagmodulo.application.usecase.CreateCheckout.CreateCheckoutCommand;
 import com.fillipe.pagmodulo.domain.checkout.entity.Checkout;
 
@@ -29,10 +30,20 @@ public class CheckoutMapper {
         );
     }
 
+    public static ResCheckoutCreatedDto toResCheckoutCreatedDto(Checkout checkout, String payLink) {
+        if (checkout == null) return null;
+        return new ResCheckoutCreatedDto(
+                checkout.getId().toString(),
+                checkout.getStatus().name(),
+                checkout.getCreatedAt(),
+                payLink
+        );
+    }
+
     public static ResCheckoutDto toCheckoutResponseDTO(Checkout checkout) {
         if (checkout == null) return null;
         return new ResCheckoutDto(
-                checkout.getId() != null ? checkout.getId().toString() : null,
+                checkout.getId().toString(),
                 checkout.getGatewayId(),
                 checkout.getStatus(),
                 checkout.getCreatedAt(),

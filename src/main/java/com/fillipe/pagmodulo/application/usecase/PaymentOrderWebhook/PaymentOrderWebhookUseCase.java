@@ -2,19 +2,19 @@ package com.fillipe.pagmodulo.application.usecase.PaymentOrderWebhook;
 
 import com.fillipe.pagmodulo.domain.order.entity.Charge;
 import com.fillipe.pagmodulo.domain.order.entity.Order;
-import com.fillipe.pagmodulo.domain.order.port.OrderGateway;
+import com.fillipe.pagmodulo.domain.order.port.OrderRepository;
 
 import java.util.List;
 
-public class PaymentWebhookUseCase {
+public class PaymentOrderWebhookUseCase {
 
-    private final OrderGateway orderGateway;
+    private final OrderRepository orderRepository;
 
-    public PaymentWebhookUseCase(OrderGateway orderGateway) {
-        this.orderGateway = orderGateway;
+    public PaymentOrderWebhookUseCase(OrderRepository orderRepository) {
+        this.orderRepository = orderRepository;
     }
 
-    public Order execute(PaymentOrderCommand cmd) {
+    public void execute(PaymentOrderCommand cmd) {
 
         List<Charge> charges = cmd.charges().stream()
                 .map(c -> new Charge(
@@ -30,8 +30,7 @@ public class PaymentWebhookUseCase {
                 ))
                 .toList();
 
-        Order order = Order.builder()
-                .orderId(cmd.orderId())
+        Order order = Order.newOrder()
                 .checkoutId(cmd.checkoutId())
                 .gatewayOrderId(cmd.gatewayOrderId())
                 .createdAt(cmd.createdAt())
@@ -40,6 +39,9 @@ public class PaymentWebhookUseCase {
                 .charges(charges)
                 .build();
 
-        return orderGateway.saveOrder(order);
+        // TODO: Validar se o checkout existe no BD ou no PagBank
+        // TODO: Validar o customer do checkout bate com o do order (tqxId == taxId)
+
+        orderRepository.save(order);
     }
 }

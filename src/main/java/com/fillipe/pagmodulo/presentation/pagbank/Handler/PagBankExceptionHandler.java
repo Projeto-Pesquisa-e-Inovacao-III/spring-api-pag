@@ -1,7 +1,7 @@
 package com.fillipe.pagmodulo.presentation.pagbank.Handler;
 
 import com.fillipe.pagmodulo.infrastructure.pagbank.exeception.*;
-import com.fillipe.pagmodulo.presentation.common.exception.ErrorResponse;
+import com.fillipe.pagmodulo.presentation.shared.exception.ErrorResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;

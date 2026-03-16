@@ -1,7 +1,7 @@
 package com.fillipe.pagmodulo.application.dto.checkout.response;
 
-import com.fillipe.pagmodulo.application.dto.checkout.CustomerDto;
-import com.fillipe.pagmodulo.application.dto.checkout.ItemDto;
+import com.fillipe.pagmodulo.application.dto.shared.CustomerDto;
+import com.fillipe.pagmodulo.application.dto.shared.ItemDto;
 import com.fillipe.pagmodulo.application.dto.checkout.PaymentMethodDto;
 import com.fillipe.pagmodulo.domain.checkout.enums.CheckoutStatus;
 

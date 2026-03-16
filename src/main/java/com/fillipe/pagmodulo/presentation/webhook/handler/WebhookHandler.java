@@ -1,7 +1,7 @@
 package com.fillipe.pagmodulo.presentation.webhook.handler;
 
 import com.fillipe.pagmodulo.infrastructure.web.webhook.exeception.WebhookAuthorizationException;
-import com.fillipe.pagmodulo.presentation.common.exception.ErrorResponse;
+import com.fillipe.pagmodulo.presentation.shared.exception.ErrorResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;

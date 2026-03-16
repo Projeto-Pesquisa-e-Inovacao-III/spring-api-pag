@@ -1,4 +1,4 @@
-package com.fillipe.pagmodulo.presentation.common.exception;
+package com.fillipe.pagmodulo.presentation.shared.exception;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 

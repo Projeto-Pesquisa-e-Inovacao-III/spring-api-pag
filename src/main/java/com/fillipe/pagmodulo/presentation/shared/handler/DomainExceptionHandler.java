@@ -1,11 +1,11 @@
-package com.fillipe.pagmodulo.presentation.common.handler;
+package com.fillipe.pagmodulo.presentation.shared.handler;
 
 import com.fillipe.pagmodulo.domain.checkout.exception.CheckoutExpiredException;
 import com.fillipe.pagmodulo.domain.shared.exceptions.InvalidFieldException;
 import com.fillipe.pagmodulo.domain.checkout.exception.CheckoutInvalidStatusException;
 import com.fillipe.pagmodulo.domain.checkout.exception.CheckoutNotFoundException;
 import com.fillipe.pagmodulo.domain.checkout.exception.CnpjIsNotSupportedException;
-import com.fillipe.pagmodulo.presentation.common.exception.ErrorResponse;
+import com.fillipe.pagmodulo.presentation.shared.exception.ErrorResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;

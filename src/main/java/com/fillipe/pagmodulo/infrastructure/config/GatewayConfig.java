@@ -14,6 +14,13 @@ public class GatewayConfig {
     private String softDescriptor;
     private String returnUrl;
     private String redirectUrl;
+    private Boolean customerModifiable;
+
+    public Boolean getCustomerModifiable() {return customerModifiable;}
+
+    public void setCustomerModifiable(Boolean customerModifiable) {
+        this.customerModifiable = customerModifiable;
+    }
 
     public List<String> getNotificationWebhookUrls() {
         return notificationWebhookUrls;

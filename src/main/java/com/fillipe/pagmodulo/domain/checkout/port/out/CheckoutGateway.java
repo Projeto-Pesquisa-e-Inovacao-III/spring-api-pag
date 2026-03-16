@@ -12,4 +12,6 @@ public interface CheckoutGateway {
     ExtActivationCheckoutDto activate(Checkout checkout);
 
     ExtInactivationCheckoutDto inactivate(Checkout checkout);
+
+    String getGatewayPayUrl(Checkout checkout);
 }

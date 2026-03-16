@@ -1,6 +1,6 @@
-package com.fillipe.pagmodulo.application.mapper.checkout;
+package com.fillipe.pagmodulo.presentation.mapper.checkout;
 
-import com.fillipe.pagmodulo.application.dto.checkout.ItemDto;
+import com.fillipe.pagmodulo.application.dto.shared.ItemDto;
 import com.fillipe.pagmodulo.domain.shared.valueobjects.Item;
 
 import java.util.List;

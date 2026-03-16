@@ -2,18 +2,19 @@ package com.fillipe.pagmodulo.presentation.pagbank.controller;
 
 import com.fillipe.pagmodulo.application.dto.checkout.request.ReqCreateCheckoutDto;
 import com.fillipe.pagmodulo.application.dto.checkout.response.ResActivateCheckoutDto;
+import com.fillipe.pagmodulo.application.dto.checkout.response.ResCheckoutCreatedDto;
 import com.fillipe.pagmodulo.application.dto.checkout.response.ResCheckoutDto;
 import com.fillipe.pagmodulo.application.dto.checkout.response.ResInactivateCheckoutDto;
-import com.fillipe.pagmodulo.application.mapper.checkout.CheckoutMapper;
+import com.fillipe.pagmodulo.presentation.mapper.checkout.CheckoutMapper;
 import com.fillipe.pagmodulo.application.usecase.ActivateCheckout.ActivateCheckoutUseCase;
+import com.fillipe.pagmodulo.application.usecase.CreateCheckout.CreateCheckoutResponse;
 import com.fillipe.pagmodulo.application.usecase.InactivateCheckout.InactivateCheckoutUseCase;
 import com.fillipe.pagmodulo.application.usecase.CreateCheckout.CreateCheckoutCommand;
 import com.fillipe.pagmodulo.application.usecase.CreateCheckout.CreateCheckoutUseCase;
 import com.fillipe.pagmodulo.application.usecase.GetCheckout.GetCheckoutUseCase;
 import com.fillipe.pagmodulo.domain.checkout.entity.Checkout;
 import jakarta.validation.Valid;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.springframework.context.annotation.Profile;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -24,7 +25,6 @@ import java.util.UUID;
 @RequestMapping("/api/v1/checkouts")
 public class CheckoutController {
 
-    private static final Logger log = LoggerFactory.getLogger(CheckoutController.class);
     private final CreateCheckoutUseCase createCheckoutUseCase;
     private final GetCheckoutUseCase getCheckoutUseCase;
     private final InactivateCheckoutUseCase inactivateCheckoutUseCase;
@@ -38,15 +38,16 @@ public class CheckoutController {
     }
 
     @PostMapping
-    public ResponseEntity<ResCheckoutDto> createCheckout(@Valid @RequestBody ReqCreateCheckoutDto request) {
+    public ResponseEntity<ResCheckoutCreatedDto> createCheckout(@Valid @RequestBody ReqCreateCheckoutDto request) {
         CreateCheckoutCommand command = CheckoutMapper.toCreateCheckoutCommand(request);
-        Checkout checkout = createCheckoutUseCase.execute(command);
+        CreateCheckoutResponse createCheckoutResponse = createCheckoutUseCase.execute(command);
 
-        ResCheckoutDto response = CheckoutMapper.toCheckoutResponseDTO(checkout);
+        ResCheckoutCreatedDto response = CheckoutMapper.toResCheckoutCreatedDto(createCheckoutResponse.checkout(), createCheckoutResponse.payLink());
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
 
     @GetMapping("/{uuid}")
+    @Profile("dev")
     public ResponseEntity<ResCheckoutDto> getCheckout(@PathVariable UUID uuid) {
         Checkout checkout = getCheckoutUseCase.execute(uuid);
 

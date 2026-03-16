@@ -33,6 +33,7 @@ public class PagBankCheckoutGateway implements CheckoutGateway {
 
     private final RestClient restClient;
     private final String apiToken;
+    private final String apiPayUrl;
     private final PagBankCheckoutMapper mapper;
     private final ObjectMapper objectMapper;
     private final GatewayConfig gatewayConfig;
@@ -40,10 +41,12 @@ public class PagBankCheckoutGateway implements CheckoutGateway {
     public PagBankCheckoutGateway(
             @Value("${pagbank.api.url}") String apiUrl,
             @Value("${pagbank.api.token}") String apiToken,
+            @Value("${pagbank.api.payUrl}") String apiPayUrl,
             PagBankCheckoutMapper mapper,
             ObjectMapper objectMapper,
             GatewayConfig gatewayConfig
     ) {
+        this.apiPayUrl = apiPayUrl;
         this.mapper = mapper;
         this.objectMapper = objectMapper;
         this.restClient = RestClient.builder().baseUrl(apiUrl).build();
@@ -56,7 +59,6 @@ public class PagBankCheckoutGateway implements CheckoutGateway {
         log.info("Registrando checkout | uuid: {} | gatewayId: {}", checkout.getId(), checkout.getGatewayId());
 
         ReqPagBankCheckoutDto request = mapper.toReqPagBankCheckoutRegisterDto(checkout, mapConfigToDto(gatewayConfig));
-
 
         RestClient.RequestHeadersSpec<?> spec = restClient.post()
                 .uri("/checkouts")
@@ -123,11 +125,17 @@ public class PagBankCheckoutGateway implements CheckoutGateway {
         return mapper.toResInactivationCheckoutDto(response);
     }
 
+    @Override
+    public String getGatewayPayUrl(Checkout checkout) {
+        String gatewayId = checkout.getGatewayId();
+        String uuidLowerCase = gatewayId.substring(5).toLowerCase();
+        return apiPayUrl + "/pagamento?code=" + uuidLowerCase;
+    }
+
     private <T> T executeRequest(
             RestClient.RequestHeadersSpec<?> spec,
             Class<T> responseType,
             String operation) {
-
         try {
             T response = spec
                     .retrieve()
@@ -216,6 +224,13 @@ public class PagBankCheckoutGateway implements CheckoutGateway {
     }
 
     private PagBankConfigDto mapConfigToDto(GatewayConfig config){
-        return new PagBankConfigDto(config.getNotificationWebhookUrls(), config.getPaymentNotificationUrls(), config.getSoftDescriptor(), config.getReturnUrl(), config.getRedirectUrl());
+        return new PagBankConfigDto(
+                config.getNotificationWebhookUrls(),
+                config.getPaymentNotificationUrls(),
+                config.getSoftDescriptor(),
+                config.getReturnUrl(),
+                config.getRedirectUrl(),
+                config.getCustomerModifiable()
+        );
     }
 }

@@ -7,6 +7,7 @@ public record PagBankConfigDto(
         List<String> paymentNotificationUrls,
         String softDescriptor,
         String returnUrl,
-        String redirectUrl
+        String redirectUrl,
+        Boolean customerModifiable
 ) {
 }

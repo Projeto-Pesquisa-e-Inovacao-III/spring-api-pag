@@ -1,5 +1,6 @@
 package com.fillipe.pagmodulo.domain.order.entity;
 
+import com.fillipe.pagmodulo.domain.order.event.OrderPaidEvent;
 import com.fillipe.pagmodulo.domain.shared.valueobjects.CheckoutId;
 import com.fillipe.pagmodulo.domain.shared.valueobjects.Customer;
 import com.fillipe.pagmodulo.domain.shared.valueobjects.Item;
@@ -18,6 +19,17 @@ public class Order {
     private final Customer customer;
     private final List<Item> items;
     private final List<Charge> charges;
+    private final List<OrderPaidEvent> paidEvents;
+
+    public static Builder newOrder() {
+        return new Builder()
+                .orderId(OrderId.generate())
+                .fromExisting(false);
+    }
+
+    public static Builder fromExisting() {
+        return new Builder().fromExisting(true);
+    }
 
     private Order(Builder builder) {
         this.id = builder.orderId;
@@ -27,31 +39,62 @@ public class Order {
         this.customer = builder.customer;
         this.items = builder.items;
         this.charges = builder.charges;
+        this.paidEvents = new ArrayList<>();
+
+        if (!builder.fromExisting) {
+            createPaidEvents();
+        }
     }
 
-    public static Builder builder() {
-        return new Builder();
+    private void createPaidEvents() {
+        for (Charge charge : charges) {
+            if (charge.isPaid()) {
+                paidEvents.add(new OrderPaidEvent(
+                        id,
+                        checkoutId,
+                        gatewayOrderId,
+                        charge.getId(),
+                        charge.getPaid_at(),
+                        OffsetDateTime.now()
+                ));
+            }
+        }
     }
+
+    public boolean isPaid() {
+        return charges.stream().anyMatch(Charge::isPaid);
+    }
+
     public OrderId getOrderId() {
         return id;
     }
+
     public CheckoutId getCheckoutId() {
         return checkoutId;
     }
+
     public String getGatewayOrderId() {
         return gatewayOrderId;
     }
+
     public OffsetDateTime getCreatedAt() {
         return createdAt;
     }
+
     public Customer getCustomer() {
         return customer;
     }
+
     public List<Item> getItems() {
         return items;
     }
+
     public List<Charge> getCharges() {
         return charges;
+    }
+
+    public List<OrderPaidEvent> getPaidEvents() {
+        return List.copyOf(paidEvents);
     }
 
     @Override
@@ -75,6 +118,7 @@ public class Order {
         private Customer customer;
         private List<Item> items;
         private List<Charge> charges;
+        private boolean fromExisting;
 
         public Builder orderId(OrderId orderId) {
             this.orderId = orderId;
@@ -108,6 +152,11 @@ public class Order {
 
         public Builder charges(List<Charge> charges) {
             this.charges = charges != null ? new ArrayList<>(charges) : new ArrayList<>();
+            return this;
+        }
+
+        public Builder fromExisting(boolean fromExisting) {
+            this.fromExisting = fromExisting;
             return this;
         }
 

@@ -26,7 +26,6 @@ public record PaymentResponse(
     }
 
     private static void validateReference(String reference) {
-        if (reference == null || reference.isBlank()) throw new InvalidFieldException("PaymentResponse.reference", "reference não pode ser nulo ou em branco");
-        if (reference.length() < 4 || reference.length() > 20) throw new InvalidFieldException("PaymentResponse.reference", "reference deve ter entre 4 e 20 caracteres");
+        if (reference != null && (reference.length() < 4 || reference.length() > 20)) throw new InvalidFieldException("PaymentResponse.reference", "reference deve ter entre 4 e 20 caracteres");
     }
 }

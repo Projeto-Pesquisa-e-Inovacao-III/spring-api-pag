@@ -1,7 +1,7 @@
 package com.fillipe.pagmodulo.application.dto.checkout.request;
 
-import com.fillipe.pagmodulo.application.dto.checkout.CustomerDto;
-import com.fillipe.pagmodulo.application.dto.checkout.ItemDto;
+import com.fillipe.pagmodulo.application.dto.shared.CustomerDto;
+import com.fillipe.pagmodulo.application.dto.shared.ItemDto;
 import com.fillipe.pagmodulo.application.dto.checkout.PaymentMethodDto;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotEmpty;
