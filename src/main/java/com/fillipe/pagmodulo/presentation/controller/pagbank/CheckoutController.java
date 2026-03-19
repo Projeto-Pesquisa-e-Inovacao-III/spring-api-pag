@@ -1,4 +1,4 @@
-package com.fillipe.pagmodulo.presentation.pagbank.controller;
+package com.fillipe.pagmodulo.presentation.controller.pagbank;
 
 import com.fillipe.pagmodulo.application.dto.checkout.request.ReqCreateCheckoutDto;
 import com.fillipe.pagmodulo.application.dto.checkout.response.ResActivateCheckoutDto;

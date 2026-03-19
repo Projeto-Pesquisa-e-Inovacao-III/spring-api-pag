@@ -1,6 +1,7 @@
 package com.fillipe.pagmodulo.domain.order.entity;
 
 import com.fillipe.pagmodulo.domain.order.event.OrderPaidEvent;
+import com.fillipe.pagmodulo.domain.shared.event.DomainEvent;
 import com.fillipe.pagmodulo.domain.shared.valueobjects.CheckoutId;
 import com.fillipe.pagmodulo.domain.shared.valueobjects.Customer;
 import com.fillipe.pagmodulo.domain.shared.valueobjects.Item;

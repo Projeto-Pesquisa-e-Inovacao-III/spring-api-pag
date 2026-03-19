@@ -3,8 +3,8 @@ package com.fillipe.pagmodulo.infrastructure.persistence.shared.mapper;
 import com.fillipe.pagmodulo.domain.shared.valueobjects.Customer;
 import com.fillipe.pagmodulo.domain.shared.valueobjects.Phone;
 import com.fillipe.pagmodulo.domain.shared.valueobjects.TaxDocument;
-import com.fillipe.pagmodulo.infrastructure.persistence.checkout.embeddable.PhoneEmbeddableJpa;
-import com.fillipe.pagmodulo.infrastructure.persistence.checkout.embeddable.TaxDocumentEmbeddableJpa;
+import com.fillipe.pagmodulo.infrastructure.persistence.shared.embeddable.PhoneEmbeddableJpa;
+import com.fillipe.pagmodulo.infrastructure.persistence.shared.embeddable.TaxDocumentEmbeddableJpa;
 import com.fillipe.pagmodulo.infrastructure.persistence.shared.embeddable.CustomerEmbeddableJpa;
 import org.mapstruct.*;
 

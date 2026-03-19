@@ -1,4 +1,4 @@
-package com.fillipe.pagmodulo.presentation.pagbank.Handler;
+package com.fillipe.pagmodulo.presentation.handler.pagbank;
 
 import com.fillipe.pagmodulo.infrastructure.pagbank.exeception.*;
 import com.fillipe.pagmodulo.presentation.shared.exception.ErrorResponse;

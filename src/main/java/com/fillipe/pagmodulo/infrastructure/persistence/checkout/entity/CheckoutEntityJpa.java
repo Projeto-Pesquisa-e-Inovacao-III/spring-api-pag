@@ -38,7 +38,7 @@ public class CheckoutEntityJpa {
     private CustomerEmbeddableJpa customer;
 
     @OneToMany(mappedBy = "checkout", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<ItemEntityJpa> items;
+    private List<CheckoutItemEntityJpa> items;
 
     @Column(updatable = false)
     private Integer additionalAmount;
@@ -69,7 +69,7 @@ public class CheckoutEntityJpa {
             OffsetDateTime createdAt,
             CheckoutStatusJpa status,
             CustomerEmbeddableJpa customer,
-            List<ItemEntityJpa> items,
+            List<CheckoutItemEntityJpa> items,
             Integer additionalAmount,
             Integer discountAmount,
             List<PaymentMethodEmbeddableJpa> paymentMethods,
@@ -95,7 +95,7 @@ public class CheckoutEntityJpa {
     public OffsetDateTime getCreatedAt() { return createdAt; }
     public CheckoutStatusJpa getStatus() { return status; }
     public CustomerEmbeddableJpa getCustomer() { return customer; }
-    public List<ItemEntityJpa> getItems() { return items; }
+    public List<CheckoutItemEntityJpa> getItems() { return items; }
     public Integer getAdditionalAmount() { return additionalAmount; }
     public Integer getDiscountAmount() { return discountAmount; }
     public List<PaymentMethodEmbeddableJpa> getPaymentMethods() { return paymentMethods; }
@@ -105,7 +105,7 @@ public class CheckoutEntityJpa {
     public void setCreatedAt(OffsetDateTime createdAt) { this.createdAt = createdAt; }
     public void setStatus(CheckoutStatusJpa status) { this.status = status; }
     public void setCustomer(CustomerEmbeddableJpa customer) { this.customer = customer; }
-    public void setItems(List<ItemEntityJpa> items) { this.items = items; }
+    public void setItems(List<CheckoutItemEntityJpa> items) { this.items = items; }
     public void setId(Long id) { this.id = id; }
     public void setUuid(UUID uuid) { this.uuid = uuid; }
     public void setExpirationDate(OffsetDateTime expirationDate) { this.expirationDate = expirationDate; }

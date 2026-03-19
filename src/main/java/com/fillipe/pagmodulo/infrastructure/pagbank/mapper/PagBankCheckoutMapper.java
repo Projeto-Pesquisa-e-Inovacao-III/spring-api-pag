@@ -48,14 +48,14 @@ public abstract class PagBankCheckoutMapper {
     public abstract ReqPagBankCheckoutDto toReqPagBankCheckoutRegisterDto(Checkout checkout, PagBankConfigDto config);
 
     @ObjectFactory
-    public Checkout toDomain(ResPagBankCheckoutDto dto) {
+    public Checkout toDomain(ResPagBankCheckoutDto dto, String externalCustomerId) {
         return Checkout.fromExisting()
                 .uuid(conversionMapper.toUUID(dto.referenceId()))
                 .gatewayId(dto.id())
                 .expirationDate(OffsetDateTime.parse(dto.expirationDate(), DateTimeFormatter.ISO_OFFSET_DATE_TIME))
                 .createdAt(OffsetDateTime.parse(dto.createdAt(), DateTimeFormatter.ISO_OFFSET_DATE_TIME))
                 .status(utilCheckoutMapper.toStatus(dto.status()))
-                .customer(pagBankCustomerMapper.toCustomerDomain(dto.customer()))
+                .customer(pagBankCustomerMapper.toCustomerDomain(dto.customer(), externalCustomerId))
                 .items(pagBankItemMapper.toItemsDomain(dto.items()))
                 .additionalAmount(dto.additionalAmount())
                 .discountAmount(dto.discountAmount())

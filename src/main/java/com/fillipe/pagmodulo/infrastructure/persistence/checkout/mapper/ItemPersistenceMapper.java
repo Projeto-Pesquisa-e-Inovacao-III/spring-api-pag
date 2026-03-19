@@ -2,7 +2,7 @@ package com.fillipe.pagmodulo.infrastructure.persistence.checkout.mapper;
 
 import com.fillipe.pagmodulo.domain.shared.valueobjects.Item;
 import com.fillipe.pagmodulo.infrastructure.persistence.checkout.entity.CheckoutEntityJpa;
-import com.fillipe.pagmodulo.infrastructure.persistence.checkout.entity.ItemEntityJpa;
+import com.fillipe.pagmodulo.infrastructure.persistence.checkout.entity.CheckoutItemEntityJpa;
 import org.mapstruct.AfterMapping;
 import org.mapstruct.Context;
 import org.mapstruct.Mapper;
@@ -14,21 +14,21 @@ import java.util.stream.Collectors;
 @Mapper(componentModel = "spring")
 public interface ItemPersistenceMapper {
 
-    ItemEntityJpa toEntity(Item item, @Context CheckoutEntityJpa checkout);
+    CheckoutItemEntityJpa toEntity(Item item, @Context CheckoutEntityJpa checkout);
 
     @AfterMapping
-    default void setCheckout(@MappingTarget ItemEntityJpa entity, @Context CheckoutEntityJpa checkout) {
+    default void setCheckout(@MappingTarget CheckoutItemEntityJpa entity, @Context CheckoutEntityJpa checkout) {
         entity.setCheckout(checkout);
     }
 
-    default List<ItemEntityJpa> toEntityList(List<Item> items, CheckoutEntityJpa checkout) {
+    default List<CheckoutItemEntityJpa> toEntityList(List<Item> items, CheckoutEntityJpa checkout) {
         if (items == null) return List.of();
         return items.stream()
                 .map(item -> toEntity(item, checkout))
                 .collect(Collectors.toList());
     }
 
-    Item toDomain(ItemEntityJpa entity);
+    Item toDomain(CheckoutItemEntityJpa entity);
 
 
 

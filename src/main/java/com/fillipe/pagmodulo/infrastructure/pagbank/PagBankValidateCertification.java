@@ -5,37 +5,34 @@ import com.fillipe.pagmodulo.infrastructure.web.webhook.exeception.WebhookAuthor
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.HexFormat;
 
-public class PagBankValidateCertification  {
-    public static void validate(String token, String payload, String target){
-        String signature = token+"-"+payload;
-        MessageDigest digest;
+public class PagBankValidateCertification {
+    private PagBankValidateCertification() {
+        /* This utility class should not be instantiated */
+    }
+    public static void validate(String token, String payload, String target) {
+        if (token == null || payload == null || target == null) {
+            throw new WebhookAuthorizationException("Dados de validação incompletos");
+        }
 
         try {
-            digest = MessageDigest.getInstance("SHA-256");
+            MessageDigest digest = MessageDigest.getInstance("SHA-256");
+
+            digest.update(token.getBytes(StandardCharsets.UTF_8));
+            digest.update((byte) '-');
+            digest.update(payload.getBytes(StandardCharsets.UTF_8));
+
+            byte[] computedHash = digest.digest();
+            byte[] targetHash = HexFormat.of().parseHex(target);
+
+            if (!MessageDigest.isEqual(computedHash, targetHash)) {
+                throw new WebhookAuthorizationException("Assinatura invalida");
+            }
         } catch (NoSuchAlgorithmException e) {
-            throw new RuntimeException(e);
+            throw new IllegalStateException("Algoritmo de hash não encontrado", e);
+        } catch (IllegalArgumentException e) {
+            throw new WebhookAuthorizationException("Formato de assinatura invalido");
         }
-
-        byte[] encodedHash = digest.digest(signature.getBytes(StandardCharsets.UTF_8));
-
-        byte[] targetBytes = target.getBytes(StandardCharsets.UTF_8);
-
-        byte[] computedBytes = bytesToHex(encodedHash).getBytes(StandardCharsets.UTF_8);
-
-        if (!MessageDigest.isEqual(computedBytes, targetBytes)) {
-            throw new WebhookAuthorizationException("Assinatura invalida");
-        }
-
-    }
-
-    private static String bytesToHex(byte[] hash) {
-        StringBuilder hexString = new StringBuilder();
-        for (byte b : hash) {
-            String hex = Integer.toHexString(0xff & b);
-            if (hex.length() == 1) hexString.append('0');
-            hexString.append(hex);
-        }
-        return hexString.toString();
     }
 }

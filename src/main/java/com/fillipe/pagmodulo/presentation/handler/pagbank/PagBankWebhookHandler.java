@@ -1,4 +1,4 @@
-package com.fillipe.pagmodulo.presentation.webhook.handler;
+package com.fillipe.pagmodulo.presentation.handler.pagbank;
 
 import com.fillipe.pagmodulo.infrastructure.web.webhook.exeception.WebhookAuthorizationException;
 import com.fillipe.pagmodulo.presentation.shared.exception.ErrorResponse;
@@ -10,9 +10,9 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 @RestControllerAdvice
-public class WebhookHandler {
+public class PagBankWebhookHandler {
 
-    private static final Logger log = LoggerFactory.getLogger(WebhookHandler.class);
+    private static final Logger log = LoggerFactory.getLogger(PagBankWebhookHandler.class);
 
     @ExceptionHandler(WebhookAuthorizationException.class)
     public ResponseEntity<ErrorResponse> handleWebhookAuthorization(WebhookAuthorizationException ex) {

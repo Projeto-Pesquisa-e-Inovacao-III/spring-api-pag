@@ -33,22 +33,20 @@ public class OrderEntityJpa {
     @OneToMany(mappedBy = "order", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<ChargeEntityJpa> charges;
 
+    @OneToMany(mappedBy = "order", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<OrderItemEntityJpa> itens;
+
     public OrderEntityJpa() {}
 
-    public OrderEntityJpa(
-            UUID uuid,
-            UUID checkoutId,
-            String gatewayOrderId,
-            OffsetDateTime createdAt,
-            CustomerEmbeddableJpa customer,
-            List<ChargeEntityJpa> charges
-    ) {
+    public OrderEntityJpa(Long id, UUID uuid, UUID checkoutId, String gatewayOrderId, OffsetDateTime createdAt, CustomerEmbeddableJpa customer, List<ChargeEntityJpa> charges, List<OrderItemEntityJpa> itens) {
+        this.id = id;
         this.uuid = uuid;
         this.checkoutId = checkoutId;
         this.gatewayOrderId = gatewayOrderId;
         this.createdAt = createdAt;
         this.customer = customer;
         this.charges = charges;
+        this.itens = itens;
     }
 
     public Long getId() { return id; }
@@ -58,6 +56,7 @@ public class OrderEntityJpa {
     public OffsetDateTime getCreatedAt() { return createdAt; }
     public CustomerEmbeddableJpa getCustomer() { return customer; }
     public List<ChargeEntityJpa> getCharges() { return charges; }
+    public List<OrderItemEntityJpa> getItens() { return itens; }
 
     public void setId(Long id) { this.id = id; }
     public void setUuid(UUID uuid) { this.uuid = uuid; }
@@ -66,4 +65,5 @@ public class OrderEntityJpa {
     public void setCreatedAt(OffsetDateTime createdAt) { this.createdAt = createdAt; }
     public void setCustomer(CustomerEmbeddableJpa customer) { this.customer = customer; }
     public void setCharges(List<ChargeEntityJpa> charges) { this.charges = charges; }
+    public void setItens(List<OrderItemEntityJpa> itens) { this.itens = itens; }
 }

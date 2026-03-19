@@ -71,7 +71,7 @@ public class PagBankCheckoutGateway implements CheckoutGateway {
                 "registro de checkout"
         );
 
-        return mapper.toDomain(response);
+        return mapper.toDomain(response, checkout.getCustomer().externalCustomerId());
     }
 
     @Override
@@ -88,7 +88,8 @@ public class PagBankCheckoutGateway implements CheckoutGateway {
                 "sincronização de checkout com ID: " + gatewayId
         );
 
-        return mapper.toDomain(response);
+        //TODO: Achar uma solução para quando não tenho o checkout no meu banco de dados e preciso do id do cliente, talvez só usar o cpf?
+        return mapper.toDomain(response, "pagbank-synced-no-id");
     }
 
     @Override

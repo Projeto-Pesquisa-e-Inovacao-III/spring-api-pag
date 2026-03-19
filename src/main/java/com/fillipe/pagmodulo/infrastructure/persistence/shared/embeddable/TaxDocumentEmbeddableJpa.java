@@ -1,4 +1,4 @@
-package com.fillipe.pagmodulo.infrastructure.persistence.checkout.embeddable;
+package com.fillipe.pagmodulo.infrastructure.persistence.shared.embeddable;
 
 import com.fillipe.pagmodulo.domain.shared.valueobjects.TaxDocumentType;
 import jakarta.persistence.Column;
@@ -8,10 +8,10 @@ import jakarta.persistence.Enumerated;
 
 @Embeddable
 public class TaxDocumentEmbeddableJpa {
-    @Column(name = "tax_value")
+    @Column(name = "customer_tax_value")
     private String value;
 
-    @Column(name = "tax_type")
+    @Column(name = "customer_tax_type")
     @Enumerated(EnumType.STRING)
     private TaxDocumentType type;
 

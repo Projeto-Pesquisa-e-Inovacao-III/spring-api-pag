@@ -25,4 +25,8 @@ public class OrderRepositoryAdapter implements OrderRepository {
         return mapper.toDomain(entity);
     }
 
+    @Override
+    public boolean existsByGatewayOrderId(String gatewayOrderId) {
+        return repository.existsByGatewayOrderId(gatewayOrderId);
+    }
 }

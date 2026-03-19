@@ -6,6 +6,7 @@ import com.fillipe.pagmodulo.application.usecase.GetCheckout.GetCheckoutUseCase;
 import com.fillipe.pagmodulo.domain.checkout.port.out.CheckoutGateway;
 import com.fillipe.pagmodulo.domain.checkout.port.out.CheckoutRepository;
 import com.fillipe.pagmodulo.application.usecase.CreateCheckout.CreateCheckoutUseCase;
+import com.fillipe.pagmodulo.application.usecase.UpdateCheckoutStatus.UpdateCheckoutStatusUseCase;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -44,5 +45,11 @@ public class CheckoutUseCaseConfig {
     ) {
         return new InactivateCheckoutUseCase(checkoutGateway, checkoutRepository);
     }
-}
 
+    @Bean
+    public UpdateCheckoutStatusUseCase updateCheckoutStatusUseCase(
+            CheckoutRepository checkoutRepository
+    ) {
+        return new UpdateCheckoutStatusUseCase(checkoutRepository);
+    }
+}

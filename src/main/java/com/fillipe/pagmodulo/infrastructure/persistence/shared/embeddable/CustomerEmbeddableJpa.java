@@ -1,7 +1,5 @@
 package com.fillipe.pagmodulo.infrastructure.persistence.shared.embeddable;
 
-import com.fillipe.pagmodulo.infrastructure.persistence.checkout.embeddable.PhoneEmbeddableJpa;
-import com.fillipe.pagmodulo.infrastructure.persistence.checkout.embeddable.TaxDocumentEmbeddableJpa;
 import jakarta.persistence.*;
 
 @Embeddable
@@ -17,18 +15,9 @@ public class CustomerEmbeddableJpa {
     private String email;
 
     @Embedded
-    @AttributeOverrides({
-            @AttributeOverride(name = "value", column = @Column(name = "customer_tax_value")),
-            @AttributeOverride(name = "type",  column = @Column(name = "customer_tax_type"))
-    })
     private TaxDocumentEmbeddableJpa taxDocument;
 
     @Embedded
-    @AttributeOverrides({
-            @AttributeOverride(name = "country", column = @Column(name = "customer_phone_country")),
-            @AttributeOverride(name = "area",    column = @Column(name = "customer_phone_area")),
-            @AttributeOverride(name = "number",  column = @Column(name = "customer_phone_number"))
-    })
     private PhoneEmbeddableJpa phone;
 
     public CustomerEmbeddableJpa() {

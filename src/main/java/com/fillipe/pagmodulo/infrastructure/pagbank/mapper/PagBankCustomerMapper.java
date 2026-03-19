@@ -16,9 +16,9 @@ public interface PagBankCustomerMapper {
 
     PagBankPhoneDto toReqPagBankPhoneDto(Phone phone);
 
-    @Mapping(source = "taxId", target = "taxDocument", qualifiedByName = "toTaxDocument")
-    @Mapping(target = "externalCustomerId", ignore = true)
-    Customer toCustomerDomain(PagBankCustomerDto dto);
+    @Mapping(source = "dto.taxId", target = "taxDocument", qualifiedByName = "toTaxDocument")
+    @Mapping(source = "externalCustomerId", target = "externalCustomerId")
+    Customer toCustomerDomain(PagBankCustomerDto dto, String externalCustomerId);
 
     Phone toPhoneDomain(PagBankPhoneDto dto);
 }

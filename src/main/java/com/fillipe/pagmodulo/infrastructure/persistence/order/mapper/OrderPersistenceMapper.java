@@ -3,15 +3,14 @@ package com.fillipe.pagmodulo.infrastructure.persistence.order.mapper;
 import com.fillipe.pagmodulo.domain.order.entity.Charge;
 import com.fillipe.pagmodulo.domain.order.entity.Order;
 import com.fillipe.pagmodulo.domain.shared.valueobjects.CheckoutId;
+import com.fillipe.pagmodulo.domain.shared.valueobjects.Item;
 import com.fillipe.pagmodulo.domain.shared.valueobjects.OrderId;
-import com.fillipe.pagmodulo.infrastructure.persistence.order.entity.ChargeEntityJpa;
 import com.fillipe.pagmodulo.infrastructure.persistence.order.entity.OrderEntityJpa;
 import com.fillipe.pagmodulo.infrastructure.persistence.shared.mapper.CustomerPersistenceMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Component
 public class OrderPersistenceMapper {
@@ -22,7 +21,9 @@ public class OrderPersistenceMapper {
     @Autowired
     private ChargePersistenceMapper chargeMapper;
 
-    // ---- toEntity ----
+    @Autowired
+    private OrderItemPersistenceMapper orderItemMapper;
+
 
     public OrderEntityJpa toEntity(Order order) {
         if (order == null) return null;
@@ -34,6 +35,7 @@ public class OrderPersistenceMapper {
         entity.setCreatedAt(order.getCreatedAt());
         entity.setCustomer(customerMapper.toEmbeddable(order.getCustomer()));
         entity.setCharges(chargeMapper.toEntityList(order.getCharges(), entity));
+        entity.setItens(orderItemMapper.toEntityList(order.getItems(), entity));
 
         return entity;
     }
@@ -44,12 +46,11 @@ public class OrderPersistenceMapper {
         return entity;
     }
 
-    // ---- toDomain ----
-
     public Order toDomain(OrderEntityJpa entity) {
         if (entity == null) return null;
 
         List<Charge> charges = chargeMapper.toDomainList(entity.getCharges());
+        List<Item> items = orderItemMapper.toDomainList(entity.getItens());
 
         return Order.fromExisting()
                 .orderId(new OrderId(entity.getUuid()))
@@ -57,7 +58,7 @@ public class OrderPersistenceMapper {
                 .gatewayOrderId(entity.getGatewayOrderId())
                 .createdAt(entity.getCreatedAt())
                 .customer(customerMapper.toDomain(entity.getCustomer()))
-                .items(List.of())
+                .items(items)
                 .charges(charges)
                 .build();
     }

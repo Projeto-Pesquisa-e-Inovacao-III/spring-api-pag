@@ -1,10 +1,11 @@
 package com.fillipe.pagmodulo.infrastructure.persistence.checkout.entity;
 
+import com.fillipe.pagmodulo.infrastructure.persistence.order.entity.OrderEntityJpa;
 import jakarta.persistence.*;
 
 @Entity
-@Table(name = "item")
-public class ItemEntityJpa {
+@Table(name = "checkout_item")
+public class CheckoutItemEntityJpa {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -17,12 +18,12 @@ public class ItemEntityJpa {
     private String imageUrl;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "checkout_id", nullable = false)
-    CheckoutEntityJpa checkout;
+    @JoinColumn(name = "checkout_id")
+    private CheckoutEntityJpa checkout;
 
-    public ItemEntityJpa() { }
+    public CheckoutItemEntityJpa() { }
 
-    public ItemEntityJpa(Long id, String externalItemId, String name, String description, Integer quantity, Integer unitAmount, String imageUrl, CheckoutEntityJpa checkout) {
+    public CheckoutItemEntityJpa(Long id, String externalItemId, String name, String description, Integer quantity, Integer unitAmount, String imageUrl, CheckoutEntityJpa checkout, OrderEntityJpa order) {
         this.id = id;
         this.externalItemId = externalItemId;
         this.name = name;
@@ -31,6 +32,10 @@ public class ItemEntityJpa {
         this.unitAmount = unitAmount;
         this.imageUrl = imageUrl;
         this.checkout = checkout;
+    }
+
+    public CheckoutItemEntityJpa(Long id, String externalItemId, String name, String description, Integer quantity, Integer unitAmount, String imageUrl, CheckoutEntityJpa checkout) {
+        this(id, externalItemId, name, description, quantity, unitAmount, imageUrl, checkout, null);
     }
 
     public Long getId() {

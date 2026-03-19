@@ -1,11 +1,17 @@
-package com.fillipe.pagmodulo.infrastructure.persistence.checkout.embeddable;
+package com.fillipe.pagmodulo.infrastructure.persistence.shared.embeddable;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Embeddable;
 
 @Embeddable
 public class PhoneEmbeddableJpa {
+    @Column(name = "customer_phone_country")
     private String country;
+
+    @Column(name = "customer_phone_area")
     private String area;
+
+    @Column(name = "customer_phone_number")
     private String number;
 
     public PhoneEmbeddableJpa() {

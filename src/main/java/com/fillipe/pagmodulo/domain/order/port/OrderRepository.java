@@ -4,4 +4,5 @@ import com.fillipe.pagmodulo.domain.order.entity.Order;
 
 public interface OrderRepository {
     Order save(Order order);
+    boolean existsByGatewayOrderId(String gatewayOrderId);
 }
