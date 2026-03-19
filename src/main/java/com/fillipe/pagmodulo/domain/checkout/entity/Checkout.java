@@ -6,13 +6,11 @@ import com.fillipe.pagmodulo.domain.shared.exceptions.InvalidFieldException;
 import com.fillipe.pagmodulo.domain.checkout.exception.CheckoutInvalidStatusException;
 import com.fillipe.pagmodulo.domain.shared.valueobjects.Customer;
 import com.fillipe.pagmodulo.domain.shared.valueobjects.Item;
-import com.fillipe.pagmodulo.domain.checkout.valueobject.paymentMethod.PaymentMethod;
 import com.fillipe.pagmodulo.domain.shared.valueobjects.CheckoutId;
 
 import java.time.OffsetDateTime;
 import java.time.ZoneOffset;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
 import java.util.UUID;
 
@@ -38,7 +36,6 @@ public class Checkout {
 
     private final Integer discountAmount;
 
-    private final List<PaymentMethod> paymentMethods;
 
     // Todo: descobrir o pq desse campo, talvez algo com charge?
     // private String origin;
@@ -110,7 +107,6 @@ public class Checkout {
         this.items = builder.items;
         this.additionalAmount = builder.additionalAmount;
         this.discountAmount = builder.discountAmount;
-        this.paymentMethods = builder.paymentMethods;
     }
 
     public static Builder fromExisting() {
@@ -150,9 +146,6 @@ public class Checkout {
     public Integer getDiscountAmount() {
         return discountAmount;
     }
-    public List<PaymentMethod> getPaymentMethods() {
-        return paymentMethods;
-    }
 
     @Override
     public String toString() {
@@ -166,7 +159,6 @@ public class Checkout {
                 ", items=" + items +
                 ", additionalAmount=" + additionalAmount +
                 ", discountAmount=" + discountAmount +
-                ", paymentMethods=" + paymentMethods +
                 '}';
     }
 
@@ -180,7 +172,6 @@ public class Checkout {
         private List<Item> items;
         private Integer additionalAmount;
         private Integer discountAmount;
-        private List<PaymentMethod> paymentMethods;
 
         public Builder uuid(UUID uuid) {
             this.uuid = uuid;
@@ -227,10 +218,6 @@ public class Checkout {
             return this;
         }
 
-        public Builder paymentMethods(List<PaymentMethod> paymentMethods) {
-            this.paymentMethods = paymentMethods != null ? new ArrayList<>(paymentMethods) : new ArrayList<>();
-            return this;
-        }
 
 
         public Checkout build() {
@@ -244,14 +231,6 @@ public class Checkout {
             }
             if (items == null || items.isEmpty()) {
                 throw new InvalidFieldException("items", "deve conter pelo menos um item");
-            }
-            if (paymentMethods == null || paymentMethods.isEmpty()) {
-                throw new InvalidFieldException("paymentMethods", "deve conter pelo menos um método de pagamento");
-            }
-
-            HashSet<PaymentMethod> uniqueMethods = new HashSet<>(paymentMethods);
-            if (uniqueMethods.size() != paymentMethods.size()) {
-                throw new InvalidFieldException("paymentMethods", "não pode conter métodos de pagamento duplicados");
             }
         }
     }

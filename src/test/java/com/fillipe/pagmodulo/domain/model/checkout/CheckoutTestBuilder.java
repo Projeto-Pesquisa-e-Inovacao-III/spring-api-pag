@@ -2,8 +2,6 @@ package com.fillipe.pagmodulo.domain.model.checkout;
 
 import com.fillipe.pagmodulo.domain.checkout.entity.Checkout;
 import com.fillipe.pagmodulo.domain.checkout.enums.CheckoutStatus;
-import com.fillipe.pagmodulo.domain.checkout.valueobject.paymentMethod.PaymentMethod;
-import com.fillipe.pagmodulo.domain.checkout.valueobject.paymentMethod.PixPaymentMethod;
 import com.fillipe.pagmodulo.domain.shared.valueobjects.*;
 
 import java.time.OffsetDateTime;
@@ -20,8 +18,8 @@ public class CheckoutTestBuilder {
         // Start with valid defaults
         this.builder = Checkout.newCheckout()
                 .customer(validCustomer())
-                .items(List.of(validItem()))
-                .paymentMethods(List.of(new PixPaymentMethod()));
+                .items(List.of(validItem()));
+
     }
 
     public static CheckoutTestBuilder aCheckout() {
@@ -48,15 +46,15 @@ public class CheckoutTestBuilder {
         return this;
     }
 
-    public CheckoutTestBuilder withPaymentMethods(PaymentMethod... methods) {
-        this.builder.paymentMethods(List.of(methods));
-        return this;
-    }
-
-    public CheckoutTestBuilder withNoPaymentMethods() {
-        this.builder.paymentMethods(List.of());
-        return this;
-    }
+//    public CheckoutTestBuilder withPaymentMethods(PaymentMethod... methods) {
+//        this.builder.paymentMethods(List.of(methods));
+//        return this;
+//    }
+//
+//    public CheckoutTestBuilder withNoPaymentMethods() {
+//        this.builder.paymentMethods(List.of());
+//        return this;
+//    }
 
     public CheckoutTestBuilder withExpirationDate(OffsetDateTime expirationDate) {
         this.builder.expirationDate(expirationDate);

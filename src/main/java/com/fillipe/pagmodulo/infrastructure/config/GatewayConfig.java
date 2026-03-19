@@ -15,6 +15,15 @@ public class GatewayConfig {
     private String returnUrl;
     private String redirectUrl;
     private Boolean customerModifiable;
+    private List<String> paymentMethod;
+
+    public List<String> getPaymentMethod() {
+        return paymentMethod;
+    }
+
+    public void setPaymentMethod(List<String> paymentMethod) {
+        this.paymentMethod = paymentMethod;
+    }
 
     public Boolean getCustomerModifiable() {return customerModifiable;}
 

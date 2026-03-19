@@ -43,8 +43,6 @@ public abstract class CheckoutPersistenceMapper {
         entity.setItems(itemMapper.toEntityList(checkout.getItems(), entity));
         entity.setAdditionalAmount(checkout.getAdditionalAmount());
         entity.setDiscountAmount(checkout.getDiscountAmount());
-        entity.setPaymentMethods(paymentMethodMapper.toEmbeddableList(checkout.getPaymentMethods()));
-        entity.setConfigOptions(paymentMethodMapper.toConfigOptionEmbeddableList(checkout.getPaymentMethods()));
         return entity;
     }
 
@@ -75,7 +73,6 @@ public abstract class CheckoutPersistenceMapper {
                 .items(items)
                 .additionalAmount(entity.getAdditionalAmount())
                 .discountAmount(entity.getDiscountAmount())
-                .paymentMethods(paymentMethods)
                 .build();
     }
 

@@ -7,8 +7,6 @@ import com.fillipe.pagmodulo.presentation.mapper.shared.CustomerMapper;
 import com.fillipe.pagmodulo.application.usecase.CreateCheckout.CreateCheckoutCommand;
 import com.fillipe.pagmodulo.domain.checkout.entity.Checkout;
 
-import java.time.LocalDateTime;
-
 public class CheckoutMapper {
 
     private CheckoutMapper() {}
@@ -16,17 +14,10 @@ public class CheckoutMapper {
     public static CreateCheckoutCommand toCreateCheckoutCommand(ReqCreateCheckoutDto requestDTO) {
         if (requestDTO == null) return null;
         return new CreateCheckoutCommand(
-                LocalDateTime.now().plusHours(1),
                 CustomerMapper.toCustomer(requestDTO.customer()),
                 ItemMapper.toItemList(requestDTO.items()),
                 requestDTO.additionalAmount(),
-                requestDTO.discountAmount(),
-                PaymentMethodMapper.toPaymentMethodList(requestDTO.paymentMethods()),
-                requestDTO.softDescriptor(),
-                requestDTO.redirectUrl(),
-                requestDTO.returnUrl(),
-                requestDTO.notificationUrls(),
-                requestDTO.paymentNotificationUrls()
+                requestDTO.discountAmount()
         );
     }
 
@@ -50,7 +41,6 @@ public class CheckoutMapper {
                 checkout.getExpirationDate(),
                 CustomerMapper.toCustomerDTO(checkout.getCustomer()),
                 ItemMapper.toItemDTOList(checkout.getItems()),
-                PaymentMethodMapper.toPaymentMethodDTOList(checkout.getPaymentMethods()),
                 checkout.getAdditionalAmount(),
                 checkout.getDiscountAmount()
         );

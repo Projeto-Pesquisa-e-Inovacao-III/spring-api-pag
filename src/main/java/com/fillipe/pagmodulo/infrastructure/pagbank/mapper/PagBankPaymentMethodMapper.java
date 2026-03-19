@@ -50,6 +50,18 @@ public interface PagBankPaymentMethodMapper {
                 .toList();
     }
 
+    default PagBankPaymentMethodDto toDto(String type) {
+        if (type == null) return null;
+        return new PagBankPaymentMethodDto(type);
+    }
+
+    default List<PagBankPaymentMethodDto> toDtoList(List<String> types) {
+        if (types == null) return Collections.emptyList();
+        return types.stream()
+                .map(this::toDto)
+                .toList();
+    }
+
     @Named("toPaymentConfigOptionDomain")
     default PaymentConfigOption toPaymentConfigOptionDomain(PagBankConfigOptionDto dto) {
         if (dto == null) return null;

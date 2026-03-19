@@ -17,16 +17,6 @@ public record ReqCreateCheckoutDto(
         @NotEmpty(message = "A lista de itens é obrigatória e não pode estar vazia")
         @Valid
         List<ItemDto> items,
-
-        @NotEmpty(message = "A lista de métodos de pagamento é obrigatória e não pode estar vazia")
-        @Valid
-        List<PaymentMethodDto> paymentMethods,
-
-        String softDescriptor,
-        String redirectUrl,
-        String returnUrl,
-        List<String> notificationUrls,
-        List<String> paymentNotificationUrls,
         Integer additionalAmount,
         Integer discountAmount
 ) {}

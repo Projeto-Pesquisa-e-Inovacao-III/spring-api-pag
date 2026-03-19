@@ -18,7 +18,6 @@ public class CreateCheckoutUseCase {
         Checkout createdCheckout = Checkout.newCheckout()
                 .customer(command.customer())
                 .items(command.items())
-                .paymentMethods(command.paymentMethods())
                 .additionalAmount(command.additionalAmount())
                 .discountAmount(command.discountAmount())
                 .build();

@@ -228,6 +228,7 @@ public class PagBankCheckoutGateway implements CheckoutGateway {
         return new PagBankConfigDto(
                 config.getNotificationWebhookUrls(),
                 config.getPaymentNotificationUrls(),
+                config.getPaymentMethod(),
                 config.getSoftDescriptor(),
                 config.getReturnUrl(),
                 config.getRedirectUrl(),

@@ -16,7 +16,6 @@ public record ResCheckoutDto(
         OffsetDateTime expirationDate,
         CustomerDto customer,
         List<ItemDto> items,
-        List<PaymentMethodDto> paymentMethods,
         Integer additionalAmount,
         Integer discountAmount
 ) {}

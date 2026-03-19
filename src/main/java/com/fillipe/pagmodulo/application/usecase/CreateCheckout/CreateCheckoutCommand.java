@@ -2,29 +2,17 @@ package com.fillipe.pagmodulo.application.usecase.CreateCheckout;
 
 import com.fillipe.pagmodulo.domain.shared.valueobjects.Customer;
 import com.fillipe.pagmodulo.domain.shared.valueobjects.Item;
-import com.fillipe.pagmodulo.domain.checkout.valueobject.paymentMethod.PaymentMethod;
 
-import java.time.LocalDateTime;
 import java.util.List;
 
 public record CreateCheckoutCommand(
-        LocalDateTime expirationDate,
         Customer customer,
         List<Item> items,
         Integer additionalAmount,
-        Integer discountAmount,
-        List<PaymentMethod> paymentMethods,
-        String softDescriptor,
-        String redirectUrl,
-        String returnUrl,
-        List<String> notificationUrls,
-        List<String> paymentNotificationUrls
+        Integer discountAmount
 ) {
 
     public CreateCheckoutCommand {
-        if (expirationDate == null) {
-            throw new IllegalArgumentException("expirationDate não pode ser nulo");
-        }
         if (customer == null) {
             throw new IllegalArgumentException("customer não pode ser nulo");
         }

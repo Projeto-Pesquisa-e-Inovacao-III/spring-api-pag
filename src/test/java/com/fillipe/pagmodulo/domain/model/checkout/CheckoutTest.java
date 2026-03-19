@@ -2,9 +2,7 @@ package com.fillipe.pagmodulo.domain.model.checkout;
 
 import com.fillipe.pagmodulo.domain.checkout.entity.Checkout;
 import com.fillipe.pagmodulo.domain.checkout.enums.CheckoutStatus;
-import com.fillipe.pagmodulo.domain.checkout.valueobject.paymentMethod.PixPaymentMethod;
 import com.fillipe.pagmodulo.domain.shared.exceptions.InvalidFieldException;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
@@ -43,22 +41,22 @@ public class CheckoutTest {
                     () -> aCheckout().withNoItems().build());
         }
 
-        @Test
-        void shouldRejectEmptyPaymentMethods() {
-            assertThrows(InvalidFieldException.class,
-                    () -> aCheckout().withNoPaymentMethods().build());
-        }
-
-        @Test
-        void shouldRejectDuplicatePaymentMethods() {
-            assertThrows(InvalidFieldException.class,
-                    () -> aCheckout()
-                            .withPaymentMethods(
-                                    new PixPaymentMethod(),
-                                    new PixPaymentMethod()
-                            )
-                            .build());
-        }
+//        @Test
+//        void shouldRejectEmptyPaymentMethods() {
+//            assertThrows(InvalidFieldException.class,
+//                    () -> aCheckout().withNoPaymentMethods().build());
+//        }
+//
+//        @Test
+//        void shouldRejectDuplicatePaymentMethods() {
+//            assertThrows(InvalidFieldException.class,
+//                    () -> aCheckout()
+//                            .withPaymentMethods(
+//                                    new PixPaymentMethod(),
+//                                    new PixPaymentMethod()
+//                            )
+//                            .build());
+//        }
     }
 
     @Nested
