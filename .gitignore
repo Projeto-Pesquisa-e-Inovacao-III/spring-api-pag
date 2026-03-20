@@ -32,10 +32,6 @@ build/
 ### VS Code ###
 .vscode/
 
-**/application*.yaml
-**/application*.yml
-**/application*.properties
-
 ### Environment Variables ###
 .env
 .env.*
