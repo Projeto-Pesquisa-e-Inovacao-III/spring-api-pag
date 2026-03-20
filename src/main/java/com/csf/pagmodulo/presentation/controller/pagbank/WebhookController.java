@@ -3,6 +3,7 @@ package com.csf.pagmodulo.presentation.controller.pagbank;
 import com.csf.pagmodulo.application.dto.order.request.ReqOrderDto;
 import com.csf.pagmodulo.application.dto.checkout.request.ReqUpdateCheckoutDto;
 import com.csf.pagmodulo.application.usecase.UpdateCheckoutStatus.UpdateCheckoutStatusUseCase;
+import com.csf.pagmodulo.presentation.controller.pagbank.api.WebhookApi;
 import com.csf.pagmodulo.presentation.mapper.order.OrderMapper;
 import com.csf.pagmodulo.application.usecase.PaymentOrderWebhook.PaymentOrderCommand;
 import com.csf.pagmodulo.application.usecase.PaymentOrderWebhook.PaymentOrderWebhookUseCase;
@@ -14,7 +15,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/v1/webhook/pagbank")
-public class WebhookController {
+public class WebhookController implements WebhookApi {
 
     private static final Logger log = LoggerFactory.getLogger(WebhookController.class);
 
@@ -27,6 +28,7 @@ public class WebhookController {
         this.updateCheckoutStatusUseCase = updateCheckoutStatusUseCase;
     }
 
+    @Override
     @PostMapping("/update")
     @ResponseStatus(HttpStatus.OK)
     public void updateCheckout(@RequestBody ReqUpdateCheckoutDto dto) {
@@ -40,6 +42,7 @@ public class WebhookController {
         updateCheckoutStatusUseCase.execute(cmd);
     }
 
+    @Override
     @PostMapping(value = "/payment-update", consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.OK)
     public void paymentUpdateCheckout(@RequestBody ReqOrderDto dto) {
@@ -49,6 +52,7 @@ public class WebhookController {
             paymentOrderWebhookUseCase.execute(cmd);
     }
 
+    @Override
     @PostMapping(value = "/payment-update", consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
     @ResponseStatus(HttpStatus.OK)
     public void paymentUpdateCheckoutNotification(
