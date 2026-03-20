@@ -21,9 +21,11 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.UUID;
 
+import com.csf.pagmodulo.presentation.controller.pagbank.api.CheckoutApi;
+
 @RestController
 @RequestMapping("/api/v1/checkouts")
-public class CheckoutController {
+public class CheckoutController implements CheckoutApi {
 
     private final CreateCheckoutUseCase createCheckoutUseCase;
     private final GetCheckoutUseCase getCheckoutUseCase;
@@ -37,6 +39,7 @@ public class CheckoutController {
         this.activateCheckoutUseCase = activateCheckoutUseCase;
     }
 
+    @Override
     @PostMapping
     public ResponseEntity<ResCheckoutCreatedDto> createCheckout(@Valid @RequestBody ReqCreateCheckoutDto request) {
         CreateCheckoutCommand command = CheckoutMapper.toCreateCheckoutCommand(request);
@@ -46,6 +49,7 @@ public class CheckoutController {
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
 
+    @Override
     @GetMapping("/{uuid}")
     @Profile("dev")
     public ResponseEntity<ResCheckoutDto> getCheckout(@PathVariable UUID uuid) {
@@ -55,6 +59,7 @@ public class CheckoutController {
         return ResponseEntity.status(HttpStatus.FOUND).body(response);
     }
 
+    @Override
     @PostMapping("/{uuid}/activate")
     public ResponseEntity<ResActivateCheckoutDto> activateCheckout(@PathVariable UUID uuid) {
         return new ResponseEntity<>(
@@ -62,6 +67,7 @@ public class CheckoutController {
                 HttpStatus.OK);
     }
 
+    @Override
     @PostMapping("/{uuid}/inactivate")
     public ResponseEntity<ResInactivateCheckoutDto> inactivateCheckout(@PathVariable UUID uuid) {
         return new ResponseEntity<>(
