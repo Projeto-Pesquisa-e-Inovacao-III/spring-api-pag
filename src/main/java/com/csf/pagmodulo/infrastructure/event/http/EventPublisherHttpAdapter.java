@@ -1,4 +1,4 @@
-package com.csf.pagmodulo.infrastructure.event;
+package com.csf.pagmodulo.infrastructure.event.http;
 
 import com.csf.pagmodulo.domain.shared.event.DomainEvent;
 import com.csf.pagmodulo.domain.shared.event.EventPublisher;

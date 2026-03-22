@@ -2,7 +2,7 @@ package com.csf.pagmodulo.infrastructure.config;
 
 import com.csf.pagmodulo.application.usecase.PaymentOrderWebhook.PaymentOrderWebhookUseCase;
 import com.csf.pagmodulo.domain.order.port.OrderRepository;
-import com.csf.pagmodulo.infrastructure.event.EventPublisherHttpAdapter;
+import com.csf.pagmodulo.infrastructure.event.http.EventPublisherHttpAdapter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 

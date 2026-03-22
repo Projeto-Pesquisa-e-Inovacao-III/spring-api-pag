@@ -1,11 +1,20 @@
 spring:
   config:
     import: optional:file:.env[.properties]
+
   docker:
     compose:
       enabled: false
+
   profiles:
     active: dev
+
+  rabbitmq:
+    host: localhost
+    port: 5672
+    username: app_user
+    password: app_password_123
+    virtual-host: /app
 
 springdoc:
   api-docs:
