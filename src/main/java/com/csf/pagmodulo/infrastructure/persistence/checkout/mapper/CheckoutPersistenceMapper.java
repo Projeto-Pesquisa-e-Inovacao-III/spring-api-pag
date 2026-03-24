@@ -27,8 +27,6 @@ public abstract class CheckoutPersistenceMapper {
     protected CustomerPersistenceMapper customerMapper;
     @Autowired
     protected ItemPersistenceMapper itemMapper;
-    @Autowired
-    protected PaymentMethodPersistenceMapper paymentMethodMapper;
 
     public CheckoutEntityJpa toEntity(Checkout checkout) {
         if (checkout == null) return null;
@@ -58,10 +56,7 @@ public abstract class CheckoutPersistenceMapper {
         Customer customer = customerMapper.toDomain(entity.getCustomer());
 
         List<Item> items = entity.getItems() == null ? List.of()
-                : entity.getItems().stream().map(itemMapper::toDomain).collect(Collectors.toList());
-
-        List<PaymentMethod> paymentMethods =
-                paymentMethodMapper.toDomainList(entity.getPaymentMethods(), entity.getConfigOptions());
+                : entity.getItems().stream().map(itemMapper::toDomain).toList();
 
         return Checkout.fromExisting()
                 .uuid(entity.getUuid())
