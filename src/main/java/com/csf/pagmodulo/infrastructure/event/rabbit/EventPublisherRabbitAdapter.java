@@ -23,10 +23,10 @@ public class EventPublisherRabbitAdapter implements EventPublisher {
     public void publish(DomainEvent event) {
         if (event instanceof OrderPaidEvent orderPaidEvent) {
             OrderPaidMessage orderPaidMessage = new OrderPaidMessage(
-                    orderPaidEvent.orderId(),
-                    orderPaidEvent.checkoutId(),
+                    orderPaidEvent.orderId().value().toString(),
+                    orderPaidEvent.checkoutId().value().toString(),
                     orderPaidEvent.gatewayOrderId(),
-                    orderPaidEvent.chargeId(),
+                    orderPaidEvent.chargeId().value().toString(),
                     orderPaidEvent.paidAt(),
                     orderPaidEvent.occurredOn()
             );

@@ -7,10 +7,10 @@ import com.csf.pagmodulo.domain.shared.valueobjects.OrderId;
 import java.time.OffsetDateTime;
 
 public record OrderPaidMessage(
-        OrderId orderId,
-        CheckoutId checkoutId,
+        String orderId,
+        String checkoutId,
         String gatewayOrderId,
-        ChargeId chargeId,
+        String chargeId,
         OffsetDateTime paidAt,
         OffsetDateTime occurredOn
 ) { }
