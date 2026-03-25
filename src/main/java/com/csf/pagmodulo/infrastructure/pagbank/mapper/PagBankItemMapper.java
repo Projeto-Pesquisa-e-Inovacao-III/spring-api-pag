@@ -16,6 +16,6 @@ public interface PagBankItemMapper {
 
     List<Item> toItemsDomain(List<PagBankItemDto> items);
 
-    @Mapping(source = "referenceId", target = "externalItemId", qualifiedByName = "toLong")
+    @Mapping(source = "referenceId", target = "externalItemId")
     Item toItemDomain(PagBankItemDto dto);
 }
