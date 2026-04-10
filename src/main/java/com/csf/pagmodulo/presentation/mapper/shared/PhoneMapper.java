@@ -1,6 +1,6 @@
 package com.csf.pagmodulo.presentation.mapper.shared;
 
-import com.csf.pagmodulo.application.dto.shared.PhoneDto;
+import com.csf.pagmodulo.presentation.dto.shared.PhoneDto;
 import com.csf.pagmodulo.domain.shared.valueobjects.Phone;
 
 public class PhoneMapper {

@@ -1,10 +1,10 @@
 package com.csf.pagmodulo.presentation.controller.pagbank.api;
 
-import com.csf.pagmodulo.application.dto.checkout.request.ReqCreateCheckoutDto;
-import com.csf.pagmodulo.application.dto.checkout.response.ResActivateCheckoutDto;
-import com.csf.pagmodulo.application.dto.checkout.response.ResCheckoutCreatedDto;
-import com.csf.pagmodulo.application.dto.checkout.response.ResCheckoutDto;
-import com.csf.pagmodulo.application.dto.checkout.response.ResInactivateCheckoutDto;
+import com.csf.pagmodulo.presentation.dto.checkout.request.ReqCreateCheckoutDto;
+import com.csf.pagmodulo.presentation.dto.checkout.response.ResActivateCheckoutDto;
+import com.csf.pagmodulo.presentation.dto.checkout.response.ResCheckoutCreatedDto;
+import com.csf.pagmodulo.presentation.dto.checkout.response.ResCheckoutDto;
+import com.csf.pagmodulo.presentation.dto.checkout.response.ResInactivateCheckoutDto;
 import com.csf.pagmodulo.presentation.shared.exception.ErrorResponse;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;

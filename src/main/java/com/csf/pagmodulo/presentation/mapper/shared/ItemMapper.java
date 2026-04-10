@@ -1,6 +1,6 @@
 package com.csf.pagmodulo.presentation.mapper.shared;
 
-import com.csf.pagmodulo.application.dto.shared.ItemDto;
+import com.csf.pagmodulo.presentation.dto.shared.ItemDto;
 import com.csf.pagmodulo.domain.shared.valueobjects.Item;
 
 import java.util.List;

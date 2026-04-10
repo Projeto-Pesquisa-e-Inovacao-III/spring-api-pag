@@ -1,12 +1,13 @@
 package com.csf.pagmodulo.presentation.controller.pagbank;
 
-import com.csf.pagmodulo.application.dto.order.request.ReqOrderDto;
-import com.csf.pagmodulo.application.dto.checkout.request.ReqUpdateCheckoutDto;
+import com.csf.pagmodulo.presentation.dto.order.request.ReqOrderDto;
+import com.csf.pagmodulo.presentation.dto.checkout.request.ReqUpdateCheckoutDto;
 import com.csf.pagmodulo.application.usecase.UpdateCheckoutStatus.UpdateCheckoutStatusUseCase;
 import com.csf.pagmodulo.presentation.controller.pagbank.api.WebhookApi;
 import com.csf.pagmodulo.presentation.mapper.order.OrderMapper;
 import com.csf.pagmodulo.application.usecase.PaymentOrderWebhook.PaymentOrderCommand;
 import com.csf.pagmodulo.application.usecase.PaymentOrderWebhook.PaymentOrderWebhookUseCase;
+import jakarta.validation.Valid;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
@@ -31,7 +32,7 @@ public class WebhookController implements WebhookApi {
     @Override
     @PostMapping("/update")
     @ResponseStatus(HttpStatus.OK)
-    public void updateCheckout(@RequestBody ReqUpdateCheckoutDto dto) {
+    public void updateCheckout(@Valid @RequestBody ReqUpdateCheckoutDto dto) {
         log.info("Update webhook recebido | dto: {}", dto);
         UpdateCheckoutStatusUseCase.UpdateCheckoutStatusCommand cmd = new UpdateCheckoutStatusUseCase.UpdateCheckoutStatusCommand(
                 dto.id(),
@@ -45,7 +46,7 @@ public class WebhookController implements WebhookApi {
     @Override
     @PostMapping(value = "/payment-update", consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.OK)
-    public void paymentUpdateCheckout(@RequestBody ReqOrderDto dto) {
+    public void paymentUpdateCheckout(@Valid @RequestBody ReqOrderDto dto) {
         log.info("Pagamento webhook recebido | dto: {}", dto);
 
             PaymentOrderCommand cmd = OrderMapper.toCommand(dto);

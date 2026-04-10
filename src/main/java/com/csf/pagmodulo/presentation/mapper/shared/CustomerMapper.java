@@ -1,6 +1,6 @@
 package com.csf.pagmodulo.presentation.mapper.shared;
 
-import com.csf.pagmodulo.application.dto.shared.CustomerDto;
+import com.csf.pagmodulo.presentation.dto.shared.CustomerDto;
 import com.csf.pagmodulo.domain.shared.valueobjects.Customer;
 
 public class CustomerMapper {

@@ -1,15 +1,15 @@
 package com.csf.pagmodulo.presentation.mapper.order;
 
-import com.csf.pagmodulo.application.dto.order.request.ReqAmountDto;
-import com.csf.pagmodulo.application.dto.order.request.ReqChargeDto;
-import com.csf.pagmodulo.application.dto.order.request.ReqCustomerOrderDto;
-import com.csf.pagmodulo.application.dto.order.request.ReqItemOrderDto;
-import com.csf.pagmodulo.application.dto.order.request.ReqOrderDto;
-import com.csf.pagmodulo.application.dto.order.request.ReqPaymentResponseDto;
-import com.csf.pagmodulo.application.dto.shared.CustomerDto;
-import com.csf.pagmodulo.application.dto.shared.ItemDto;
-import com.csf.pagmodulo.application.dto.shared.PhoneDto;
-import com.csf.pagmodulo.application.dto.shared.TaxDocumentDto;
+import com.csf.pagmodulo.presentation.dto.order.request.ReqAmountDto;
+import com.csf.pagmodulo.presentation.dto.order.request.ReqChargeDto;
+import com.csf.pagmodulo.presentation.dto.order.request.ReqCustomerOrderDto;
+import com.csf.pagmodulo.presentation.dto.order.request.ReqItemOrderDto;
+import com.csf.pagmodulo.presentation.dto.order.request.ReqOrderDto;
+import com.csf.pagmodulo.presentation.dto.order.request.ReqPaymentResponseDto;
+import com.csf.pagmodulo.presentation.dto.shared.CustomerDto;
+import com.csf.pagmodulo.presentation.dto.shared.ItemDto;
+import com.csf.pagmodulo.presentation.dto.shared.PhoneDto;
+import com.csf.pagmodulo.presentation.dto.shared.TaxDocumentDto;
 import com.csf.pagmodulo.application.usecase.PaymentOrderWebhook.PaymentOrderCommand;
 import com.csf.pagmodulo.domain.order.enums.BillingStatus;
 import com.csf.pagmodulo.domain.order.valueobject.Amount;

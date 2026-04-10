@@ -7,4 +7,9 @@ public record Customer(
         String email,
         TaxDocument taxDocument,
         Phone phone
-) {}
+) {
+
+    public Customer withExternalCustomerId(String externalCustomerId) {
+        return new Customer(externalCustomerId, name, email, taxDocument, phone);
+    }
+}

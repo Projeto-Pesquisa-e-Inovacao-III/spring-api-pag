@@ -1,7 +1,7 @@
 package com.csf.pagmodulo.presentation.controller.pagbank.api;
 
-import com.csf.pagmodulo.application.dto.checkout.request.ReqUpdateCheckoutDto;
-import com.csf.pagmodulo.application.dto.order.request.ReqOrderDto;
+import com.csf.pagmodulo.presentation.dto.checkout.request.ReqUpdateCheckoutDto;
+import com.csf.pagmodulo.presentation.dto.order.request.ReqOrderDto;
 import com.csf.pagmodulo.presentation.shared.exception.ErrorResponse;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;

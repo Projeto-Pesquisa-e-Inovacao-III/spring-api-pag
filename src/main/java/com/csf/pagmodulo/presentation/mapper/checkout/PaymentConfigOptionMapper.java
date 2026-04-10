@@ -1,6 +1,6 @@
 package com.csf.pagmodulo.presentation.mapper.checkout;
 
-import com.csf.pagmodulo.application.dto.checkout.PaymentConfigOptionDto;
+import com.csf.pagmodulo.presentation.dto.checkout.PaymentConfigOptionDto;
 import com.csf.pagmodulo.domain.checkout.valueobject.paymentMethod.PaymentConfigOption;
 
 public class PaymentConfigOptionMapper {

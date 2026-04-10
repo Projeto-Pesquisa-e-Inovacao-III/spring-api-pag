@@ -1,8 +1,8 @@
 package com.csf.pagmodulo.presentation.mapper.checkout;
 
-import com.csf.pagmodulo.application.dto.checkout.request.ReqCreateCheckoutDto;
-import com.csf.pagmodulo.application.dto.checkout.response.ResCheckoutCreatedDto;
-import com.csf.pagmodulo.application.dto.checkout.response.ResCheckoutDto;
+import com.csf.pagmodulo.presentation.dto.checkout.request.ReqCreateCheckoutDto;
+import com.csf.pagmodulo.presentation.dto.checkout.response.ResCheckoutCreatedDto;
+import com.csf.pagmodulo.presentation.dto.checkout.response.ResCheckoutDto;
 import com.csf.pagmodulo.presentation.mapper.shared.CustomerMapper;
 import com.csf.pagmodulo.application.usecase.CreateCheckout.CreateCheckoutCommand;
 import com.csf.pagmodulo.domain.checkout.entity.Checkout;

@@ -1,7 +1,7 @@
 package com.csf.pagmodulo.infrastructure.pagbank;
 
-import com.csf.pagmodulo.application.dto.checkout.external.ExtActivationCheckoutDto;
-import com.csf.pagmodulo.application.dto.checkout.external.ExtInactivationCheckoutDto;
+import com.csf.pagmodulo.presentation.dto.checkout.external.ExtActivationCheckoutDto;
+import com.csf.pagmodulo.presentation.dto.checkout.external.ExtInactivationCheckoutDto;
 import com.csf.pagmodulo.domain.checkout.entity.Checkout;
 import com.csf.pagmodulo.domain.checkout.port.out.CheckoutGateway;
 import com.csf.pagmodulo.infrastructure.config.GatewayConfig;

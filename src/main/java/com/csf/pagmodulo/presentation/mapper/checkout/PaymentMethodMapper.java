@@ -1,7 +1,7 @@
 package com.csf.pagmodulo.presentation.mapper.checkout;
 
-import com.csf.pagmodulo.application.dto.checkout.PaymentMethodDto;
-import com.csf.pagmodulo.application.dto.checkout.enums.PaymentMethodType;
+import com.csf.pagmodulo.presentation.dto.checkout.PaymentMethodDto;
+import com.csf.pagmodulo.presentation.dto.checkout.enums.PaymentMethodType;
 import com.csf.pagmodulo.domain.checkout.valueobject.paymentMethod.*;
 
 import java.util.List;

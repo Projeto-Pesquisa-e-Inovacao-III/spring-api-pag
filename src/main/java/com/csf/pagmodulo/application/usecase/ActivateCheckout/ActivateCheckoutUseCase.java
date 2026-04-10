@@ -1,6 +1,6 @@
 package com.csf.pagmodulo.application.usecase.ActivateCheckout;
 
-import com.csf.pagmodulo.application.dto.checkout.external.ExtActivationCheckoutDto;
+import com.csf.pagmodulo.presentation.dto.checkout.external.ExtActivationCheckoutDto;
 import com.csf.pagmodulo.domain.checkout.entity.Checkout;
 import com.csf.pagmodulo.domain.checkout.exception.CheckoutNotFoundException;
 import com.csf.pagmodulo.domain.checkout.port.out.CheckoutGateway;
