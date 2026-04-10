@@ -6,12 +6,16 @@ import com.csf.pagmodulo.domain.shared.valueobjects.Customer;
 import com.csf.pagmodulo.domain.shared.valueobjects.Item;
 import com.csf.pagmodulo.domain.shared.valueobjects.OrderId;
 import com.csf.pagmodulo.domain.shared.exceptions.InvalidFieldException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.time.OffsetDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
 public class Order {
+    private static final Logger log = LoggerFactory.getLogger(Order.class);
+
     private final OrderId id;
     private final CheckoutId checkoutId;
     private final String gatewayOrderId;
@@ -49,18 +53,21 @@ public class Order {
     private void createPaidEvents() {
         for (Charge charge : charges) {
             if (charge.isPaid()) {
-                paidEvents.add(new OrderPaidEvent(
+                OrderPaidEvent event = new OrderPaidEvent(
                         id,
                         checkoutId,
                         gatewayOrderId,
+                        customer.externalCustomerId(),
+                        items.stream().map(Item::externalItemId).toList(),
                         charge.getId(),
                         charge.getPaid_at(),
-                        OffsetDateTime.now()
-                ));
+                        OffsetDateTime.now());
+
+                paidEvents.add(event);
+                log.info("OrderPaidEvent created: orderId={}, chargeId={}, itensId={}", id, charge.getId(), event.itensId());
             }
         }
     }
-
     public boolean isPaid() {
         return charges.stream().anyMatch(Charge::isPaid);
     }
