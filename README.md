@@ -1,6 +1,6 @@
-# PagModulo
+# Api-Pag
 
-PagModulo é uma aplicação Spring Boot projetada para facilitar a integração de processamento de pagamentos com o PagBank. Ela foi arquitetada com Clean Architecture para garantir modularidade, escalabilidade e facilidade de manutenção.
+Api-Pag é uma aplicação Spring Boot projetada para facilitar a integração de processamento de pagamentos com o PagBank. Ela foi arquitetada com Clean Architecture para garantir modularidade, escalabilidade e facilidade de manutenção.
 
 ## Visão Geral do Projeto
 
@@ -11,7 +11,7 @@ Esta API permite a criação e o gerenciamento de checkouts de pagamento e proce
 O projeto utiliza as seguintes tecnologias:
 
 - **Java 21**: Linguagem principal.
-- **Spring Boot 4.0.3**: Framework para construção da aplicação.
+- **Spring Boot 4.0.5**: Framework para construção da aplicação.
 - **Spring Data JPA**: Persistência de dados.
 - **MapStruct**: Mapeamento eficiente de beans Java.
 - **H2 Database**: Banco em memória para desenvolvimento e testes.
@@ -108,5 +108,3 @@ Principais propriedades de configuração:
 - **OpenAPI completo**: `http://localhost:8080/v3/api-docs`
 - **Grupo Checkout**: `http://localhost:8080/v3/api-docs/checkout`
 - **Grupo Order**: `http://localhost:8080/v3/api-docs/order`
-
-As descrições dos endpoints foram centralizadas em interfaces na camada de **Presentation**.
