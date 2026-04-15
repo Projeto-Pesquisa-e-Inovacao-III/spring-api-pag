@@ -9,10 +9,10 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>com.fillipe</groupId>
-    <artifactId>pagModulo</artifactId>
+    <artifactId>api-pag</artifactId>
     <version>0.0.1</version>
-    <name>pagModulo</name>
-    <description>pagModulo</description>
+    <name>api-pag</name>
+    <description>api-pag</description>
     <url/>
     <licenses>
         <license/>
