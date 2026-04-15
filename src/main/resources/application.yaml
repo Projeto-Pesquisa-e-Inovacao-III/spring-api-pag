@@ -1,0 +1,14 @@
+spring:
+  config:
+    import: optional:file:.env[.properties]
+  docker:
+    compose:
+      enabled: false
+  profiles:
+    active: dev
+
+springdoc:
+  api-docs:
+    enabled: false
+  swagger-ui:
+    enabled: false

@@ -1,0 +1,49 @@
+spring:
+  docker:
+    compose:
+      enabled: true
+      file: compose.yaml
+  datasource:
+    url: jdbc:h2:mem:pagmodulodb;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE
+    driver-class-name: org.h2.Driver
+    username: sa
+    password:
+  jpa:
+    database-platform: org.hibernate.dialect.H2Dialect
+    hibernate:
+      ddl-auto: create-drop
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+  h2:
+    console:
+      enabled: true
+      path: /h2-console
+
+
+pagbank:
+  api:
+    url: ${PAGBANK_API_URL:https://sandbox.api.pagseguro.com}
+    token: ${PAGBANK_API_TOKEN:}
+    payUrl: ${PAGBANK_API_PAY_URL:https://pagamento.sandbox.pagbank.com.br}
+
+gateway:
+  config:
+    notification-webhook-urls: ${GATEWAY_CONFIG_NOTIFICATION_WEBHOOK_URLS:https://localhost/api/v1/webhook/pagbank/update}
+    payment-notification-urls: ${GATEWAY_CONFIG_PAYMENT_NOTIFICATION_URLS:https://localhost/api/v1/webhook/pagbank/payment-update}
+    payment-method: ${GATEWAY_CONFIG_PAYMENT_METHOD:PIX}
+    soft-descriptor: ${GATEWAY_CONFIG_SOFT_DESCRIPTOR:teste}
+    return-url: ${GATEWAY_CONFIG_RETURN_URL:https://google.com}
+    redirect-url: ${GATEWAY_CONFIG_REDIRECT_URL:https://google.com}
+    customer-modifiable: ${GATEWAY_CONFIG_CUSTOMER_MODIFIABLE:false}
+
+
+event:
+  urls: ${EVENT_URLS:http://localhost:8081/api/}
+
+springdoc:
+  api-docs:
+    enabled: true
+  swagger-ui:
+    enabled: true
