@@ -1,12 +1,15 @@
 spring:
   config:
     import: optional:file:.env[.properties]
+
   docker:
     compose:
       enabled: false
+
   profiles:
     active: dev
-
+server:
+  port: 8081
 springdoc:
   api-docs:
     enabled: false

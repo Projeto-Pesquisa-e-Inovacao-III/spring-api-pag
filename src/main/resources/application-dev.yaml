@@ -1,3 +1,6 @@
+server:
+  port: 8081
+
 spring:
   docker:
     compose:
@@ -20,6 +23,13 @@ spring:
     console:
       enabled: true
       path: /h2-console
+
+  rabbitmq:
+    host: ${RABBITMQ_HOST:localhost}
+    port: ${RABBITMQ_PORT:5672}
+    username: ${RABBITMQ_USERNAME:app_user}
+    password: ${RABBITMQ_PASSWORD:app_password_123}
+    virtual-host: ${RABBITMQ_VHOST:/app}
 
 
 pagbank:
@@ -47,3 +57,4 @@ springdoc:
     enabled: true
   swagger-ui:
     enabled: true
+
