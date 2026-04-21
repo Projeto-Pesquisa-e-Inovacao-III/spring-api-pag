@@ -8,7 +8,7 @@ import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 @Configuration
-@Profile("prod")
+@Profile("prod-homo")
 public class WebMvcConfig implements WebMvcConfigurer {
 
     private final PagBankSignatureValidator pagBankSignatureValidator;

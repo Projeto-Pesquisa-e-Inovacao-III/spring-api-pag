@@ -1,7 +1,7 @@
 services:
   ngrok:
     image: ngrok/ngrok:alpine
-    command: http --url=tinkly-catchable-aurea.ngrok-free.dev host.docker.internal:8081
+    command: http --url=${NGROK_URL} host.docker.internal:8081
     environment:
       NGROK_AUTHTOKEN: ${NGROK_AUTHTOKEN}
     ports:

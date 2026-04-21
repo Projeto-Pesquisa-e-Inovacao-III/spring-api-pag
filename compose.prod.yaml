@@ -1,0 +1,79 @@
+name: spring-api-pag-prod
+services:
+  payment:
+    image: localhost/payment:latest
+    container_name: payment-service
+    restart: unless-stopped
+    environment:
+      SPRING_PROFILES_ACTIVE: prod
+      PAGBANK_API_URL: ${PAGBANK_API_URL}
+      PAGBANK_API_TOKEN: ${PAGBANK_API_TOKEN}
+      PAGBANK_API_PAY_URL: ${PAGBANK_API_PAY_URL}
+
+      GATEWAY_CONFIG_NOTIFICATION_WEBHOOK_URLS: ${GATEWAY_CONFIG_NOTIFICATION_WEBHOOK_URLS}
+      GATEWAY_CONFIG_PAYMENT_NOTIFICATION_URLS: ${GATEWAY_CONFIG_PAYMENT_NOTIFICATION_URLS}
+      GATEWAY_CONFIG_PAYMENT_METHOD: ${GATEWAY_CONFIG_PAYMENT_METHOD}
+      GATEWAY_CONFIG_SOFT_DESCRIPTOR: ${GATEWAY_CONFIG_SOFT_DESCRIPTOR}
+      GATEWAY_CONFIG_RETURN_URL: ${GATEWAY_CONFIG_RETURN_URL}
+      GATEWAY_CONFIG_REDIRECT_URL: ${GATEWAY_CONFIG_REDIRECT_URL}
+      GATEWAY_CONFIG_CUSTOMER_MODIFIABLE: ${GATEWAY_CONFIG_CUSTOMER_MODIFIABLE}
+
+      EVENT_URLS: ${EVENT_URLS}
+
+      SPRING_RABBITMQ_HOST: rabbitmq
+      SPRING_RABBITMQ_PORT: ${SPRING_RABBITMQ_PORT}
+      SPRING_RABBITMQ_USERNAME: ${SPRING_RABBITMQ_USERNAME}
+      SPRING_RABBITMQ_PASSWORD: ${SPRING_RABBITMQ_PASSWORD}
+      SPRING_RABBITMQ_VHOST: ${SPRING_RABBITMQ_VHOST}
+
+      PAYMENT_WEBHOOK_SECRET: ${PAYMENT_WEBHOOK_SECRET}
+    depends_on:
+      rabbitmq:
+        condition: service_healthy
+    networks:
+      - payment-net
+    ports:
+      - "8080:8080"
+
+  rabbitmq:
+    image: rabbitmq:4-management-alpine
+    container_name: rabbitmq
+    restart: unless-stopped
+    hostname: rabbitmq_broker
+
+    volumes:
+      - rabbitmq_data:/var/lib/rabbitmq
+      - ./rabbitmq/rabbitmq.conf:/etc/rabbitmq/rabbitmq.conf:ro
+      - ./rabbitmq/definitions.json:/etc/rabbitmq/definitions.json:ro
+    ports:
+      - "127.0.0.1:15672:15672"
+      - "5672:5672"
+    healthcheck:
+      test: ["CMD", "rabbitmq-diagnostics", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - payment-net
+
+  ngrok:
+    image: ngrok/ngrok:latest
+    container_name: ngrok
+    restart: unless-stopped
+    command: http --url=${NGROK_URL} payment:8080 --log=stdout
+    environment:
+      NGROK_URL: ${NGROK_URL}
+      NGROK_AUTHTOKEN: ${NGROK_AUTHTOKEN}
+    ports:
+      - "4040:4040"
+    depends_on:
+      - payment
+    networks:
+      - payment-net
+
+networks:
+  payment-net:
+    driver: bridge
+
+volumes:
+  rabbitmq_data:

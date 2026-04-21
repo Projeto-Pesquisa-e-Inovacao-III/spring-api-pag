@@ -1,0 +1,55 @@
+# Production configuration for Spring Boot
+# All values are injected from environment variables for security and flexibility
+
+server:
+  port: 8080
+
+spring:
+  config:
+    activate:
+      on-profile: prod
+
+  rabbitmq:
+    host: ${SPRING_RABBITMQ_HOST}
+    port: ${SPRING_RABBITMQ_PORT}
+    username: ${SPRING_RABBITMQ_USERNAME}
+    password: ${SPRING_RABBITMQ_PASSWORD}
+    virtual-host: ${SPRING_RABBITMQ_VHOST}
+  web:
+    error:
+      include-stacktrace: never
+
+pagbank:
+  api:
+    url: ${PAGBANK_API_URL}
+    token: ${PAGBANK_API_TOKEN}
+    payUrl: ${PAGBANK_API_PAY_URL}
+
+gateway:
+  config:
+    notification-webhook-urls: ${GATEWAY_CONFIG_NOTIFICATION_WEBHOOK_URLS}
+    payment-notification-urls: ${GATEWAY_CONFIG_PAYMENT_NOTIFICATION_URLS}
+    payment-method: ${GATEWAY_CONFIG_PAYMENT_METHOD}
+    soft-descriptor: ${GATEWAY_CONFIG_SOFT_DESCRIPTOR}
+    return-url: ${GATEWAY_CONFIG_RETURN_URL}
+    redirect-url: ${GATEWAY_CONFIG_REDIRECT_URL}
+    customer-modifiable: ${GATEWAY_CONFIG_CUSTOMER_MODIFIABLE}
+
+event:
+  urls: ${EVENT_URLS}
+
+payment:
+  webhook:
+    secret: ${PAYMENT_WEBHOOK_SECRET}
+
+
+
+logging:
+  level:
+    root: warn
+    com.csf: info
+
+
+
+# Add additional production settings as needed (e.g., logging, actuator, etc.)
+

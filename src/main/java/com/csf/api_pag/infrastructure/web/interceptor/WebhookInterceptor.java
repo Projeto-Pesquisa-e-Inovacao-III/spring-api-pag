@@ -14,7 +14,7 @@ import org.springframework.web.servlet.HandlerInterceptor;
 import java.nio.charset.StandardCharsets;
 
 @Component
-@Profile("prod")
+@Profile("prod-homo")
 public class WebhookInterceptor implements HandlerInterceptor {
 
     private static final Logger log = LoggerFactory.getLogger(WebhookInterceptor.class);

@@ -12,7 +12,7 @@ import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
 
-@Profile("prod")
+@Profile("prod-homo")
 @Component
 @Order(1)
 public class CachedBodyFilter extends OncePerRequestFilter {
