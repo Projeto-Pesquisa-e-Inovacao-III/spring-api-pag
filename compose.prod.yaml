@@ -27,6 +27,12 @@ services:
       SPRING_RABBITMQ_VHOST: ${SPRING_RABBITMQ_VHOST}
 
       PAYMENT_WEBHOOK_SECRET: ${PAYMENT_WEBHOOK_SECRET}
+
+      MYSQL_HOST: ${MYSQL_HOST}
+      MYSQL_PORT: ${MYSQL_PORT}
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
+      MYSQL_USER: ${MYSQL_USER}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
     depends_on:
       rabbitmq:
         condition: service_healthy

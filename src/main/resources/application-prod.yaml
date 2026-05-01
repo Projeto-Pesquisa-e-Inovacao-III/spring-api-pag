@@ -1,6 +1,3 @@
-# Production configuration for Spring Boot
-# All values are injected from environment variables for security and flexibility
-
 server:
   port: 8080
 
@@ -18,6 +15,22 @@ spring:
   web:
     error:
       include-stacktrace: never
+  datasource:
+    url: jdbc:mysql://${MYSQL_HOST}:${MYSQL_PORT:3306}/${MYSQL_DATABASE}?useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    username: ${MYSQL_USER}
+    password: ${MYSQL_PASSWORD}
+  jpa:
+    database-platform: org.hibernate.dialect.MySQLDialect
+    hibernate:
+      ddl-auto: update
+    show-sql: false
+    properties:
+      hibernate:
+        format_sql: true
+  h2:
+    console:
+      enabled: false
 
 pagbank:
   api:
@@ -42,14 +55,12 @@ payment:
   webhook:
     secret: ${PAYMENT_WEBHOOK_SECRET}
 
-
-
 logging:
   level:
     root: warn
     com.csf: info
 
-
-
+# MySQL connection for production profile
+# Make sure to set MYSQL_HOST, MYSQL_PORT, MYSQL_DATABASE, MYSQL_USER, and MYSQL_PASSWORD in your environment.
 # Add additional production settings as needed (e.g., logging, actuator, etc.)
 
