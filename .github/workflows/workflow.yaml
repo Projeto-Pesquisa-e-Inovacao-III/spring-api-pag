@@ -62,11 +62,11 @@ jobs:
           SPRING_RABBITMQ_PASSWORD=${{ secrets.SPRING_RABBITMQ_PASSWORD }}
           SPRING_RABBITMQ_VHOST=${{ secrets.SPRING_RABBITMQ_VHOST }}
           PAYMENT_WEBHOOK_SECRET=${{ secrets.PAYMENT_WEBHOOK_SECRET }}
-          MYSQL_HOST=${{ secrets.MYSQL_HOST }}
-          MYSQL_PORT=${{ secrets.MYSQL_PORT }}
-          MYSQL_DATABASE=${{ secrets.MYSQL_DATABASE }}
-          MYSQL_USER=${{ secrets.MYSQL_USER }}
-          MYSQL_PASSWORD=${{ secrets.MYSQL_PASSWORD }}
+          MYSQL_HOST=mysql
+          MYSQL_PORT=3306
+          MYSQL_DATABASE=payment
+          MYSQL_USER=payment
+          MYSQL_PASSWORD=payment
           NGROK_URL=${{ secrets.NGROK_URL }}
           NGROK_AUTHTOKEN=${{ secrets.NGROK_AUTHTOKEN }}
           EOF
