@@ -56,5 +56,10 @@
       "routing_key": "failed.#",
       "arguments": {}
     }
+  ],
+  "vhosts": [
+    {
+      "name": "/app"
+    }
   ]
 }
