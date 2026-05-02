@@ -82,7 +82,9 @@ jobs:
               break
             fi
             if [ "$status" = "unhealthy" ]; then
-              echo "RabbitMQ is unhealthy. Logs:"
+              echo "RabbitMQ is unhealthy. Inspect/diagnostics/logs:"
+              docker inspect rabbitmq | cat || true
+              docker exec rabbitmq rabbitmq-diagnostics status || true
               docker logs rabbitmq || true
               exit 1
             fi
@@ -90,7 +92,9 @@ jobs:
           done
 
           if [ "$(docker inspect -f '{{.State.Health.Status}}' rabbitmq 2>/dev/null || echo "unknown")" != "healthy" ]; then
-            echo "RabbitMQ did not become healthy in time. Logs:"
+            echo "RabbitMQ did not become healthy in time. Inspect/diagnostics/logs:"
+            docker inspect rabbitmq | cat || true
+            docker exec rabbitmq rabbitmq-diagnostics status || true
             docker logs rabbitmq || true
             exit 1
           fi
