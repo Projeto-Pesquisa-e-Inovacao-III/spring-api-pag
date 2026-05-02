@@ -16,6 +16,11 @@ jobs:
 
     steps:
       - uses: actions/checkout@v4
+      - name: Validate RabbitMQ volume files
+        run: |
+          ls -la rabbitmq
+          test -f rabbitmq/rabbitmq.conf
+          test -f rabbitmq/definitions.json
       - name: Set up java
         uses: actions/setup-java@v4
         with:
@@ -113,9 +118,3 @@ jobs:
       - uses: actions/checkout@v4
       - name: Deploy stub
         run: bash .github/scripts/deploy_payment_compose_stub.sh
-
-          
-
-          
-
-  
