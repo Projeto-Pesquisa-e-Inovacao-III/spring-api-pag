@@ -1,0 +1,60 @@
+{
+  "exchanges": [
+    {
+      "name": "order_exchange",
+      "vhost": "/app",
+      "type": "topic",
+      "durable": true,
+      "auto_delete": false,
+      "internal": false,
+      "arguments": {}
+    },
+    {
+      "name": "dlx_exchange",
+      "vhost": "/app",
+      "type": "topic",
+      "durable": true,
+      "auto_delete": false,
+      "internal": false,
+      "arguments": {}
+    }
+  ],
+  "queues": [
+    {
+      "name": "api_system.orders.queue",
+      "vhost": "/app",
+      "durable": true,
+      "auto_delete": false,
+      "arguments": {
+        "x-dead-letter-exchange": "dlx_exchange",
+        "x-dead-letter-routing-key": "failed.order",
+        "x-message-ttl": 60000
+      }
+    },
+    {
+      "name": "dlq.failed_messages",
+      "vhost": "/app",
+      "durable": true,
+      "auto_delete": false,
+      "arguments": {}
+    }
+  ],
+  "bindings": [
+    {
+      "vhost": "/app",
+      "source": "order_exchange",
+      "destination": "api_system.orders.queue",
+      "destination_type": "queue",
+      "routing_key": "order.#",
+      "arguments": {}
+    },
+    {
+      "vhost": "/app",
+      "source": "dlx_exchange",
+      "destination": "dlq.failed_messages",
+      "destination_type": "queue",
+      "routing_key": "failed.#",
+      "arguments": {}
+    }
+  ]
+}

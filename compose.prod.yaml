@@ -1,7 +1,7 @@
 name: spring-api-pag-prod
 services:
   payment:
-    image: localhost/payment:latest
+    image: payment:latest
     container_name: payment-service
     restart: unless-stopped
     environment:
@@ -46,6 +46,10 @@ services:
     container_name: rabbitmq
     restart: unless-stopped
     hostname: rabbitmq_broker
+    environment:
+      RABBITMQ_DEFAULT_USER: ${SPRING_RABBITMQ_USERNAME}
+      RABBITMQ_DEFAULT_PASS: ${SPRING_RABBITMQ_PASSWORD}
+      RABBITMQ_DEFAULT_VHOST: ${SPRING_RABBITMQ_VHOST}
 
     volumes:
       - rabbitmq_data:/var/lib/rabbitmq
@@ -70,6 +74,11 @@ services:
     environment:
       NGROK_URL: ${NGROK_URL}
       NGROK_AUTHTOKEN: ${NGROK_AUTHTOKEN}
+    healthcheck:
+      test: ["CMD-SHELL", "curl -fsS http://127.0.0.1:4040/api/tunnels >/dev/null || exit 1"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
     ports:
       - "4040:4040"
     depends_on:
