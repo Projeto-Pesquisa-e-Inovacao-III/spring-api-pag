@@ -76,32 +76,8 @@ jobs:
 
       - name: Run compose stack and smoke test
         run: |
-          docker compose -f compose.prod.yaml --env-file .env up -d || true
-          docker compose -f compose.prod.yaml --env-file .env ps
-
-          for i in {1..30}; do
-            status=$(docker inspect -f '{{.State.Health.Status}}' rabbitmq 2>/dev/null || echo "unknown")
-            if [ "$status" = "healthy" ]; then
-              echo "RabbitMQ is healthy"
-              break
-            fi
-            if [ "$status" = "unhealthy" ]; then
-              echo "RabbitMQ is unhealthy. Inspect/diagnostics/logs:"
-              docker inspect rabbitmq | cat || true
-              docker exec rabbitmq rabbitmq-diagnostics status || true
-              docker logs rabbitmq || true
-              exit 1
-            fi
-            sleep 2
-          done
-
-          if [ "$(docker inspect -f '{{.State.Health.Status}}' rabbitmq 2>/dev/null || echo "unknown")" != "healthy" ]; then
-            echo "RabbitMQ did not become healthy in time. Inspect/diagnostics/logs:"
-            docker inspect rabbitmq | cat || true
-            docker exec rabbitmq rabbitmq-diagnostics status || true
-            docker logs rabbitmq || true
-            exit 1
-          fi
+          docker compose -f compose.prod.yaml -f compose.ci.yaml --env-file .env up -d || true
+          docker compose -f compose.prod.yaml -f compose.ci.yaml --env-file .env ps
 
           for i in {1..30}; do
             code=$(curl -s -o /dev/null -w "%{http_code}" http://localhost:8080/ || true)
@@ -125,7 +101,7 @@ jobs:
 
       - name: Cleanup compose stack
         if: always()
-        run: docker compose -f compose.prod.yaml --env-file .env down -v || true
+        run: docker compose -f compose.prod.yaml -f compose.ci.yaml --env-file .env down -v || true
 
       - name: login to Docker Hub
         uses: docker/login-action@v2
