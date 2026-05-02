@@ -32,7 +32,7 @@ jobs:
         run: chmod +x mvnw
 
       - name: Build and test
-        run: ./mvnw clean verify -Pprod
+        run: ./mvnw clean verify
 
       - name: Build payment image
         run: |
