@@ -71,6 +71,9 @@ jobs:
           NGROK_AUTHTOKEN=${{ secrets.NGROK_AUTHTOKEN }}
           EOF
 
+      - name: Validate env file
+        run: EXPECT_RABBITMQ_VHOST=/app bash .github/scripts/validate_ci_env.sh .env
+
       - name: Run compose stack and smoke test
         run: |
           docker compose -f compose.prod.yaml --env-file .env up -d || true
