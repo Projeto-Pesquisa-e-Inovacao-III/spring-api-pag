@@ -17,9 +17,12 @@ public class EventPublisherRabbitAdapter implements EventPublisher {
     private static final String ROUTING_KEY = "order.paid";
     private static final Logger log = LoggerFactory.getLogger(EventPublisherRabbitAdapter.class);
     private final RabbitTemplate rabbitTemplate;
+    private final HmacService HmacService;
 
-    public EventPublisherRabbitAdapter(RabbitTemplate rabbitTemplate) {
+    public EventPublisherRabbitAdapter(RabbitTemplate rabbitTemplate,
+                                       HmacService HmacService) {
         this.rabbitTemplate = rabbitTemplate;
+        this.HmacService = HmacService;
     }
 
     @Override
@@ -44,10 +47,17 @@ public class EventPublisherRabbitAdapter implements EventPublisher {
                     EXCHANGE,
                     ROUTING_KEY);
 
+            String idempotencyKey = HmacService.generateFor(orderPaidEvent);
+
             rabbitTemplate.convertAndSend(
                     EXCHANGE,
                     ROUTING_KEY,
-                    orderPaidMessage);
+                    orderPaidMessage,
+                    message -> {
+                        message.getMessageProperties().setHeader("x-idempotency-key", idempotencyKey);
+                        message.getMessageProperties().setHeader("x-timestamp", orderPaidMessage.occurredOn());
+                        return message;
+                    });
         }
     }
 
