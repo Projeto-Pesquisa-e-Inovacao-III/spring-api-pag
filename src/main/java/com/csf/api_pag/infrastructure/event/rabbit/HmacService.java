@@ -1,13 +1,16 @@
 package com.csf.api_pag.infrastructure.event.rabbit;
 
-import com.csf.api_pag.domain.order.event.OrderPaidEvent;
+import com.csf.api_pag.domain.shared.event.DomainEvent;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import javax.crypto.Mac;
 import javax.crypto.spec.SecretKeySpec;
+import java.lang.reflect.Field;
 import java.nio.charset.StandardCharsets;
+import java.time.OffsetDateTime;
 import java.util.Base64;
+import java.util.StringJoiner;
 
 @Component
 public class HmacService {
@@ -17,20 +20,8 @@ public class HmacService {
         this.hmacSecret = hmacSecret;
     }
 
-    public String generateFor(OrderPaidEvent orderPaidEvent) {
-        String payload = buildIdempotencyPayload(orderPaidEvent);
-        return hmacSha256(payload, hmacSecret);
-    }
-
-    private String buildIdempotencyPayload(OrderPaidEvent orderPaidEvent) {
-        return String.join("|",
-                "orderId=" + orderPaidEvent.orderId().value(),
-                "checkoutId=" + orderPaidEvent.checkoutId().value(),
-                "gatewayOrderId=" + orderPaidEvent.gatewayOrderId(),
-                "customerId=" + orderPaidEvent.customerId(),
-                "itensId=" + orderPaidEvent.itensId(),
-                "chargeId=" + orderPaidEvent.chargeId().value()
-        );
+    public String generateForEvent(DomainEvent domainEvent) {
+        return hmacSha256(domainEvent.toString(), hmacSecret);
     }
 
     public String hmacSha256(String payload, String secret) {

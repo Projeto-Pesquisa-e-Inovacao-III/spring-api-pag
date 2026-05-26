@@ -24,5 +24,17 @@ public record OrderPaidEvent(
     public OrderPaidEvent(OrderId orderId, CheckoutId checkoutId, String gatewayOrderId, String customerId, List<String> itensId, ChargeId chargeId, OffsetDateTime paidAt) {
         this(orderId, checkoutId, gatewayOrderId, customerId,  itensId, chargeId, paidAt, OffsetDateTime.now(ZONE_OFFSET));
     }
+
+    @Override
+    public String toString() {
+        return "OrderPaidEvent{" +
+                "orderId=" + orderId +
+                ", checkoutId=" + checkoutId +
+                ", gatewayOrderId='" + gatewayOrderId + '\'' +
+                ", customerId='" + customerId + '\'' +
+                ", itensId=" + itensId +
+                ", chargeId=" + chargeId +
+                '}';
+    }
 }
 

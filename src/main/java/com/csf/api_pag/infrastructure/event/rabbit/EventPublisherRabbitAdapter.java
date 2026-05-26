@@ -2,8 +2,6 @@ package com.csf.api_pag.infrastructure.event.rabbit;
 
 import com.csf.api_pag.domain.shared.event.DomainEvent;
 import com.csf.api_pag.domain.shared.event.EventPublisher;
-import com.csf.api_pag.domain.order.event.OrderPaidEvent;
-import com.csf.api_pag.infrastructure.event.rabbit.dto.OrderPaidMessage;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
@@ -27,38 +25,21 @@ public class EventPublisherRabbitAdapter implements EventPublisher {
 
     @Override
     public void publish(DomainEvent event) {
-        if (event instanceof OrderPaidEvent orderPaidEvent) {
-            OrderPaidMessage orderPaidMessage = new OrderPaidMessage(
-                    orderPaidEvent.orderId().value().toString(),
-                    orderPaidEvent.checkoutId().value().toString(),
-                    orderPaidEvent.gatewayOrderId(),
-                    orderPaidEvent.customerId(),
-                    orderPaidEvent.itensId(),
-                    orderPaidEvent.chargeId().value().toString(),
-                    orderPaidEvent.paidAt(),
-                    orderPaidEvent.occurredOn()
-            );
+        log.info("Publishing event: " + event.toString(),
+                EXCHANGE,
+                ROUTING_KEY);
 
-            log.info("Publishing OrderPaidMessage: orderId={}, checkoutId={}, chargeId={}, itensId={}, exchange={}, routingKey={}",
-                    orderPaidMessage.orderId(),
-                    orderPaidMessage.checkoutId(),
-                    orderPaidMessage.chargeId(),
-                    orderPaidMessage.itensId(),
-                    EXCHANGE,
-                    ROUTING_KEY);
+        String idempotencyKey = HmacService.generateForEvent(event);
 
-            String idempotencyKey = HmacService.generateFor(orderPaidEvent);
-
-            rabbitTemplate.convertAndSend(
-                    EXCHANGE,
-                    ROUTING_KEY,
-                    orderPaidMessage,
-                    message -> {
-                        message.getMessageProperties().setHeader("x-idempotency-key", idempotencyKey);
-                        message.getMessageProperties().setHeader("x-timestamp", orderPaidMessage.occurredOn());
-                        return message;
-                    });
-        }
+        rabbitTemplate.convertAndSend(
+                EXCHANGE,
+                ROUTING_KEY,
+                event,
+                message -> {
+                    message.getMessageProperties().setHeader("x-idempotency-key", idempotencyKey);
+                    message.getMessageProperties().setHeader("x-timestamp", event.occurredOn());
+                    return message;
+                });
     }
 
     @Override

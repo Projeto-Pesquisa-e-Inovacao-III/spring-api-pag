@@ -130,7 +130,7 @@ public class PagBankCheckoutGateway implements CheckoutGateway {
     public String getGatewayPayUrl(Checkout checkout) {
         String gatewayId = checkout.getGatewayId();
         String uuidLowerCase = gatewayId.substring(5).toLowerCase();
-        return apiPayUrl + "pagamento?code=" + uuidLowerCase;
+        return apiPayUrl + "/pagamento?code=" + uuidLowerCase;
     }
 
     private <T> T executeRequest(
