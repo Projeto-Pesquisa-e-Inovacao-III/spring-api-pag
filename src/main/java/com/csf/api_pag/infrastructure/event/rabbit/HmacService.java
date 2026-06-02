@@ -1,14 +1,13 @@
 package com.csf.api_pag.infrastructure.event.rabbit;
 
+import com.csf.api_pag.domain.order.event.OrderPaidEvent;
 import com.csf.api_pag.domain.shared.event.DomainEvent;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import javax.crypto.Mac;
 import javax.crypto.spec.SecretKeySpec;
-import java.lang.reflect.Field;
 import java.nio.charset.StandardCharsets;
-import java.time.OffsetDateTime;
 import java.util.Base64;
 import java.util.StringJoiner;
 
@@ -21,7 +20,24 @@ public class HmacService {
     }
 
     public String generateForEvent(DomainEvent domainEvent) {
+        if (domainEvent instanceof OrderPaidEvent orderPaidEvent) {
+            return generateFor(orderPaidEvent);
+        }
         return hmacSha256(domainEvent.toString(), hmacSecret);
+    }
+
+    @Deprecated
+    // RETIRAR
+    public String generateFor(OrderPaidEvent orderPaidEvent) {
+        String payload = new StringJoiner("|")
+                .add("orderId=" + orderPaidEvent.orderId().value())
+                .add("checkoutId=" + orderPaidEvent.checkoutId().value())
+                .add("gatewayOrderId=" + orderPaidEvent.gatewayOrderId())
+                .add("customerId=" + orderPaidEvent.customerId())
+                .add("itensId=" + orderPaidEvent.itensId())
+                .add("chargeId=" + orderPaidEvent.chargeId().value())
+                .toString();
+        return hmacSha256(payload, hmacSecret);
     }
 
     public String hmacSha256(String payload, String secret) {
