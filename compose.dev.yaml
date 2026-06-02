@@ -8,3 +8,28 @@ services:
       - "4040:4040"
     extra_hosts:
       - "host.docker.internal:host-gateway"
+
+  rabbitmq:
+      image: rabbitmq:4-management-alpine
+      container_name: rabbitmq
+      restart: unless-stopped
+      hostname: rabbitmq_broker
+      environment:
+        RABBITMQ_DEFAULT_USER: ${SPRING_RABBITMQ_USERNAME}
+        RABBITMQ_DEFAULT_PASS: ${SPRING_RABBITMQ_PASSWORD}
+        RABBITMQ_DEFAULT_VHOST: ${SPRING_RABBITMQ_VHOST:/app}
+
+      volumes:
+        - rabbitmq_data:/var/lib/rabbitmq
+        - ./rabbitmq/rabbitmq.conf:/etc/rabbitmq/rabbitmq.conf:ro
+        - ./rabbitmq/definitions.json:/etc/rabbitmq/definitions.json:ro
+      ports:
+        - "127.0.0.1:15672:15672"
+        - "5672:5672"
+      healthcheck:
+        test: [ "CMD", "rabbitmq-diagnostics", "ping" ]
+        interval: 10s
+        timeout: 5s
+        retries: 5
+      networks:
+        - payment-net
