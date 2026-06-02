@@ -67,6 +67,7 @@ jobs:
           MYSQL_DATABASE=payment
           MYSQL_USER=payment
           MYSQL_PASSWORD=payment
+          SPRING_RABBITMQ_HMAC_SECRET=${{ secrets.SPRING_RABBITMQ_HMAC_SECRET }}
           NGROK_URL=${{ secrets.NGROK_URL }}
           NGROK_AUTHTOKEN=${{ secrets.NGROK_AUTHTOKEN }}
           EOF
