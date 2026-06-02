@@ -35,7 +35,8 @@ spring:
     username: ${RABBITMQ_USERNAME:app_user}
     password: ${RABBITMQ_PASSWORD:app_password_123}
     virtual-host: ${RABBITMQ_VHOST:/app}
-
+    hmac:
+      secret: ${RABBITMQ_HMAC_SECRET:urubu100}
 
 pagbank:
   api:
@@ -62,4 +63,3 @@ springdoc:
     enabled: true
   swagger-ui:
     enabled: true
-
