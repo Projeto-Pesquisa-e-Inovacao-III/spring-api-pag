@@ -1,0 +1,22 @@
+package com.csf.api_pag.presentation.dto.checkout.request;
+
+import com.csf.api_pag.presentation.dto.shared.CustomerDto;
+import com.csf.api_pag.presentation.dto.shared.ItemDto;
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
+
+import java.util.List;
+
+public record ReqCreateCheckoutDto(
+        @NotNull(message = "O cliente é obrigatório")
+        @Valid
+        CustomerDto customer,
+
+        @NotEmpty(message = "A lista de itens é obrigatória e não pode estar vazia")
+        @Valid
+        List<ItemDto> items,
+        Integer additionalAmount,
+        Integer discountAmount
+) {}
+
