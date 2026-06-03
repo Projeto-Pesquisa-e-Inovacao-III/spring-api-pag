@@ -1,7 +1,7 @@
 name: spring-api-pag-prod
 services:
   payment:
-    image: payment:latest
+    image: ${APP_IMAGE:-payment:latest}
     container_name: payment-service
     restart: unless-stopped
     environment:
