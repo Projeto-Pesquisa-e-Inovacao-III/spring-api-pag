@@ -12,6 +12,8 @@ spring:
     username: ${SPRING_RABBITMQ_USERNAME}
     password: ${SPRING_RABBITMQ_PASSWORD}
     virtual-host: ${SPRING_RABBITMQ_VHOST}
+    hmac:
+      secret: ${SPRING_RABBITMQ_HMAC_SECRET}
   web:
     error:
       include-stacktrace: never

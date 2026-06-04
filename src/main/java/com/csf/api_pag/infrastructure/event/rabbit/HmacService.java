@@ -6,11 +6,8 @@ import org.springframework.stereotype.Component;
 
 import javax.crypto.Mac;
 import javax.crypto.spec.SecretKeySpec;
-import java.lang.reflect.Field;
 import java.nio.charset.StandardCharsets;
-import java.time.OffsetDateTime;
 import java.util.Base64;
-import java.util.StringJoiner;
 
 @Component
 public class HmacService {
