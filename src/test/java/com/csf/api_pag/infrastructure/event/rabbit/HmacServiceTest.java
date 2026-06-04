@@ -47,18 +47,11 @@ class HmacServiceTest {
                 UUID.fromString("33333333-3333-3333-3333-333333333333")
         );
         HmacService hmacService = new HmacService(SECRET);
-        String expectedPayload = String.join("|",
-                "orderId=11111111-1111-1111-1111-111111111111",
-                "checkoutId=22222222-2222-2222-2222-222222222222",
-                "gatewayOrderId=gw-123",
-                "customerId=cust-999",
-                "itensId=[item-1, item-2]",
-                "chargeId=33333333-3333-3333-3333-333333333333"
-        );
+        String expectedPayload = event.toString();
 
         // Act
         String expected = hmacService.hmacSha256(expectedPayload, SECRET);
-        String actual = hmacService.generateFor(event);
+        String actual = hmacService.generateForEvent(event);
 
         // Assert
         assertEquals(expected, actual);
@@ -86,8 +79,8 @@ class HmacServiceTest {
         );
 
         // Act
-        String firstSignature = hmacService.generateFor(first);
-        String secondSignature = hmacService.generateFor(second);
+        String firstSignature = hmacService.generateForEvent(first);
+        String secondSignature = hmacService.generateForEvent(second);
 
         // Assert
         assertNotEquals(firstSignature, secondSignature);
